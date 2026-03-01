@@ -19,7 +19,7 @@ ip a
 - Ubuntu Server (alvo): 192.168.56.105
 
 
-![IP Address](./screenshots/01-ip-address.png)
+![IP Address](./images/01-ip-address.png)
 
 ---
 
