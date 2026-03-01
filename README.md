@@ -33,11 +33,13 @@ O projeto simula um cenário real de ataque **SSH Brute Force** e demonstra todo
 - Identificação do usuário alvo
 - Verificação de login bem-sucedido
 - Conclusão do incidente
+- 
+---
+📂 Etapas do laboratório:
 
-Documentações disponíveis:
-
-- 📄 log-analysis-base.md
-- 📄 log-analysis-investigation.md
+1️⃣ 01-log-analysis-base.md — Detecção inicial do incidente  
+2️⃣ 02-ssh-bruteforce-investigation.md — Simulação do ataque  
+3️⃣ 03-log-analysis-investigation.md — Investigação SOC Tier 1
 
 ---
 
