@@ -27,7 +27,7 @@ PermitRootLogin no
 MaxAuthTries 3
 ```
 
-<img src="images/lab05/ssh-hardening-main.png" width="800">
+<img src="images/lab05/ssh-hardening-main.png" width="100%">
 
 ---
 
@@ -37,7 +37,7 @@ MaxAuthTries 3
 PasswordAuthentication no
 ```
 
-<img src="images/lab05/ssh-disable-password.png" width="800">
+<img src="images/lab05/ssh-disable-password.png" width="100%">
 
 ---
 
@@ -47,7 +47,7 @@ PasswordAuthentication no
 sudo systemctl restart ssh
 ```
 
-<img src="images/lab05/ssh-restart-service.png" width="800">
+<img src="images/lab05/ssh-restart-service.png" width="100%">
 
 ---
 
@@ -63,7 +63,7 @@ Result:
 Permission denied (publickey)
 ```
 
-<img src="images/lab05/ssh-password-blocked.png" width="800">
+<img src="images/lab05/ssh-password-blocked.png" width="100%">
 
 ---
 
