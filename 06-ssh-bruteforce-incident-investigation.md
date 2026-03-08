@@ -30,7 +30,7 @@ sudo systemctl status ssh
 
 ---
 
-## Attack Simulation
+## Attack Simulation (Hydra Brute Force)
 
 Brute force attack executed from Kali Linux using Hydra.
 
@@ -65,7 +65,7 @@ sudo grep -a "Failed password" /var/log/auth.log | wc -l
 Result:
 
 ```
-79 failed login attempts detected
+99 failed login attempts detected
 ```
 
 <img src="images/lab06/failed-password-count.png" width="100%">
@@ -112,4 +112,4 @@ Log source: /var/log/auth.log
 
 ## Conclusion
 
-The attack was detected through log analysis and mitigated by blocking the attacker IP using the firewall.
+The incident was investigated through authentication log analysis and mitigated by blocking the attacker IP using the firewall.
