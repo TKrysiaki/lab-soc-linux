@@ -19,6 +19,10 @@ Foram criadas duas máquinas virtuais no VirtualBox:
 - Kali Linux (máquina atacante)
 - Ubuntu Server (máquina alvo)
 
+<p align="center">
+<img src="images/01-virtual-machines-created.png" width="800">
+</p>
+
 ![Virtual machines](images/01-virtual-machines-created.png)
 
 ---
