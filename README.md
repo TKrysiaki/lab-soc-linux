@@ -39,8 +39,7 @@ O projeto simula um cenário real de ataque **SSH Brute Force** e demonstra todo
 
 1️⃣ 01-log-analysis-base.md — Detecção inicial do incidente  
 2️⃣ 02-ssh-bruteforce-investigation.md — Simulação do ataque  
-3️⃣ 03-log-analysis-investigation.md — Investigação SOC N1 
-
+3️⃣ 03-log-analysis-investigation.md — Investigação SOC N1  
 4️⃣ 04-ssh-bruteforce-detection-and-fail2ban.md — Mitigação do ataque com Fail2ban
 
 ---
