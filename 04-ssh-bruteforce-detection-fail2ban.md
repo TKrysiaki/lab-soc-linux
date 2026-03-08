@@ -39,7 +39,7 @@ Reconhecimento → Enumeração → Ataque → Detecção → Mitigação
 ## 1 - Identificando IP do servidor
 
 No Ubuntu utilizamos o comando abaixo para identificar o endereço IP da máquina.
-´´´ip a´´´
+```ip a```
 
 ![Ubuntu IP](images/02-ubuntu-ip.png)
 
