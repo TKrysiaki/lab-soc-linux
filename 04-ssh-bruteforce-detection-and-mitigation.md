@@ -57,7 +57,9 @@ ip a
 
 Esse comando permite identificar o endereço IP da máquina alvo.
 
-![Ubuntu IP](images/02-ubuntu-ip.png)
+<p align="center">
+<img src="images/02-ubuntu-ip.png" width="800">
+</p>
 
 ---
 
@@ -65,7 +67,10 @@ Esse comando permite identificar o endereço IP da máquina alvo.
 
 Também verificamos o IP da máquina Kali.
 
-![Kali IP](images/03-kali-ip.png)
+
+<p align="center">
+<img src="images/03-kali-ip.png" width="800">
+</p>
 
 ---
 
@@ -75,8 +80,9 @@ No Kali realizamos um teste de conectividade para verificar se as máquinas cons
 ```bash
 ping 192.168.56.105
 ```
-
-![Network connectivity](images/04-network-connectivity.png)
+<p align="center">
+<img src="images/04-network-connectivity.png" width="800">
+</p>
 
 ---
 
@@ -89,7 +95,9 @@ nmap -sS -sV 192.168.56.105
 
 O scan identificou o serviço **SSH ativo na porta 22**.
 
-![Nmap scan](images/05-nmap-scan.png)
+<p align="center">
+<img src="images/05-nmap-scan.png" width="800">
+</p>
 
 ---
 
@@ -110,7 +118,9 @@ Depois verificamos se o serviço está ativo.
 
 Após iniciar o Apache, verificamos o acesso pelo navegador.
 
-![Apache webpage](images/07-apache-webpage.png)
+<p align="center">
+<img src="images/07-apache-webpage.png" width="800">
+</p>
 
 ---
 
@@ -120,8 +130,9 @@ No Kali utilizamos o Dirb para descobrir diretórios no servidor web.
 ```bash
 dirb http://192.168.56.105
 ```
-
-![Dirb enumeration](images/08-dirb-enumeration.png)
+<p align="center">
+<img src="images/08-dirb-enumeration.png" width="800">
+</p>
 
 ---
 
@@ -131,8 +142,9 @@ Antes do ataque confirmamos que o serviço SSH está acessível.
 ```bash
 ssh tiago@192.168.56.105
 ```
-
-![SSH access](images/09-ssh-access-test.png)
+<p align="center">
+<img src="images/09-ssh-access-test.png" width="800">
+</p>
 
 ---
 
@@ -140,7 +152,9 @@ ssh tiago@192.168.56.105
 
 Foi utilizada a wordlist **rockyou** para realizar o ataque de brute force.
 
-![Rockyou wordlist](images/10-rockyou-wordlist.png)
+<p align="center">
+<img src="images/10-rockyou-wordlist.png" width="800">
+</p>
 
 ---
 
@@ -152,7 +166,9 @@ para simular um atacante tentando obter acesso ao servidor SSH.
 hydra -l tiago -P /usr/share/wordlists/rockyou.txt ssh://192.168.56.105
 ```
 
-![Hydra brute force](images/11-hydra-bruteforce.png)
+<p align="center">
+<img src="images/11-hydra-bruteforce.png" width="800">
+</p>
 
 ---
 
@@ -175,7 +191,9 @@ Monitoramento em tempo real:
 sudo tail -f /var/log/auth.log
 ```
 
-![SSH attack logs](images/12-ssh-attack-logs.png)
+<p align="center">
+<img src="images/12-ssh-attack-logs.png" width="800">
+</p>
 
 ---
 
@@ -183,7 +201,9 @@ sudo tail -f /var/log/auth.log
 
 O Fail2Ban foi configurado para monitorar tentativas de login falhadas.
 
-![Fail2ban running](images/13-fail2ban-running.png)
+<p align="center">
+<img src="images/13-fail2ban-running.png" width="800">
+</p>
 
 ---
 
@@ -191,7 +211,9 @@ O Fail2Ban foi configurado para monitorar tentativas de login falhadas.
 
 Foi criada uma jail específica para proteger o serviço SSH.
 
-![Fail2ban ssh jail](images/14-fail2ban-ssh-jail.png)
+<p align="center">
+<img src="images/14-fail2ban-ssh-jail.png" width="800">
+</p>
 
 ---
 
@@ -199,7 +221,9 @@ Foi criada uma jail específica para proteger o serviço SSH.
 
 Após a configuração, verificamos que a jail está ativa.
 
-![Fail2ban jail active](images/15-fail2ban-jail-active.png)
+<p align="center">
+<img src="images/15-fail2ban-jail-active.png" width="800">
+</p>
 
 ---
 
@@ -207,7 +231,9 @@ Após a configuração, verificamos que a jail está ativa.
 
 Após múltiplas tentativas de ataque, o Fail2Ban bloqueou automaticamente o IP do atacante.
 
-![Attacker IP banned](images/16-attacker-ip-banned.png)
+<p align="center">
+<img src="images/16-attacker-ip-banned.png" width="800">
+</p>
 
 ---
 
