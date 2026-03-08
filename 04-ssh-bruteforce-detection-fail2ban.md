@@ -149,7 +149,7 @@ sudo fail2ban-client status sshd
 ![Attacker IP Banned](images/16-attacker-ip-banned.png)
 
 ---
-## Impacto de segurança
+## Impacto do ataque
 
 Ataques de brute force podem permitir acesso não autorizado a servidores expostos na internet.
 
@@ -163,7 +163,7 @@ Caso bem-sucedido, o atacante pode:
 ---
 ## Conclusão
 
-Este laboratório demonstra um fluxo completo de análise de segurança utilizado em ambientes SOC:
+Este laboratório demonstra um fluxo completo de análise de segurança utilizado em ambientes SOC N1:
 
 - Reconhecimento de serviços expostos
 - Simulação de ataque brute force
