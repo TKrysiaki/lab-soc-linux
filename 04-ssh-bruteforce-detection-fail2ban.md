@@ -40,7 +40,9 @@ Reconhecimento → Enumeração → Ataque → Detecção → Mitigação
 
 No Ubuntu utilizamos o comando abaixo para identificar o endereço IP da máquina.
 
-```ip a```
+```bash
+ip a
+```
 
 ![Ubuntu IP](images/02-ubuntu-ip.png)
 
