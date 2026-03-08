@@ -6,7 +6,7 @@ Este laboratório simula um ataque de **brute force contra o serviço SSH** e de
 
 O fluxo do laboratório segue o modelo utilizado em operações de **Security Operations Center (SOC)**:
 
-Reconhecimento → Ataque → Detecção → Resposta
+Reconhecimento → Ataque → Detecção → Investigação → Resposta
 
 ---
 
@@ -144,7 +144,8 @@ Foi utilizada a wordlist **rockyou** para realizar o ataque de brute force.
 
 ## 10 - Ataque brute force com Hydra
 
-Foi realizado um ataque de brute force utilizando Hydra.
+Foi realizado um ataque de brute force utilizando Hydra e a wordlist rockyou
+para simular um atacante tentando obter acesso ao servidor SSH.
 ```bash
 hydra -l tiago -P /usr/share/wordlists/rockyou.txt ssh://192.168.56.105
 ```
@@ -223,7 +224,12 @@ Caso bem-sucedido, o atacante pode:
 
 # Conclusão
 
-Este laboratório demonstra um fluxo completo de análise de segurança utilizado em ambientes **SOC N1**:
+Este laboratório demonstra um fluxo prático de detecção e resposta a incidentes
+utilizado por analistas SOC N1 em ambientes Linux.
+
+O cenário simula um ataque de brute force contra SSH e mostra como identificar
+o comportamento malicioso através da análise de logs e aplicar mitigação
+automática utilizando Fail2Ban.
 
 - Reconhecimento de serviços expostos
 - Simulação de ataque brute force
