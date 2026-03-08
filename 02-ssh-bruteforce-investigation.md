@@ -19,7 +19,7 @@ ip a
 - Ubuntu Server (alvo): 192.168.56.105
 
 
-![IP Address](./images/01-ip-address.png)
+![IP Address](./images/lab02/01-ip-address.png)
 
 ---
 
@@ -33,7 +33,7 @@ A máquina Kali realizou conexão SSH com o servidor Ubuntu, validando o serviç
 ssh tiago@192.168.56.105
 ```
 Resultado: acesso remoto realizado com sucesso.
-![SSH Login](./images/02-ssh-login.png)
+![SSH Login](./images/lab02/02-ssh-login.png)
 
 ---
 
@@ -48,7 +48,7 @@ nmap -sV 192.168.56.105
 Resultado: 
 Porta 22/tcp aberta
 Serviço identificado: OpenSSH
-![Nmap Scan](./images/03-nmap-scan.png)
+![Nmap Scan](./images/lab02/03-nmap-scan.png)
 
 ---
 
@@ -67,7 +67,7 @@ hydra -l tiago -P /usr/share/wordlists/rockyou.txt -t 4 ssh://192.168.56.105
 O Hydra iniciou múltiplas tentativas de autenticação contra o serviço SSH.
 
 
-![Hydra Attack](./images/04-hydra-attack.png)
+![Hydra Attack](./images/lab02/04-hydra-attack.png)
 
 ---
 
@@ -83,7 +83,7 @@ Eventos observados:
 Failed password
 múltiplas tentativas do IP atacante 192.168.56.104
 
-![Auth Log](./images/05-auth-log.png)
+![Auth Log](./images/lab02/05-auth-log.png)
 
 ---
 
@@ -97,7 +97,7 @@ sudo fail2ban-client status sshd
 ```
 Resultado:
 IP atacante bloqueado automaticamente.
-![Fail2ban Block](./images/06-fail2ban-block.png)
+![Fail2ban Block](./images/lab02/06-fail2ban-block.png)
 
 ---
 
