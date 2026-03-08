@@ -36,7 +36,7 @@ grep "Failed password" /var/log/auth.log | awk '{print $(NF-3)}' | sort | uniq -
 
 Evidência:
 
-![Attacker IP](images/investigation-attacker-ip.png)
+![Attacker IP](images/lab03/investigation-attacker-ip.png)
 
 Análise: Foi identificado um endereço IP responsável pela maior quantidade de tentativas de autenticação falhadas, indicando atividade automatizada típica de ataque brute force.
 
@@ -53,7 +53,7 @@ grep "Failed password" /var/log/auth.log | tail
 ```
 Evidência:
 
-![Attack Timeline](images/investigation-timeline.png)
+![Attack Timeline](images/lab03/investigation-timeline.png)
 
 Análise: Os registros demonstram múltiplas tentativas consecutivas em curto intervalo de tempo, caracterizando comportamento contínuo de ataque.
 
@@ -67,7 +67,7 @@ grep "Failed password" /var/log/auth.log | awk '{print $(NF-5)}' | sort | uniq -
 ```
 Evidência:
 
-![Target User](images/investigation-target-user.png)
+![Target User](images/lab03/investigation-target-user.png)
 
 Análise: O atacante concentrou as tentativas em um usuário específico do sistema, indicando tentativa direcionada de acesso.
 
@@ -81,7 +81,7 @@ grep "Accepted password" /var/log/auth.log
 ```
 Evidência:
 
-![Login Result](images/investigation-login-result.png)
+![Login Result](images/lab03/investigation-login-result.png)
 
 Análise: Nenhum login bem-sucedido foi identificado, indicando que o ataque não comprometeu o sistema.
 
