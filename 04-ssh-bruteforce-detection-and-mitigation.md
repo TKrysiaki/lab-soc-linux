@@ -23,8 +23,6 @@ Foram criadas duas máquinas virtuais no VirtualBox:
 <img src="images/01-virtual-machines-created.png" width="800">
 </p>
 
-![Virtual machines](images/01-virtual-machines-created.png)
-
 ---
 
 # Ambiente
