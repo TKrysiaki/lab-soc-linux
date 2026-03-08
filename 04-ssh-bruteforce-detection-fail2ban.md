@@ -118,6 +118,12 @@ hydra -l tiago -P /usr/share/wordlists/rockyou.txt ssh://192.168.56.105
 
 ## 8 - Detecção através de análise de logs
 
+### Exemplo de log detectado
+
+Failed password for tiago from 192.168.56.104 port 45570 ssh2
+
+Isso indica múltiplas tentativas de autenticação falhadas vindas do mesmo endereço IP.
+
 As tentativas de login falhadas podem ser identificadas no arquivo:
 ```bash
 /var/log/auth.log
@@ -143,7 +149,18 @@ sudo fail2ban-client status sshd
 ![Attacker IP Banned](images/16-attacker-ip-banned.png)
 
 ---
+## Impacto de segurança
 
+Ataques de brute force podem permitir acesso não autorizado a servidores expostos na internet.
+
+Caso bem-sucedido, o atacante pode:
+
+- obter acesso remoto ao sistema
+- escalar privilégios
+- instalar malware ou backdoors
+- comprometer dados sensíveis
+
+---
 ## Conclusão
 
 Este laboratório demonstra um fluxo completo de análise de segurança utilizado em ambientes SOC:
