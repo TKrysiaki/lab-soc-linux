@@ -59,7 +59,9 @@ No Kali Linux utilizamos o mesmo comando para identificar o IP da máquina ataca
 ## 3 - Testando conectividade entre as máquinas
 
 Foi realizado um teste de conectividade entre as máquinas.
-´´´ping 192.168.56.105´´´
+```bash
+ping 192.168.56.105
+```
 
 ![Network Connectivity](images/04-network-connectivity.png)
 
@@ -69,7 +71,9 @@ Foi realizado um teste de conectividade entre as máquinas.
 
 Foi realizado um scan de portas para identificar serviços expostos no servidor.
 
-´´´nmap -sS -sV 192.168.56.105´´´
+```bash
+nmap -sS -sV 192.168.56.105
+```
 
 
 ![Nmap Scan](images/05-nmap-scan.png)
