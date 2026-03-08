@@ -65,7 +65,7 @@ sudo grep -a "Failed password" /var/log/auth.log | wc -l
 Result:
 
 ```
-99 failed login attempts detected
+79 failed login attempts detected
 ```
 
 <img src="images/lab06/failed-password-count.png" width="100%">
