@@ -20,7 +20,7 @@ Foram criadas duas máquinas virtuais no VirtualBox:
 - Ubuntu Server (máquina alvo)
 
 <p align="center">
-<img src="images/01-virtual-machines-created.png" width="800">
+<img src="images/lab04/01-virtual-machines-created.png" width="800">
 </p>
 
 ---
@@ -58,7 +58,7 @@ ip a
 Esse comando permite identificar o endereço IP da máquina alvo.
 
 <p align="center">
-<img src="images/02-ubuntu-ip.png" width="800">
+<img src="images/lab04/02-ubuntu-ip.png" width="800">
 </p>
 
 ---
@@ -69,7 +69,7 @@ Também verificamos o IP da máquina Kali.
 
 
 <p align="center">
-<img src="images/03-kali-ip.png" width="800">
+<img src="images/lab04/03-kali-ip.png" width="800">
 </p>
 
 ---
@@ -81,7 +81,7 @@ No Kali realizamos um teste de conectividade para verificar se as máquinas cons
 ping 192.168.56.105
 ```
 <p align="center">
-<img src="images/04-network-connectivity.png" width="800">
+<img src="images/lab04/04-network-connectivity.png" width="800">
 </p>
 
 ---
@@ -96,7 +96,7 @@ nmap -sS -sV 192.168.56.105
 O scan identificou o serviço **SSH ativo na porta 22**.
 
 <p align="center">
-<img src="images/05-nmap-scan.png" width="800">
+<img src="images/lab04/05-nmap-scan.png" width="800">
 </p>
 
 ---
@@ -110,7 +110,7 @@ sudo apt install apache2
 
 Depois verificamos se o serviço está ativo.
 
-![Apache running](images/06-apache-running.png)
+![Apache running](images/lab04/06-apache-running.png)
 
 ---
 
@@ -119,7 +119,7 @@ Depois verificamos se o serviço está ativo.
 Após iniciar o Apache, verificamos o acesso pelo navegador.
 
 <p align="center">
-<img src="images/07-apache-webpage.png" width="800">
+<img src="images/lab04/07-apache-webpage.png" width="800">
 </p>
 
 ---
@@ -131,7 +131,7 @@ No Kali utilizamos o Dirb para descobrir diretórios no servidor web.
 dirb http://192.168.56.105
 ```
 <p align="center">
-<img src="images/08-dirb-enumeration.png" width="800">
+<img src="images/lab04/08-dirb-enumeration.png" width="800">
 </p>
 
 ---
@@ -143,7 +143,7 @@ Antes do ataque confirmamos que o serviço SSH está acessível.
 ssh tiago@192.168.56.105
 ```
 <p align="center">
-<img src="images/09-ssh-access-test.png" width="800">
+<img src="images/lab04/09-ssh-access-test.png" width="800">
 </p>
 
 ---
@@ -153,7 +153,7 @@ ssh tiago@192.168.56.105
 Foi utilizada a wordlist **rockyou** para realizar o ataque de brute force.
 
 <p align="center">
-<img src="images/10-rockyou-wordlist.png" width="800">
+<img src="images/lab04/10-rockyou-wordlist.png" width="800">
 </p>
 
 ---
@@ -167,7 +167,7 @@ hydra -l tiago -P /usr/share/wordlists/rockyou.txt ssh://192.168.56.105
 ```
 
 <p align="center">
-<img src="images/11-hydra-bruteforce.png" width="800">
+<img src="images/lab04/11-hydra-bruteforce.png" width="800">
 </p>
 
 ---
@@ -192,7 +192,7 @@ sudo tail -f /var/log/auth.log
 ```
 
 <p align="center">
-<img src="images/12-ssh-attack-logs.png" width="800">
+<img src="images/lab04/12-ssh-attack-logs.png" width="800">
 </p>
 
 ---
@@ -202,7 +202,7 @@ sudo tail -f /var/log/auth.log
 O Fail2Ban foi configurado para monitorar tentativas de login falhadas.
 
 <p align="center">
-<img src="images/13-fail2ban-running.png" width="800">
+<img src="images/lab04/13-fail2ban-running.png" width="800">
 </p>
 
 ---
@@ -212,7 +212,7 @@ O Fail2Ban foi configurado para monitorar tentativas de login falhadas.
 Foi criada uma jail específica para proteger o serviço SSH.
 
 <p align="center">
-<img src="images/14-fail2ban-ssh-jail.png" width="800">
+<img src="images/lab04/14-fail2ban-ssh-jail.png" width="800">
 </p>
 
 ---
@@ -222,7 +222,7 @@ Foi criada uma jail específica para proteger o serviço SSH.
 Após a configuração, verificamos que a jail está ativa.
 
 <p align="center">
-<img src="images/15-fail2ban-jail-active.png" width="800">
+<img src="images/lab04/15-fail2ban-jail-active.png" width="800">
 </p>
 
 ---
@@ -232,7 +232,7 @@ Após a configuração, verificamos que a jail está ativa.
 Após múltiplas tentativas de ataque, o Fail2Ban bloqueou automaticamente o IP do atacante.
 
 <p align="center">
-<img src="images/16-attacker-ip-banned.png" width="800">
+<img src="images/lab04/16-attacker-ip-banned.png" width="800">
 </p>
 
 ---
