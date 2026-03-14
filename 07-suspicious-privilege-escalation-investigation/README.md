@@ -20,7 +20,7 @@ Command:
 cd /var/log
 ls
 ```
-<img src="images/01-access-log-directory.png" width="800">
+![Access log directory](images/01-access-log-directory.png)
 
 ---
 
