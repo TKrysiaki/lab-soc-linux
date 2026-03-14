@@ -42,6 +42,7 @@ Command:
 grep root auth.log
 ```
 <img src="images/03-root-session-events.png" width="800">
+
 ---
 
 ## 4. Check failed authentication attempts
