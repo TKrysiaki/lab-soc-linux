@@ -54,6 +54,7 @@ grep "failed" auth.log
 <img src="images/04-failed-authentication-check.png" width="800">
 
 ---
+
 ## 5. Investigate sudo command history
 
 Command:
@@ -61,7 +62,9 @@ Command:
 zgrep sudo auth.log.2.gz
 ```
 <img src="images/05-sudo-commands-history.png" width="800">
+
 ---
+
 ## 6. Review login history
 
 Command:
