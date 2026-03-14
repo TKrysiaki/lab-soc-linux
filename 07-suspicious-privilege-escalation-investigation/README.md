@@ -21,7 +21,7 @@ Command:
 cd /var/log
 ls
 ```
-<img src="images/lab07-01-access-log-directory" width="800">
+<img src="images/01-access-log-directory" width="800">
 
 ---
 ## 2. Review authentication logs
