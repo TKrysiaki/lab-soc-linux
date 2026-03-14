@@ -24,6 +24,7 @@ ls
 <img src="images/01-access-log-directory.png" width="800">
 
 ---
+
 ## 2. Review authentication logs
 
 Command:
@@ -33,6 +34,7 @@ cat auth.log
 <img src="images/02-auth-log-content.png" width="800">
 
 ---
+
 ## 3. Identify root sessions
 
 Command:
@@ -41,6 +43,7 @@ grep root auth.log
 ```
 <img src="images/03-root-session-events.png" width="800">
 ---
+
 ## 4. Check failed authentication attempts
 
 Command:
@@ -65,7 +68,9 @@ Command:
 last
 ```
 <img src="images/06-login-history-last-command.png" width="800">
+
 ---
+
 # Findings
 
 - Root sessions were identified in the authentication logs.
