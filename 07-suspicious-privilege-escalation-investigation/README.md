@@ -30,7 +30,7 @@ Command:
 ```bash
 cat auth.log
 ```
-<img src="images/lab07-02-auth-log-content" width="800">
+<img src="images/02-auth-log-content.png" width="800">
 
 ---
 ## 3. Identify root sessions
@@ -39,7 +39,7 @@ Command:
 ```bash
 grep root auth.log
 ```
-<img src="images/lab07-03-root-session-events" width="800">
+<img src="images/03-root-session-events.png" width="800">
 ---
 ## 4. Check failed authentication attempts
 
@@ -47,7 +47,7 @@ Command:
 ```bash
 grep "failed" auth.log
 ```
-<img src="images/lab07-04-failed-authentication-check" width="800">
+<img src="images/04-failed-authentication-check.png" width="800">
 
 ---
 ## 5. Investigate sudo command history
@@ -56,7 +56,7 @@ Command:
 ```bash
 zgrep sudo auth.log.2.gz
 ```
-<img src="images/lab07-05-sudo-commands-history" width="800">
+<img src="images/05-sudo-commands-history.png" width="800">
 ---
 ## 6. Review login history
 
@@ -64,7 +64,7 @@ Command:
 ```bash
 last
 ```
-<img src="images/lab07/lab07-06-login-history-last-command" width="800">
+<img src="images/06-login-history-last-command.png" width="800">
 ---
 # Findings
 
