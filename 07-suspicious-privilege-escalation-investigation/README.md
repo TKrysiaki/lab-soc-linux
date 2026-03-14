@@ -1,7 +1,7 @@
-# Suspicious Privilege Escalation Investigation
+# SOC Investigation: Suspicious Privilege Escalation in Linux
 
 ## Objective
-Investigate potential privilege escalation activity on a Linux system by analyzing authentication logs.
+To Investigate potential privilege escalation activity on a Linux system by analyzing authentication logs.
 
 ## Environment
 - Ubuntu (target machine)
