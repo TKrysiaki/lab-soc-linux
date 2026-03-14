@@ -4,8 +4,7 @@
 To Investigate potential privilege escalation activity on a Linux system by analyzing authentication logs.
 
 ## Environment
-- Ubuntu (target machine)
-- Kali Linux (analyst machine)
+- Ubuntu
 - VirtualBox
 
 ## Log File Investigated
