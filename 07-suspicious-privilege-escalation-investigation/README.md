@@ -20,7 +20,7 @@ Command:
 cd /var/log
 ls
 ```
-![Access log directory](images/01-access-log-directory.png)
+<img src="images/01-access-log-directory.png" width="100%">
 
 ---
 
@@ -30,7 +30,7 @@ Command:
 ```bash
 cat auth.log
 ```
-<img src="images/02-auth-log-content.png" width="800">
+<img src="images/02-auth-log-content.png" width="100%">
 
 ---
 
@@ -40,7 +40,7 @@ Command:
 ```bash
 grep root auth.log
 ```
-<img src="images/03-root-session-events.png" width="800">
+<img src="images/03-root-session-events.png" width="100%">
 
 ---
 
@@ -50,7 +50,7 @@ Command:
 ```bash
 grep "failed" auth.log
 ```
-<img src="images/04-failed-authentication-check.png" width="800">
+<img src="images/04-failed-authentication-check.png" width="100%">
 
 ---
 
@@ -60,7 +60,7 @@ Command:
 ```bash
 zgrep sudo auth.log.2.gz
 ```
-<img src="images/05-sudo-commands-history.png" width="800">
+<img src="images/05-sudo-commands-history.png" width="100%">
 
 ---
 
@@ -70,7 +70,7 @@ Command:
 ```bash
 last
 ```
-<img src="images/06-login-history-last-command.png" width="800">
+<img src="images/06-login-history-last-command.png" width="100%">
 
 ---
 
