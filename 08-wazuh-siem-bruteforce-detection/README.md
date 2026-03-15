@@ -113,7 +113,7 @@ maxretry = 3
 bantime = 3600
 findtime = 600
 ```
-This configuration blocks an IP address after 3 failed authentication attempts within a 10-minute window, preventing further login attempts.
+This configuration blocks an IP address after 3 failed authentication attempts within a 10-minute window. The offending IP is then banned for 1 hour, preventing further login attempts.
 
 <img src="images/14-fail2ban-ssh-3-attempts-config.png" width="100%">
 
