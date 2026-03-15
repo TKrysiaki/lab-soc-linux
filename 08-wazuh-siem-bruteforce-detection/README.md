@@ -29,30 +29,20 @@ Defense Tool: Fail2ban
 
 ```
 Attacker: Kali Linux (Hydra)
-
         │
         ▼
-
 Target: Ubuntu Server (SSH)
-
         │
         ▼
-
 Logs: /var/log/auth.log
-
         │
         ▼
-
 Detection: Wazuh SIEM
-
         │
         ▼
-
 MITRE ATT&CK: T1110 – Brute Force
-
         │
         ▼
-
 Response: Fail2ban blocks attacker IP
 ```
 
