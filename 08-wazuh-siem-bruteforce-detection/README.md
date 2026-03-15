@@ -57,7 +57,7 @@ The attack was performed using Hydra, attempting a brute force login against the
 ```bash
 hydra -l tiago -P /usr/share/wordlists/rockyou.txt ssh://192.168.18.239
 ```
-This generated multiple authentication failures in the system logs.
+This command attempts multiple password combinations from a wordlist against the SSH service to simulate a brute force attack scenario.
 
 ## Log Evidence
 
@@ -98,6 +98,24 @@ Technique:
 T1110 — Brute Force
 
 <img src="images/09-wazuh-mitre-password-guessing.png" width="100%">
+
+---
+
+## Automated Response with Fail2ban
+
+To mitigate brute force attacks, Fail2ban was configured to automatically block IP addresses after multiple failed login attempts.
+
+Configuration used:
+```bash
+[sshd]
+enabled = true
+maxretry = 3
+bantime = 3600
+findtime = 600
+```
+This configuration blocks an IP address after 3 failed authentication attempts within a 10-minute window, preventing further login attempts.
+
+<img src="images/14-fail2ban-ssh-3-attempts-config.png" width="100%">
 
 ---
 
