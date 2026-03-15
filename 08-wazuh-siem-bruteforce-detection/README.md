@@ -60,7 +60,7 @@ This generated multiple authentication failures in the system logs.
 
 Ubuntu system logs captured the attack attempts:
 
-<img src="images/04-ubuntu-auth-log-ssh-failed.png" width="800">
+<img src="images/04-ubuntu-auth-log-ssh-failed.png" width="100%">
 
 ### Example log entry:
 ```bash
@@ -72,7 +72,7 @@ Failed password for tiago from 192.168.18.240 port 53030 ssh2
 
 Wazuh detected the authentication failures and generated security alerts.
 
-<img src="images/07-wazuh-multiple-ssh-failed-events.png" width="800">
+<img src="images/07-wazuh-multiple-ssh-failed-events.png" width="100%">
 
 Alert details:
 
@@ -82,7 +82,7 @@ Alert details:
 
 - Log source: /var/log/auth.log
 
-<img src="images/08-wazuh-ssh-alert-details.png" width="800">
+<img src="images/08-wazuh-ssh-alert-details.png" width="100%">
 
 ---
 
@@ -94,7 +94,7 @@ Technique:
 
 T1110 — Brute Force
 
-<img src="images/09-wazuh-mitre-password-guessing.png" width="800">
+<img src="images/09-wazuh-mitre-password-guessing.png" width="100%">
 
 ---
 
@@ -110,7 +110,7 @@ maxretry = 3
 bantime = 3600
 findtime = 600
 ```
-<img src="images/14-fail2ban-ssh-3-attempts-config.png" width="800">
+<img src="images/14-fail2ban-ssh-3-attempts-config.png" width="100%">
 
 ---
 
@@ -118,7 +118,7 @@ findtime = 600
 
 After detecting multiple failed logins, Fail2ban automatically blocked the attacker IP.
 
-<img src="images/16-fail2ban-ip-blocked.png" width="800">
+<img src="images/16-fail2ban-ip-blocked.png" width="100%">
 
 Blocked IP:
 ```bash
