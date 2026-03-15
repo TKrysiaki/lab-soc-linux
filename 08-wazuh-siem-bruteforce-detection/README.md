@@ -21,7 +21,9 @@
 ## Lab Architecture
 
 Attacker: Kali Linux
+
 Target: Ubuntu Server
+
 SIEM: Wazuh Server
 
 Attack Tool: Hydra
