@@ -27,6 +27,7 @@ Target: Ubuntu Server
 SIEM: Wazuh Server
 
 Attack Tool: Hydra
+
 Defense Tool: Fail2ban
 
 ```
