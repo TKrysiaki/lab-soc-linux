@@ -22,7 +22,7 @@ Command executed from Kali:
 
 ssh tiago@192.168.18.239
 
-<img src="images/01-ssh-login-kali.png" width="800">
+<img src="images/01-ssh-login-kali.png" width="100%">
 
 ---
 
@@ -30,7 +30,7 @@ ssh tiago@192.168.18.239
 
 Linux authentication logs recorded multiple failed login attempts.
 
-<img src="images/07-auth-log-attacker-ip.png" width="800">
+<img src="images/07-auth-log-attacker-ip.png" width="100%">
 
 Indicators identified:
 
@@ -44,11 +44,11 @@ Indicators identified:
 
 The Wazuh SIEM detected authentication failures and generated security events.
 
-<img src="images/03-wazuh-ssh-alert.png" width="800">
+<img src="images/03-wazuh-ssh-alert.png" width="100%">
 
 Security event details:
 
-<img src="images/05-wazuh-ssh-event-details.png" width="800">
+<img src="images/05-wazuh-ssh-event-details.png" width="100%">
 
 ---
 
@@ -77,11 +77,11 @@ Evidence collected from:
 
 Linux logs:
 
-<img src="images/17-authentication-failures-log.png" width="800">
+<img src="images/17-authentication-failures-log.png" width="100%">
 
 Wazuh SIEM:
 
-<img src="images/04-wazuh-ssh-events.png" width="800">
+<img src="images/04-wazuh-ssh-events.png" width="100%">
 
 ---
 
