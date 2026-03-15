@@ -8,7 +8,7 @@ The goal is to identify the attacker, analyze security events, and reconstruct t
 
 # Lab Environment
 
-Kali Linux →  Attacker  
+Kali Linux → Attacker
 Ubuntu Target →  Victim machine  
 Ubuntu Server →  Wazuh SIEM
 
