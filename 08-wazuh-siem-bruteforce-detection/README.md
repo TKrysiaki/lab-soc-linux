@@ -27,27 +27,34 @@ SIEM: Wazuh Server
 Attack Tool: Hydra
 Defense Tool: Fail2ban
 
-Kali (Attacker)
-        │
-        │ SSH Brute Force (Hydra)
-        ▼
-Ubuntu Server (Target)
-        │
-        │ Authentication logs
-        ▼
-/var/log/auth.log
+```
+Attacker: Kali Linux (Hydra)
+
         │
         ▼
-Wazuh Agent
+
+Target: Ubuntu Server (SSH)
+
         │
         ▼
-Wazuh SIEM
+
+Logs: /var/log/auth.log
+
         │
         ▼
-Alert + MITRE Classification
+
+Detection: Wazuh SIEM
+
         │
         ▼
-Fail2ban blocks attacker IP
+
+MITRE ATT&CK: T1110 – Brute Force
+
+        │
+        ▼
+
+Response: Fail2ban blocks attacker IP
+```
 
 ---
 
