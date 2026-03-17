@@ -16,7 +16,7 @@ Detect and investigate unauthorized access attempts to sensitive files in a Linu
 
 ## ⚔️ Attack Simulation
 
-SSH access from attacker machine:
+### SSH access from attacker machine:
 
 ```
 ssh tiago@192.168.18.237
@@ -26,7 +26,7 @@ ssh tiago@192.168.18.237
 ---
 
 
-Attempt to access sensitive file:
+### Attempt to access sensitive file:
 ```
 cat /etc/shadow
 ```
