@@ -42,7 +42,7 @@ grep shadow /var/log/auth.log
 
 ---
 
-Search for privilege escalation:
+### Search for privilege escalation:
 ```
 grep sudo /var/log/auth.log
 ```
@@ -51,7 +51,7 @@ grep sudo /var/log/auth.log
 
 ---
 
-Build attack timeline:
+### Build attack timeline:
 ```
 grep "2026-03-17" /var/log/auth.log
 ```
