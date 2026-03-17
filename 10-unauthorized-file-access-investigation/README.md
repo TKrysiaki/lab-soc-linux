@@ -65,6 +65,10 @@ grep shadow /var/log/auth.log
 ```
 grep sudo /var/log/auth.log
 ```
+This command filters authentication logs to identify actions executed with sudo, which indicates privilege escalation.
+> Analysis:
+> The use of sudo represents a privilege escalation event, allowing execution of commands as root.
+> Monitoring these actions is critical, as attackers often leverage elevated privileges to modify the system or access sensitive data.
 
 <img src="images/04-sudo-commands-log.png" width="100%"> 
 
