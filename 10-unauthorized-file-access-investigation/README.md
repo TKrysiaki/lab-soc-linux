@@ -20,7 +20,7 @@ Detect and investigate unauthorized access attempts to sensitive files in a Linu
 ```
 ssh tiago@192.168.18.237
 ```
-> This command establishes an SSH connection from the attacker machine to the target system.
+This command establishes an SSH connection from the attacker machine to the target system.
 
 > Analysis:
 > SSH access represents an initial access vector.
