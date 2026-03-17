@@ -1,5 +1,22 @@
-# Unauthorized File Access Investigation (SOC Lab)
+# 🔍 Lab 10 - Unauthorized File Access Investigation
 
-This lab simulates the investigation of unauthorized access to sensitive files in a Linux system.
+## 🎯 Objective
+Detect and investigate unauthorized access attempts to sensitive files in a Linux environment using log analysis.
 
-The objective is to detect suspicious file access activity using audit logs and Wazuh SIEM, identify the user responsible, and reconstruct the incident timeline.
+---
+
+## 🖥️ Lab Environment
+
+- Attacker: Kali Linux
+- Target: Ubuntu Server
+- Access method: SSH
+- Logs analyzed: /var/log/auth.log
+
+---
+
+## ⚔️ Attack Simulation
+
+SSH access from attacker machine:
+
+```bash
+ssh tiago@192.168.18.237
