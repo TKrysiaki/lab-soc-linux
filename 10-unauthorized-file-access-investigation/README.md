@@ -41,8 +41,9 @@ cat /etc/shadow
 ```
 grep shadow /var/log/auth.log
 ```
-> This command filters authentication logs looking for references to "shadow", which is a sensitive file related to user credentials.
-> The goal is to identify any interaction with authentication-related components that may indicate suspicious activity.
+> ⚠️ **Analysis:**
+> This command filters authentication logs looking for references to **/etc/shadow**, a sensitive file related to user credentials.  
+> Any interaction may indicate **suspicious activity or credential access attempts**.
 <img src="images/03-shadow-log-evidence.png" width="100%">
 
 ---
