@@ -35,7 +35,7 @@ This command establishes an SSH connection from the attacker machine to the targ
 ```
 cat /etc/shadow
 ```
-This command attempts to access the sensitive file **/etc/shadow**, which contains hashed user credentials.
+This command attempts to access the sensitive file **/etc/shadow**, which stores hashed user credentials.
 
 > **Analysis:**
 > 
@@ -78,7 +78,7 @@ This command filters authentication logs to identify actions executed with sudo,
 ```
 grep "2026-03-17" /var/log/auth.log
 ```
-This command filters authentication logs to display events from a specific date, enabling timeline analysis of the activity.
+This command filters authentication logs to display events from a specific date, enabling timeline analysis.
 
 > Analysis:
 > Creating a timeline is essential in SOC investigations to correlate events and understand attack progression.
@@ -96,13 +96,16 @@ This command filters authentication logs to display events from a specific date,
 - Suspicious command executed:
   - apt install shadow
 
+> **Analysis:**
+> Timeline analysis helps identify the sequence of attacker actions, including initial access, privilege escalation, and post-exploitation activity.
+> 
  ---
 
 ## 🚨 Findings
 
 - Attempt to access sensitive file (/etc/shadow)
 - Use of privilege escalation via sudo
-- Execution of commands related to authentication system
+- Execution of commands related to the authentication system
 - Indicators of suspicious activity
 
 ---
