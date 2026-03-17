@@ -30,6 +30,12 @@ ssh tiago@192.168.18.237
 ```
 cat /etc/shadow
 ```
+This command attempts to access the sensitive file **/etc/shadow**, which contains hashed user credentials.
+
+> **Analysis:**
+> 
+> Access to this file is restricted to privileged users.  
+> Any attempt to read it may indicate **credential access attempts** or **privilege escalation activity**.
 
 <img src="images/02-shadow-access-attempt.png" width="100%">
 
