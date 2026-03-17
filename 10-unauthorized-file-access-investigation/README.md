@@ -78,6 +78,12 @@ This command filters authentication logs to identify actions executed with sudo,
 ```
 grep "2026-03-17" /var/log/auth.log
 ```
+This command filters authentication logs to display events from a specific date, enabling timeline analysis of the activity.
+
+> Analysis:
+> Creating a timeline is essential in SOC investigations to correlate events and understand attack progression.
+> It allows identification of key actions such as initial access, privilege escalation, and suspicious commands execution.
+
 <img src="images/05-attack-timeline.png" width="100%">
 
 ---
