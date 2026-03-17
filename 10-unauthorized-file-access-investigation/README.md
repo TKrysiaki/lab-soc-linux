@@ -27,8 +27,8 @@ Attempt to access sensitive file:
 cat /etc/shadow
 ```
 ## 📸 Evidence
-<img src="images/lab10/01-ssh-login-success.png" width="100%">
-<img src="images/lab10/02-shadow-access-attempt.png" width="100%">
+<img src="images/01-ssh-login-success.png" width="100%">
+<img src="images/02-shadow-access-attempt.png" width="100%">
 
 ---
 
@@ -47,9 +47,9 @@ Build attack timeline:
 grep "2026-03-17" /var/log/auth.log
 ```
 ## 📸 Evidence
-<img src="images/lab10/03-shadow-log-evidence.png" width="100%">
-<img src="images/lab10/04-sudo-commands-log.png" width="100%"> 
-<img src="images/lab10/05-attack-timeline.png" width="100%">
+<img src="images/03-shadow-log-evidence.png" width="100%">
+<img src="images/04-sudo-commands-log.png" width="100%"> 
+<img src="images/05-attack-timeline.png" width="100%">
 
 ---
 
@@ -60,6 +60,59 @@ grep "2026-03-17" /var/log/auth.log
 - Execution of sudo commands
 - Suspicious command executed:
   - apt install shadow
+
+ ---
+
+## 🚨 Findings
+
+- Attempt to access sensitive file (/etc/shadow)
+- Use of privilege escalation via sudo
+- Execution of commands related to authentication system
+- Indicators of suspicious activity
+
+---
+
+## 🧠 Conclusion
+
+### Suspicious activity was identified following SSH access, including privilege escalation and interaction with sensitive system components.
+The behavior suggests a potential attempt to access or manipulate authentication data.
+
+---
+
+## 🛡️ Mitigation
+
+- Restrict sudo privileges
+- Monitor access to sensitive files
+- Implement alerting for suspicious commands
+- Review authentication logs regularly
+
+---
+
+## 🧰 Skills Demonstrated
+
+- Linux Log Analysis
+- SSH Investigation
+- Privilege Escalation Detection
+- Threat Analysis
+- Timeline Correlation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
