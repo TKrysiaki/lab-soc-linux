@@ -21,13 +21,16 @@ SSH access from attacker machine:
 ```
 ssh tiago@192.168.18.237
 ```
+<img src="images/01-ssh-login-success.png" width="100%">
+
+---
+
 
 Attempt to access sensitive file:
 ```
 cat /etc/shadow
 ```
-## 📸 Evidence
-<img src="images/01-ssh-login-success.png" width="100%">
+
 <img src="images/02-shadow-access-attempt.png" width="100%">
 
 ---
