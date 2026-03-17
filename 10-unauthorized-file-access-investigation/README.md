@@ -17,10 +17,15 @@ Detect and investigate unauthorized access attempts to sensitive files in a Linu
 ## ⚔️ Attack Simulation
 
 ### SSH access from attacker machine:
-
 ```
 ssh tiago@192.168.18.237
 ```
+> This command establishes an SSH connection from the attacker machine to the target system.
+
+> Analysis:
+> SSH access represents an initial access vector.
+> A successful login may indicate unauthorized access or the use of valid credentials by an attacker.
+
 <img src="images/01-ssh-login-success.png" width="100%">
 
 ---
