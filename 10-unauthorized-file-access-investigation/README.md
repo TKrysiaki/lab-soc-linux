@@ -38,17 +38,23 @@ cat /etc/shadow
 ```
 grep shadow /var/log/auth.log
 ```
+<img src="images/03-shadow-log-evidence.png" width="100%">
+
+---
+
 Search for privilege escalation:
 ```
 grep sudo /var/log/auth.log
 ```
+
+<img src="images/04-sudo-commands-log.png" width="100%"> 
+
+---
+
 Build attack timeline:
 ```
 grep "2026-03-17" /var/log/auth.log
 ```
-## 📸 Evidence
-<img src="images/03-shadow-log-evidence.png" width="100%">
-<img src="images/04-sudo-commands-log.png" width="100%"> 
 <img src="images/05-attack-timeline.png" width="100%">
 
 ---
