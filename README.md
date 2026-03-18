@@ -39,16 +39,18 @@ O projeto simula um cenário real de ataque **SSH Brute Force** e demonstra todo
 
 📁 Etapas do laboratório:
 
-> - 01-log-analysis-base.md — Detecção inicial do incidente  
-> - 02-ssh-bruteforce-investigation.md — Simulação do ataque  
-> - 03-log-analysis-investigation.md — Investigação SOC N1  
-> - 04-ssh-bruteforce-detection-and-fail2ban.md — Mitigação do ataque com Fail2ban  
-> - 05-ssh-hardening.md — Hardening do serviço SSH  
-> - 06-auth-log-deep-analysis.md — Análise avançada de logs  
-> - 07-user-activity-investigation.md — Investigação de atividade suspeita  
-> - 08-suspicious-login-detection.md — Detecção de login suspeito  
-> - 09-privilege-escalation-analysis.md — Análise de escalonamento de privilégio  
-> - 10-unauthorized-file-access-investigation.md — Investigação de acesso não autorizado a arquivos  
+📁 Etapas do laboratório:
+
+• [01-log-analysis-base.md](./01-log-analysis-base.md) — Detecção inicial do incidente  
+• [02-ssh-bruteforce-investigation.md](./02-ssh-bruteforce-investigation.md) — Simulação do ataque  
+• [03-log-analysis-investigation.md](./03-log-analysis-investigation.md) — Investigação SOC N1  
+• [04-ssh-bruteforce-detection-and-fail2ban.md](./04-ssh-bruteforce-detection-and-fail2ban.md) — Mitigação do ataque com Fail2ban  
+• [05-ssh-hardening.md](./05-ssh-hardening.md) — Hardening do serviço SSH  
+• [06-auth-log-deep-analysis.md](./06-auth-log-deep-analysis.md) — Análise avançada de logs  
+• [07-user-activity-investigation.md](./07-user-activity-investigation.md) — Investigação de atividade suspeita  
+• [08-suspicious-login-detection.md](./08-suspicious-login-detection.md) — Detecção de login suspeito  
+• [09-privilege-escalation-analysis.md](./09-privilege-escalation-analysis.md) — Análise de escalonamento de privilégio  
+• [10-unauthorized-file-access-investigation.md](./10-unauthorized-file-access-investigation.md) — Investigação de acesso não autorizado a arquivos  
 
 ---
 
