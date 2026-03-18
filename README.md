@@ -38,16 +38,16 @@ The project simulates a real-world SSH brute force attack scenario and demonstra
 
 ## 📁 Lab Steps
 
-• [01-log-analysis-base.md](./01-log-analysis-base.md) — Initial incident detection  
-• [02-ssh-bruteforce-investigation.md](./02-ssh-bruteforce-investigation.md) — Attack simulation  
-• [03-log-analysis-investigation.md](./03-log-analysis-investigation.md) — SOC investigation (Tier 1)  
-• [04-ssh-bruteforce-detection-and-fail2ban.md](./04-ssh-bruteforce-detection-and-fail2ban.md) — Attack mitigation with Fail2ban  
-• [05-ssh-hardening.md](./05-ssh-hardening.md) — SSH service hardening  
-• [06-auth-log-deep-analysis.md](./06-auth-log-deep-analysis.md) — Advanced log analysis  
-• [07-user-activity-investigation.md](./07-user-activity-investigation.md) — Suspicious activity investigation  
-• [08-suspicious-login-detection.md](./08-suspicious-login-detection.md) — Suspicious login detection  
-• [09-privilege-escalation-analysis.md](./09-privilege-escalation-analysis.md) — Privilege escalation analysis  
-• [10-unauthorized-file-access-investigation.md](./10-unauthorized-file-access-investigation.md) — Unauthorized file access investigation  
+• [01-log-analysis-base.md](.lab-soc-linux//01-log-analysis-base.md) — Initial incident detection  
+• [02-ssh-bruteforce-investigation.md](.lab-soc-linux//02-ssh-bruteforce-investigation.md) — Attack simulation  
+• [03-log-analysis-investigation.md](.lab-soc-linux//03-log-analysis-investigation.md) — SOC investigation (Tier 1)  
+• [04-ssh-bruteforce-detection-and-fail2ban.md](.lab-soc-linux//04-ssh-bruteforce-detection-and-fail2ban.md) — Attack mitigation with Fail2ban  
+• [05-ssh-hardening.md](.lab-soc-linux//05-ssh-hardening.md) — SSH service hardening  
+• [06-auth-log-deep-analysis.md](.lab-soc-linux//06-auth-log-deep-analysis.md) — Advanced log analysis  
+• [07-user-activity-investigation.md](.lab-soc-linux//07-user-activity-investigation.md) — Suspicious activity investigation  
+• [08-suspicious-login-detection.md](.lab-soc-linux//08-suspicious-login-detection.md) — Suspicious login detection  
+• [09-privilege-escalation-analysis.md](.lab-soc-linux//09-privilege-escalation-analysis.md) — Privilege escalation analysis  
+• [10-unauthorized-file-access-investigation.md](.lab-soc-linux//10-unauthorized-file-access-investigation.md) — Unauthorized file access investigation  
 
 ---
 
