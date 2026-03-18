@@ -38,7 +38,7 @@ The project simulates a real-world SSH brute force attack scenario and demonstra
 
 ## 📁 Lab Steps
 
-• [01-log-analysis-base.md](.lab-soc-linux//01-log-analysis-base.md) — Initial incident detection  
+• - [01-log-analysis-base.md](./labs/01-log-analysis-base.md) — Initial incident detection  
 • [02-ssh-bruteforce-investigation.md](.lab-soc-linux//02-ssh-bruteforce-investigation.md) — Attack simulation  
 • [03-log-analysis-investigation.md](.lab-soc-linux//03-log-analysis-investigation.md) — SOC investigation (Tier 1)  
 • [04-ssh-bruteforce-detection-and-fail2ban.md](.lab-soc-linux//04-ssh-bruteforce-detection-and-fail2ban.md) — Attack mitigation with Fail2ban  
