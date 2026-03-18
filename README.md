@@ -21,7 +21,7 @@ O projeto simula um cenário real de ataque **SSH Brute Force** e demonstra todo
 - Máquina atacante: Kali Linux
 - Máquina alvo: Ubuntu Server 22.04
 - Serviço analisado: SSH
-- Tipo de ataque: Brute Force
+- Attack Type: SSH Brute Force
 - Fonte dos logs: `/var/log/auth.log`
 
 ---
@@ -33,14 +33,28 @@ O projeto simula um cenário real de ataque **SSH Brute Force** e demonstra todo
 - Identificação do usuário alvo
 - Verificação de login bem-sucedido
 - Conclusão do incidente
-- 
+
 ---
 📂 Etapas do laboratório:
 
-1️⃣ 01-log-analysis-base.md — Detecção inicial do incidente  
-2️⃣ 02-ssh-bruteforce-investigation.md — Simulação do ataque  
-3️⃣ 03-log-analysis-investigation.md — Investigação SOC N1  
-4️⃣ 04-ssh-bruteforce-detection-and-fail2ban.md — Mitigação do ataque com Fail2ban
+📁 Etapas do laboratório:
+
+01-log-analysis-base.md — Detecção inicial do incidente  
+02-ssh-bruteforce-investigation.md — Simulação do ataque  
+03-log-analysis-investigation.md — Investigação SOC N1  
+04-ssh-bruteforce-detection-and-fail2ban.md — Mitigação do ataque com Fail2ban  
+05-ssh-hardening.md — Hardening do serviço SSH  
+06-auth-log-deep-analysis.md — Análise avançada de logs  
+07-user-activity-investigation.md — Investigação de atividade suspeita  
+08-suspicious-login-detection.md — Detecção de login suspeito  
+09-privilege-escalation-analysis.md — Análise de escalonamento de privilégio  
+10-unauthorized-file-access-investigation.md — Investigação de acesso não autorizado a arquivos  
+
+---
+
+## 🔎 MITRE ATT&CK Mapping
+- T1110 - Brute Force
+- T1078 - Valid Accounts
 
 ---
 
