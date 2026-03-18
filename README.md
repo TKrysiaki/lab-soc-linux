@@ -39,8 +39,8 @@ O projeto simula um cenário real de ataque **SSH Brute Force** e demonstra todo
 
 📁 Etapas do laboratório:
 
-01-log-analysis-base.md — Detecção inicial do incidente  
-02-ssh-bruteforce-investigation.md — Simulação do ataque  
+> - 01-log-analysis-base.md — Detecção inicial do incidente  
+> - 02-ssh-bruteforce-investigation.md — Simulação do ataque  
 03-log-analysis-investigation.md — Investigação SOC N1  
 04-ssh-bruteforce-detection-and-fail2ban.md — Mitigação do ataque com Fail2ban  
 05-ssh-hardening.md — Hardening do serviço SSH  
