@@ -43,12 +43,12 @@ The project simulates a real-world SSH brute force attack scenario and demonstra
 - [01-log-analysis-base](./01-log-analysis-base/README.md) — Initial incident detection  
 - [02-ssh-bruteforce-investigation](./02-ssh-bruteforce-investigation/README.md) — Attack simulation  
 - [03-log-analysis-investigation](./03-log-analysis-investigation/README.md) — SOC investigation (Tier 1)  
-- [04-ssh-bruteforce-detection-and-fail2ban](./04-ssh-bruteforce-detection-and-fail2ban/README.md) — Attack mitigation with Fail2ban  
+- [04-ssh-bruteforce-detection](./04-ssh-bruteforce-detection/README.md) — Brute force detection  
 - [05-ssh-hardening](./05-ssh-hardening/README.md) — SSH service hardening  
-- [06-auth-log-deep-analysis](./06-auth-log-deep-analysis/README.md) — Advanced log analysis  
-- [07-privilege-escalation-investigation](./07-privilege-escalation-investigation/README.md) — Suspicious activity investigation  
-- [08-suspicious-login-detection](./08-suspicious-login-detection/README.md) — Suspicious login detection  
-- [09-privilege-escalation-analysis](./09-privilege-escalation-analysis/README.md) — Privilege escalation analysis  
+- [06-ssh-bruteforce-incident-investigation](./06-ssh-bruteforce-incident-investigation/README.md) — Incident investigation  
+- [07-privilege-escalation-investigation](./07-privilege-escalation-investigation/README.md) — Privilege escalation investigation  
+- [08-wazuh-siem-bruteforce-detection](./08-wazuh-siem-bruteforce-detection/README.md) — SIEM detection with Wazuh  
+- [09-suspicious-ssh-login-investigation](./09-suspicious-ssh-login-investigation/README.md) — Suspicious login investigation  
 - [10-unauthorized-file-access-investigation](./10-unauthorized-file-access-investigation/README.md) — Unauthorized file access investigation  
 
 ---
