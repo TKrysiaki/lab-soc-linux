@@ -46,7 +46,7 @@ The project simulates a real-world SSH brute force attack scenario and demonstra
 - [04-ssh-bruteforce-detection-and-fail2ban](./04-ssh-bruteforce-detection-and-fail2ban/README.md) — Attack mitigation with Fail2ban  
 - [05-ssh-hardening](./05-ssh-hardening/README.md) — SSH service hardening  
 - [06-auth-log-deep-analysis](./06-auth-log-deep-analysis/README.md) — Advanced log analysis  
-- [07-user-activity-investigation](./07-user-activity-investigation/README.md) — Suspicious activity investigation  
+- [07-privilege-escalation-investigation](./07-privilege-escalation-investigation/README.md) — Suspicious activity investigation  
 - [08-suspicious-login-detection](./08-suspicious-login-detection/README.md) — Suspicious login detection  
 - [09-privilege-escalation-analysis](./09-privilege-escalation-analysis/README.md) — Privilege escalation analysis  
 - [10-unauthorized-file-access-investigation](./10-unauthorized-file-access-investigation/README.md) — Unauthorized file access investigation  
