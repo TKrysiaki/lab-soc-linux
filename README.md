@@ -46,7 +46,7 @@ The project simulates a real-world SSH brute force attack scenario and demonstra
 - [04-ssh-bruteforce-detection](./04-ssh-bruteforce-detection/README.md) — Brute force detection  
 - [05-ssh-hardening](./05-ssh-hardening/README.md) — SSH service hardening  
 - [06-ssh-bruteforce-incident-investigation](./06-ssh-bruteforce-incident-investigation/README.md) — Incident investigation  
-- [07-privilege-escalation-investigation](./07-privilege-escalation-investigation/README.md) — Privilege escalation investigation  
+- [07-privilege-escalation-investigation](./07-suspicious-privilege-escalation-investigation/README.md) — Privilege escalation investigation  
 - [08-wazuh-siem-bruteforce-detection](./08-wazuh-siem-bruteforce-detection/README.md) — SIEM detection with Wazuh  
 - [09-suspicious-ssh-login-investigation](./09-suspicious-ssh-login-investigation/README.md) — Suspicious login investigation  
 - [10-unauthorized-file-access-investigation](./10-unauthorized-file-access-investigation/README.md) — Unauthorized file access investigation  
