@@ -49,11 +49,11 @@ tail -n 5 /etc/passwd
 ```
 ### Short explanation (what + why)
 
-> > Displays the last lines to confirm the modification.
+> Displays the last lines to confirm the modification.
 
 ### Analysis (SOC)
 
-> > Confirms that the backdoor was persisted in the system.
+> Confirms that the backdoor was persisted in the system.
 
 ### Screenshot
 <img src="images/02-passwd-backdoor-confirmed.png" width="100%">
