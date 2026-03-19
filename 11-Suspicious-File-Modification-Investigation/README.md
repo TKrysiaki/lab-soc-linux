@@ -60,11 +60,11 @@ tail -n 5 /etc/passwd
 
 ### Command breakdown
 
-> **tail** → > shows the end of the file
+- **tail** → > shows the end of the file
 
-> **-n 5**  → last 5 lines
+- **-n 5**  → last 5 lines
 
-> **/etc/passwd** → analyzed file
+- **/etc/passwd** → analyzed file
 
 ---
 
