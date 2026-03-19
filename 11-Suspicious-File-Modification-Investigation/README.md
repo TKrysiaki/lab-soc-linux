@@ -34,7 +34,7 @@ echo 'hacker:x:0:0::/root:/bin/bash' | sudo tee -a /etc/passwd
 - Can allow privilege escalation (UID 0 = root)
 
 ### Screenshot
-<img src="images/01-passwd-modification.png" width="100%">
+<img src="images/01-passwd-backdoor-created.png" width="100%">
 
 ---
 
@@ -56,7 +56,7 @@ tail -n 5 /etc/passwd
 - Attacker created a new root-level account
 
 ### Screenshot
-<img src="images/02-passwd-tail-confirmation.png" width="100%">
+<img src="images/02-passwd-backdoor-confirmed.png" width="100%">
 
 ---
 
@@ -78,7 +78,7 @@ stat /etc/passwd
 - Useful for timeline correlation in SOC
 
 Screenshot
-<img src="images/03-passwd-stat.png" width="100%">
+<img src="images/03-passwd-malicious-user-detected" width="100%">
 
 ---
 
@@ -92,7 +92,7 @@ Screenshot
 - > Confirms telemetry pipeline is working
 
 ### Screenshot
-<img src="images/04-wazuh-agent-active.png" width="100%">
+<img src="images/04-passwd-file-metadata" width="100%">
 
 ---
 
@@ -110,7 +110,7 @@ Screenshot
 -  > file modifications
 
 ### Screenshot
-<img src="images/05-wazuh-events-overview.png" width="100%">
+<img src="images/05-current-system-time" width="100%">
 
 ---
 
