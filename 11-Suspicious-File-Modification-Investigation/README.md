@@ -32,13 +32,10 @@ echo 'hacker:x:0:0::/root:/bin/bash' | sudo tee -a /etc/passwd
 
 ### Command breakdown
 
-- **echo** → cria conteúdo
-
-- **'hacker:x:0:0::/root:/bin/bash'** → usuário com UID 0 (root)
-
-- **tee -a** → adiciona ao arquivo
-
-- **/etc/passwd** → base de usuários do sistema
+- **echo** → generates malicious content
+- **'hacker:x:0:0::/root:/bin/bash'** → creates a user with UID 0 (root privileges)
+- **tee -a** → appends content to a critical system file
+- **/etc/passwd** → critical file responsible for user account management
 
 ---
 
