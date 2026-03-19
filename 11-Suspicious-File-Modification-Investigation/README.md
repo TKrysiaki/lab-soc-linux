@@ -82,7 +82,7 @@ date
 > Allows correlation between the event and SIEM logs.
 
 ### Screenshot
-<img src="images/05-system-time.png" width="100%">
+<img src="images/05-current-system-time.png" width="100%">
 
 ### Command breakdown
 
