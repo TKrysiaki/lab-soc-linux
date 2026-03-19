@@ -100,7 +100,7 @@ date
 ### Confirms that the agent is sending logs correctly.
 
 ### Screenshot
-<img src="images/10-wazuh-dashboard-access.png" width="100%">
+<img src="images/10-wazuh-dashboard-access-success.png" width="100%">
 
 ## 📈 Events Analysis
 ### Short explanation (what + why)
