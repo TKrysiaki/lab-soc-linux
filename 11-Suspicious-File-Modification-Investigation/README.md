@@ -1,7 +1,7 @@
 # Lab 11 - Suspicious File Modification Investigation
 
 ## 🎯 Objective
-Detect and analyze unauthorized modification of a critical system file (`/etc/passwd`) using Wazuh SIEM.
+Detect and analyze unauthorized modification of `/etc/passwd` using Wazuh.
 
 ---
 
@@ -9,218 +9,62 @@ Detect and analyze unauthorized modification of a critical system file (`/etc/pa
 
 - Attacker: Kali Linux
 - Target: Ubuntu 24.04 (Wazuh Agent)
-- SIEM: Wazuh Server
+- SIEM: Wazuh
 
 ---
 
 ## 🚨 Attack Simulation
 
-### Command (run on Ubuntu target)
+### Command (Ubuntu - Target)
 ```
 echo 'hacker:x:0:0::/root:/bin/bash' | sudo tee -a /etc/passwd
 ```
-### Explanation
+### Short explanation (what + why)
 
-- > **echo** → creates a fake user entry
+> Adiciona um usuário malicioso no /etc/passwd com privilégio root.
 
-- > **tee -a** → appends content to a file
+### Analysis (SOC)
 
-- > **/etc/passwd** → critical system file (user accounts)
-
-### Analysis
-
-- Direct modification of /etc/passwd is highly suspicious
-
-- Can allow privilege escalation (UID 0 = root)
+> Modificação direta em arquivo crítico → forte indicativo de persistência e privilege escalation.
 
 ### Screenshot
 <img src="images/01-passwd-backdoor-created.png" width="100%">
 
+### Command breakdown
+
+- **echo** → cria conteúdo
+
+- **'hacker:x:0:0::/root:/bin/bash'** → usuário com UID 0 (root)
+
+- **tee -a** → adiciona ao arquivo
+
+- **/etc/passwd** → base de usuários do sistema
+
 ---
 
-## 🔍 Local Verification
-### Command
-```
+## 🔍 Verification
+### Command (Ubuntu - Target)
+```bash
 tail -n 5 /etc/passwd
 ```
-### Explanation
+### Short explanation (what + why)
 
-- > **tail -n 5** → shows last 5 lines of the file
+> Exibe as últimas linhas para confirmar a alteração.
 
-- > Used to confirm if malicious entry was added
+### Analysis (SOC)
 
-### Analysis
-
-- Confirms persistence attempt
-
-- Attacker created a new root-level account
+> Confirma que o backdoor foi persistido no sistema.
 
 ### Screenshot
 <img src="images/02-passwd-backdoor-confirmed.png" width="100%">
 
----
+### Command breakdown
 
-## 📊 File Metadata Analysis
-### Command
-```
-stat /etc/passwd
-```
-### Explanation
+> **tail** → mostra final do arquivo
 
-- > **stat** → displays file metadata
+> **-n 5**  → últimas 5 linhas
 
-- > Shows last modification time (mtime)
-
-### Analysis
-
-- Confirms exact moment of change
-
-- Useful for timeline correlation in SOC
-
-Screenshot
-<img src="images/03-passwd-malicious-user-detected" width="100%">
-
----
-
-## 🧠 SIEM Detection (Wazuh)
-### Step: Access Wazuh Dashboard
-
-### Analysis
-
-- > Agent must be active to collect logs
-
-- > Confirms telemetry pipeline is working
-
-### Screenshot
-<img src="images/04-passwd-file-metadata" width="100%">
-
----
-
-## 📈 Event Overview
-### Step: Filter events in Wazuh
-
-### Analysis
-
-- > Shows multiple security events
-
-- > Includes:
-
--  > sudo usage
-
--  > file modifications
-
-### Screenshot
-<img src="images/05-current-system-time" width="100%">
-
----
-
-## 🚨 File Integrity Monitoring Alert
-
-### Detection
-
-- > Rule: Integrity checksum changed
-
-- > Technique: T1565.001 (Data Manipulation)
-
-### Analysis
-
-- > Wazuh detected:
-
--  > File modification
-
-- > Real-time monitoring trigger
-
-### Screenshot
-<img src="images/06-wazuh-fim-detection.png" width="100%">
-
----
-
-## 🔬 Event Deep Analysis
-
-### Investigation
-
-- > File: /etc/passwd
-
-- > Change detected:
-
--  > Size
-
--  > MD5
-
--  > SHA1
-
--  > SHA256
-
-### Analysis
-
-- > Confirms tampering of critical file
-
-- > High confidence malicious activity
-
-### Screenshot
-<img src="images/07-wazuh-event-details.png" width="100%">
-
----
-
-## 🧭 Timeline
-
-- > Attacker executes sudo command
-
-- > File /etc/passwd modified
-
-- > Wazuh detects integrity change
-
-- > Alert generated in SIEM
-
----
-
-## 🧠 MITRE ATT&CK Mapping
-
-- > T1548.003 → Abuse Elevation Control Mechanism (sudo)
-
-- > T1565.001 → Data Manipulation
-
----
-
-## 🛡️ Mitigation
-
-- > Restrict sudo access
-
-- > Monitor critical files (FIM)
-
-- > Enable alerting for system file changes
-
-- > Implement least privilege
-
----
-
-## 🧰 Skills Developed
-
-- > Log analysis
-
-- > File integrity monitoring (FIM)
-
-- > Threat detection with SIEM
-
-- > MITRE ATT&CK mapping
-
-- > Incident investigation
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/etc/passwd → arquivo analisado
 
 
 
