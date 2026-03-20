@@ -20,7 +20,6 @@
 ```
 grep "Failed password" /var/log/auth.log
 ```
-## 🔹 Step 1 — Failed Password
 - **grep** → searches for text inside files
 - **"Failed password"** → filters failed login attempts
 - **/var/log/auth.log** → system authentication log
@@ -47,7 +46,6 @@ grep "Failed password" /var/log/auth.log
 ```
 grep "192.168.18.240" /var/log/auth.log
 ```
-## 🔹 Step 2 — IP Correlation
 - **grep** → searches for text
 - **"192.168.18.240"** → filters events from a specific IP address
 - **/var/log/auth.log** → log source
@@ -74,7 +72,6 @@ Screenshot:
 ```
 grep "Accepted password" /var/log/auth.log
 ```
-## 🔹 Step 3 — Accepted Password
 - **grep** → searches for text
 - **"Accepted password"** → filters successful login attempts
 - **/var/log/auth.log** → authentication log
@@ -101,7 +98,6 @@ grep "Accepted password" /var/log/auth.log
 ```
 grep "sudo" /var/log/auth.log
 ```
-## 🔹 Step 4 — Sudo Activity
 - **grep** → searches for text
 - **"sudo"** → filters privileged command execution
 - **/var/log/auth.log** → records administrative actions
@@ -128,7 +124,6 @@ grep "sudo" /var/log/auth.log
 ```
 grep "passwd" /var/log/auth.log
 ```
-## 🔹 Step 5 — Password Change
 - **grep** → searches for text
 - **"passwd"** → filters password change events
 - **/var/log/auth.log** → records account modifications
@@ -154,7 +149,6 @@ grep "passwd" /var/log/auth.log
 ```
 grep "session opened" /var/log/auth.log
 ```
-## 🔹 Step 6 — Session Opened
 - **grep** → searches for text
 - **"session opened"** → filters session creation events
 - **/var/log/auth.log** → shows user login sessions
