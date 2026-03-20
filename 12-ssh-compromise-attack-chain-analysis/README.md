@@ -8,7 +8,7 @@
 ## 🖥️ Lab Environment
 - Attacker: Kali Linux
 - Target: Ubuntu
->Log source: /var/log/auth.log
+- Log source: /var/log/auth.log
 
 ---
 
