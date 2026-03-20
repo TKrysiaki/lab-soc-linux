@@ -214,11 +214,13 @@ grep "session opened" /var/log/auth.log
 
 ---
 
-## 🎯 MITRE ATT&CK Mapping
-- T1110 — Brute Force
-- T1078 — Valid Accounts
-- T1548 — Abuse Elevation Control Mechanism
-- T1098 — Account Manipulation
+## 🎯 MITRE ATT&CK (Detailed)
+
+- T1110 — Brute Force  
+- T1078 — Valid Accounts  
+- T1548 — Abuse Elevation Control Mechanism  
+- T1098 — Account Manipulation  
+- T1059 — Command Execution  
 
 ---
 
@@ -238,6 +240,8 @@ grep "session opened" /var/log/auth.log
 - Privilege escalation observed
 - Persistence mechanism identified
 
+- Attacker Goal: Gain persistent privileged access via SSH compromise
+
 ### 👉 Final Classification: COMPROMISED SYSTEM
 
 ---
@@ -249,6 +253,18 @@ grep "session opened" /var/log/auth.log
 - Incident investigation
 - SOC-level reasoning
 - MITRE ATT&CK mapping
+
+---
+
+## 🚨 Incident Conclusion
+
+This activity confirms a full attack chain:
+- Brute force attack
+- Successful compromise
+- Privilege escalation
+- Persistence established
+
+Final Status: COMPROMISED SYSTEM
 
 
 
