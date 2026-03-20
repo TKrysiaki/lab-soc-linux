@@ -30,10 +30,15 @@ grep "Failed password" /var/log/auth.log
 - Used to detect brute force activity
 
 ## Analysis (SOC):
+- Multiple failed login attempts targeting user tiago  
+- Same source IP: 192.168.18.240  
+- Clear brute force pattern  
 
-- Multiple failed login attempts targeting user tiago
-- Same source IP: 192.168.18.240
-- Clear brute force pattern
+**Event Details:**
+- IP: 192.168.18.240  
+- User: tiago  
+- Action: Multiple failed SSH login attempts  
+- Classification: Suspicious (Brute Force Attempt)   
 
 ## Screenshot:
 <img src="images/01-ssh-failed-password.png" width="100%">
@@ -56,10 +61,15 @@ grep "192.168.18.240" /var/log/auth.log
 - Used to build attack timeline
 
 ## Analysis (SOC):
+- Repeated authentication failures from the same IP  
+- Persistent connection attempts observed  
+- Indicates ongoing brute force activity  
 
-- Repeated authentication failures
-- Persistent connection attempts
-- Transition from failed to successful login
+**Event Details:**
+- IP: 192.168.18.240  
+- User: tiago  
+- Action: Repeated authentication failures and connection attempts  
+- Classification: Suspicious (Ongoing Brute Force Activity)  
 
 Screenshot:
 <img src="images/02-ip-correlation-attack.png" width="100%">
@@ -81,10 +91,15 @@ grep "Accepted password" /var/log/auth.log
 - Detects successful authentication events
 
 ## Analysis (SOC):
+- Successful SSH login detected for user tiago  
+- Same IP previously associated with brute force  
+- Indicates attacker gained access  
 
-- Successful login for user tiago
-- Same IP used in brute force
-- Confirms attacker gained access
+**Event Details:**
+- IP: 192.168.18.240  
+- User: tiago  
+- Action: Successful SSH login (Accepted password)  
+- Classification: Malicious (Unauthorized Access)  
 
 ## Screenshot:
 <img src="images/03-ssh-accepted-password.png" width="100%">
@@ -107,9 +122,15 @@ grep "sudo" /var/log/auth.log
 - Detects commands executed with elevated privileges
 
 ## Analysis (SOC):
+- User tiago executed commands with sudo privileges  
+- Indicates elevation to root-level access  
+- Activity occurs after successful compromise  
 
-- User tiago executed commands as root
-- Indicates privilege escalation after compromise
+**Event Details:**
+- IP: 192.168.18.240  
+- User: tiago  
+- Action: Execution of commands with sudo (root privileges)  
+- Classification: Malicious (Privilege Escalation)  
 
 ## Screenshot:
 
@@ -133,9 +154,15 @@ grep "passwd" /var/log/auth.log
 - Detects password changes
 
 ## Analysis (SOC):
+- Password for user tiago changed by root  
+- Strong indicator of persistence mechanism  
+- Attacker likely securing continued access  
 
-- Password for user tiago changed by root
-- Strong indicator of persistence attempt
+**Event Details:**
+- IP: Local / Not logged  
+- User: root  
+- Action: Password change for user tiago  
+- Classification: Malicious (Persistence Mechanism)  
 
 ## Screenshot:
 
@@ -158,9 +185,15 @@ grep "session opened" /var/log/auth.log
 - Shows session creation events
 
 ## Analysis (SOC):
+- Session opened for user tiago with root privileges (uid=0)  
+- Confirms active session under elevated privileges  
+- Indicates post-compromise activity  
 
-- Session opened for user tiago with root privileges
-- Confirms active compromised session
+**Event Details:**
+- IP: Local  
+- User: tiago (executed by root - uid=0)  
+- Action: Session opened with elevated privileges  
+- Classification: Malicious (Post-Compromise Activity)  
 
 ## Screenshot:
 
