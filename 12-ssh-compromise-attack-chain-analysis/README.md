@@ -37,6 +37,219 @@ grep "Failed password" /var/log/auth.log
 
 ---
 
+## 🔹 Step 2 — Attack Correlation by IP
+
+### Command:
+```
+grep "192.168.18.240" /var/log/auth.log
+```
+
+## What + Why:
+
+- Filters all activity related to attacker IP
+- Used to build attack timeline
+
+## Analysis (SOC):
+
+- Repeated authentication failures
+- Persistent connection attempts
+- Transition from failed to successful login
+
+Screenshot:
+<img src="images/02-ip-correlation-attack.png" width="100%">
+
+---
+
+## 🔹 Step 3 — Successful Compromise
+
+### Command:
+```
+grep "Accepted password" /var/log/auth.log
+```
+
+## What + Why:
+
+- Detects successful authentication events
+
+## Analysis (SOC):
+
+- Successful login for user tiago
+- Same IP used in brute force
+- Confirms attacker gained access
+
+## Screenshot:
+<img src="images/03-ssh-accepted-password.png" width="100%">
+
+---
+
+## 🔹 Step 4 — Privilege Escalation
+
+### Command:
+
+```
+grep "sudo" /var/log/auth.log
+```
+
+## What + Why:
+
+- Detects commands executed with elevated privileges
+
+## Analysis (SOC):
+
+- User tiago executed commands as root
+- Indicates privilege escalation after compromise
+
+## Screenshot:
+
+<img src="images/04-sudo-activity.png" width="100%">
+
+---
+
+## 🔹 Step 5 — Persistence Mechanism
+
+### Command:
+
+```
+grep "passwd" /var/log/auth.log
+```
+
+## What + Why:
+
+- Detects password changes
+
+## Analysis (SOC):
+
+- Password for user tiago changed by root
+- Strong indicator of persistence attempt
+
+## Screenshot:
+
+<img src="images/05-password-change-root.png" width="100%">
+
+---
+
+## 🔹 Step 6 — Session Context
+
+### Command:
+```
+grep "session opened" /var/log/auth.log
+```
+
+## What + Why:
+
+- Shows session creation events
+
+## Analysis (SOC):
+
+- Session opened for user tiago with root privileges
+- Confirms active compromised session
+
+## Screenshot:
+
+<img src="images/06-session-opened-root.png" width="100%">
+
+---
+
+## 🧠 Attack Timeline
+
+1. Multiple failed SSH login attempts (brute force)
+2. Persistent attack from single IP
+3. Successful login achieved
+4. Privilege escalation via sudo
+5. Password changed (persistence)
+6. Active session established
+
+---
+
+## 🎯 MITRE ATT&CK Mapping
+- T1110 — Brute Force
+- T1078 — Valid Accounts
+- T1548 — Abuse Elevation Control Mechanism
+- T1098 — Account Manipulation
+
+---
+
+## 🛡️ Mitigation
+- Implement Fail2ban
+- Disable password authentication (SSH keys only)
+- Restrict root login
+- Monitor authentication logs continuously
+- Use SIEM (Wazuh) for detection
+
+---
+
+
+## 📊 Final SOC Analysis
+- Brute force attack detected
+- Successful unauthorized access confirmed
+- Privilege escalation observed
+- Persistence mechanism identified
+
+### 👉 Final Classification: COMPROMISED SYSTEM
+
+---
+
+## 🧩 Skills Demonstrated
+- Log analysis
+- Threat detection
+- Attack correlation
+- Incident investigation
+- SOC-level reasoning
+- MITRE ATT&CK mapping
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
