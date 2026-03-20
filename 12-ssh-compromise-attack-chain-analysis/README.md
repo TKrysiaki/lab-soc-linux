@@ -23,8 +23,8 @@ grep "Failed password" /var/log/auth.log
 
 ## What + Why:
 
-> Identifies failed authentication attempts
-> Used to detect brute force activity
+- Identifies failed authentication attempts
+- Used to detect brute force activity
 
 ## Analysis (SOC):
 
@@ -32,4 +32,28 @@ grep "Failed password" /var/log/auth.log
 - Same source IP: 192.168.18.240
 - Clear brute force pattern
 
-Screenshot:
+## Screenshot:
+<img src="images/01-ssh-failed-password.png" width="100%">
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
