@@ -30,6 +30,7 @@ grep "Failed password" /var/log/auth.log
 - Used to detect brute force activity
 
 
+
 ## Analysis (SOC):
 - Multiple failed login attempts targeting user tiago  
 - Same source IP: 192.168.18.240  
