@@ -49,8 +49,16 @@ The project simulates a real-world SSH brute force attack scenario and demonstra
 - [07-privilege-escalation-investigation](./07-suspicious-privilege-escalation-investigation/README.md) — Privilege escalation investigation 
 - [08-wazuh-siem-bruteforce-detection](./08-wazuh-siem-bruteforce-detection/README.md) — SIEM detection with Wazuh  
 - [09-suspicious-ssh-login-investigation](./09-suspicious-ssh-login-investigation/README.md) — Suspicious login investigation  
-- [10-unauthorized-file-access-investigation](./10-unauthorized-file-access-investigation/README.md) — Unauthorized file access investigation  
+- [10-unauthorized-file-access-investigation](./10-unauthorized-file-access-investigation/README.md) — Unauthorized file access investigation
+- [11-suspicious-file-modification-investigation].(.11-Suspicious-file-modification-investigation/README.md). — Suspicious file modification investigation    
+- 12-ssh-compromise-attack-chain — Full attack chain (initial access → persistence → impact)  
+- 13-wazuh-ssh-bruteforce-detection — Advanced SIEM detection with Wazuh  
 
+
+
+- 11-suspicious-file-modification-investigation 
+- 12-ssh-compromise-attack-chain — Full attack chain (initial access → persistence → impact)  
+- 13-wazuh-ssh-bruteforce-detection — Advanced SIEM detection with Wazuh  
 ---
 
 ## 🔎 MITRE ATT&CK Mapping
