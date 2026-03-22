@@ -18,7 +18,9 @@
 
 ### 📍 Onde executar: Kali
 
-```hydra -l tiago -P /usr/share/wordlists/rockyou.txt ssh://192.168.56.107 -t 4```
+```
+hydra -l tiago -P /usr/share/wordlists/rockyou.txt ssh://192.168.56.107 -t 4
+```
 
 ## 📖 Explicação do comando
 - **hydra** → ferramenta de brute force
@@ -40,7 +42,9 @@
 ## 🔍 Análise de Logs (Linux)
 
 ### 📍 Onde executar: Ubuntu (alvo)
-```cat /var/log/auth.log | grep "Failed password" | tail -n 20```
+```
+cat /var/log/auth.log | grep "Failed password" | tail -n 20
+```
 
 ## 📖 Explicação do comando
 - **cat** → lê o arquivo de log
@@ -83,7 +87,9 @@
 ## 🛡️ Resposta — Fail2ban
 
 ### 📍 Configuração
-```sudo nano /etc/fail2ban/jail.local```
+```
+sudo nano /etc/fail2ban/jail.local
+```
 ```
 [sshd]
 enabled = true
@@ -108,7 +114,9 @@ findtime = 600
 ---
 
 ## 🚀 Aplicar configuração
-```sudo systemctl restart fail2ban```
+```
+sudo systemctl restart fail2ban
+```
 
 ## ❌ Ataque Bloqueado
 
@@ -120,7 +128,9 @@ findtime = 600
 ---
 
 ## 🔎 Validação do Bloqueio
-```sudo fail2ban-client status sshd```
+```
+sudo fail2ban-client status sshd
+```
 
 ## 📖 Análise da saída
 - **Total failed** → total de tentativas
