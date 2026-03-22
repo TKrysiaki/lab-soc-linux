@@ -3,7 +3,8 @@
 
 ## ⚠️ Impacto
 
-Se não mitigado, ataques de força bruta podem resultar em acesso não autorizado e comprometimento do sistema.
+### Se não mitigado, ataques de força bruta podem resultar em acesso não autorizado e comprometimento do sistema.
+
 
 ## 📌 Objetivo
 
@@ -75,11 +76,13 @@ cat /var/log/auth.log | grep "Failed password" | tail -n 20
 - MITRE ATT&CK:
   - T1110.001 → Password Guessing
   - T1021.004 → SSH
+
  
 ## 📖 Campos importantes
 - **srcip** → IP do atacante
 - **dstuser** → usuário alvo
 - **full_log** → log bruto
+
 
 ## 🧠 Análise SOC
 - Alto volume de falhas (rule.firedtimes)
@@ -90,6 +93,7 @@ cat /var/log/auth.log | grep "Failed password" | tail -n 20
 ---
 
 ## 🛡️ Resposta — Fail2ban
+
 
 ### 📍 Configuração
 ```
@@ -105,11 +109,13 @@ bantime = 600
 findtime = 600
 ```
 
+
 ## 📖 Explicação
 - **enabled** → ativa proteção
 - **maxretry** → tentativas antes do bloqueio
 - **bantime** → tempo de bloqueio (segundos)
 - **findtime** → janela de tempo
+
 
 ## 🧠 Análise SOC
 - Resposta automática ao ataque
@@ -123,7 +129,9 @@ findtime = 600
 sudo systemctl restart fail2ban
 ```
 
+
 ## ❌ Ataque Bloqueado
+
 
 ### Após executar novamente o Hydra:
 - Conexão recusada
@@ -137,6 +145,7 @@ sudo systemctl restart fail2ban
 sudo fail2ban-client status sshd
 ```
 
+
 ## 📖 Análise da saída
 - **Total failed** → total de tentativas
 - **Banned IP list** → IP bloqueado
@@ -146,6 +155,7 @@ sudo fail2ban-client status sshd
 
 ## 🧠 Análise Final (SOC)
 
+
 ### 🔁 Cadeia do ataque
 - Atacante → Hydra (força bruta)
 - Logs → **/var/log/auth.log**
@@ -153,12 +163,15 @@ sudo fail2ban-client status sshd
 - Correlação → Regra + MITRE
 - Resposta → Fail2ban
 
+
 ## 🎯 Conclusão
+
 
 ### Este laboratório demonstra um fluxo completo de um SOC:
 - Detecção (SIEM)
 - Análise (logs + correlação)
 - Resposta (bloqueio automático)
+
 
 ## 🧪 Habilidades desenvolvidas
 - Análise de logs Linux
