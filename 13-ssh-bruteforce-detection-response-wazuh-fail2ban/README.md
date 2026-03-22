@@ -2,8 +2,7 @@
 
 
 ## ⚠️ Impacto
-
-### Se não mitigado, ataques de força bruta podem resultar em acesso não autorizado e comprometimento do sistema.
+Se não mitigado, ataques de força bruta podem resultar em acesso não autorizado e comprometimento do sistema.
 
 
 ## 📌 Objetivo
