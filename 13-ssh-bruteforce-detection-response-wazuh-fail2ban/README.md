@@ -7,7 +7,7 @@ Se não mitigado, ataques de força bruta podem resultar em acesso não autoriza
 
 ## 📌 Objetivo
 
-### Simular um ataque real de força bruta em SSH utilizando Hydra, detectar o ataque com Wazuh (SIEM) e aplicar resposta automática com Fail2ban, bloqueando o atacante.
+### Simular um ataque de força bruta em SSH utilizando Hydra, detectar a atividade com Wazuh (SIEM) e aplicar resposta automatizada com Fail2ban para bloqueio do atacante.
 
 ---
 
