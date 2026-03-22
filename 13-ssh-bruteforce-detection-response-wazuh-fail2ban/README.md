@@ -1,4 +1,9 @@
-# 🔐 Lab 13 — SSH Brute Force: Detecção e Resposta (Wazuh + Fail2ban)
+# 🔐 Lab 13 — Detecção e Resposta a Brute Force SSH com Wazuh + Fail2ban
+
+
+## ⚠️ Impacto
+
+Se não mitigado, ataques de força bruta podem resultar em acesso não autorizado e comprometimento do sistema.
 
 ## 📌 Objetivo
 
