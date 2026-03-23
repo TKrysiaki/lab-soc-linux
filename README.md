@@ -52,7 +52,8 @@ The project simulates a real-world SSH brute force attack scenario and demonstra
 - [10-unauthorized-file-access-investigation](./10-unauthorized-file-access-investigation/README.md) — Unauthorized file access investigation
 - [11-suspicious-file-modification-investigation](./11-Suspicious-File-Modification-Investigation/README.md) — Suspicious file modification investigation  
 - [12-ssh-compromise-attack-chain](./12-ssh-compromise-attack-chain/README.md) — Full attack chain (initial access → persistence → impact)  
-- [13-wazuh-ssh-bruteforce-detection](./13-wazuh-ssh-bruteforce-detection/README.md) — Advanced SIEM detection with Wazuh  
+- [13-wazuh-ssh-bruteforce-detection](./13-ssh-bruteforce-detection-response-wazuh-fail2ban.md) — Advanced SIEM detection with Wazuh
+- 
 ---
 
 ## 🔎 MITRE ATT&CK Mapping
