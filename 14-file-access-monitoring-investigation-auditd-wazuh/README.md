@@ -1,11 +1,10 @@
-
-# 🔍 Lab 14 — File Access Monitoring & Investigation (auditd + Wazuh)
+# 🔍 Lab 14 — Monitoramento e Investigação de Acesso a Arquivos (auditd + Wazuh)
 
 ## 📌 Objetivo
 
 Neste laboratório, o foco será monitorar e investigar acessos a arquivos sensíveis no sistema Linux utilizando o `auditd`, correlacionando os eventos com o Wazuh (SIEM).
 
-O objetivo é evoluir de detecção básica para análise comportamental, entendendo ações realizadas no sistema e identificando atividades suspeitas.
+O objetivo é evoluir de uma detecção simples para uma análise comportamental, entendendo ações realizadas no sistema e identificando atividades suspeitas.
 
 ---
 
@@ -17,6 +16,7 @@ Após um possível acesso inicial (ex: brute force), um atacante pode tentar ace
 - `/etc/shadow`
 
 Esse tipo de atividade pode indicar:
+
 - Enumeração de usuários  
 - Tentativa de coleta de credenciais  
 - Movimentação lateral  
@@ -25,7 +25,7 @@ Esse tipo de atividade pode indicar:
 
 ## 🧱 Ambiente do Lab
 
-- Kali Linux → (opcional, para simulações)  
+- Kali Linux → (opcional, para simulação de ações)  
 - Ubuntu → alvo (auditd + logs + Wazuh Agent)  
 - Wazuh Server → SIEM (detecção e correlação)  
 
@@ -33,21 +33,21 @@ Esse tipo de atividade pode indicar:
 
 ## 🔍 O que será feito
 
-- Configuração do `auditd` para monitorar arquivos críticos  
-- Geração de eventos reais de acesso a arquivos  
-- Análise de logs (`/var/log/audit/audit.log`)  
-- Correlação dos eventos no Wazuh  
-- Investigação do comportamento (quem, quando, o que fez)  
+- Configurar o `auditd` para monitorar arquivos críticos  
+- Gerar eventos reais de acesso a arquivos  
+- Analisar logs (`/var/log/audit/audit.log`)  
+- Correlacionar eventos no Wazuh  
+- Investigar o comportamento (quem, quando e o que foi feito)  
 
 ---
 
 ## 🧠 Abordagem SOC
 
-Este lab será focado em investigação:
+Este laboratório será focado em investigação:
 
 - Identificação de comportamento suspeito  
 - Análise de contexto (usuário, processo, ação)  
-- Classificação da atividade (legítima vs maliciosa)  
+- Classificação da atividade (legítima ou maliciosa)  
 
 ---
 
@@ -60,5 +60,3 @@ Ação → Log (auditd) → Detecção (Wazuh) → Investigação
 ## 🚀 Status
 
 🔜 Em construção
-
-
