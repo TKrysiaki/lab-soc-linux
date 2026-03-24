@@ -100,7 +100,6 @@ sudo cat /etc/shadow
 📌 Simula atacante acessando credenciais
 
 <img src="images/04-shadow-access-event.png" width="100%">
-<img src="images/09-shadow-access-trigger-custom.png" width="100%">
 
 ---
 
