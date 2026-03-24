@@ -82,9 +82,9 @@ sudo auditctl -w /etc/shadow -p r -k shadow-monitor
 ### 🔎 Explicação detalhada
 - Monitora arquivo de credenciais
 - Acesso aqui = alto risco
-- 
+
 <img src="images/02-auditd-rule-passwd-ok.png" width="100%">
-<img src="images/03-auditd-rule-shadow-ok.png" width="100%">
+
 
 ---
 
