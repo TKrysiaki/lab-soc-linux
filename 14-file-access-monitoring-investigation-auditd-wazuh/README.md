@@ -21,6 +21,14 @@ Usuário `tiago` eleva privilégio com `sudo` e acessa `/etc/shadow`, simulando 
 
 ---
 
+## 🔎 Investigação
+
+O usuário `tiago` executou comandos com privilégio elevado (`sudo`) e acessou o arquivo `/etc/shadow`, que contém hashes de senha.
+
+Esse comportamento indica possível tentativa de coleta de credenciais, comum em cenários de pós-exploração.
+
+---
+
 ## ⚙️ Etapa 1 — Instalação do auditd
 ```
 sudo apt install auditd -y
@@ -127,9 +135,20 @@ sudo ausearch -k shadow-monitor
 
 <img src="images/06-wazuh-detection-shadow.png" width="100%">
 
+## 🔧 Detection Engineering (Melhoria de Detecção)
+
+A regra padrão do Wazuh detecta apenas o uso de sudo, o que gera alertas genéricos.
+
+Foi criada uma regra customizada para identificar especificamente o acesso ao arquivo `/etc/shadow`, aumentando a precisão e a severidade da detecção.
+
+---
+
 ### 🔎 Análise
-- Regra 5402 → apenas detecta sudo
-- ❌ Baixo valor (não contextual)
+- Regra 5402 → detecta apenas uso de sudo
+- ❌ Baixo valor analítico (não contextualiza o comportamento)
+
+➡️ Problema:
+Não identifica o acesso a arquivos sensíveis, gerando alertas genéricos.
 
 ---
 
@@ -198,6 +217,7 @@ sudo cat /etc/shadow
 19:32 → alerta customizado (alto risco)
 ```
 
+---
 
 ## 🔍 Análise SOC
 - Usuário: tiago
@@ -213,11 +233,15 @@ sudo cat /etc/shadow
 
 **True Positive — Atividade Suspeita**
 
+- Acesso a arquivo sensível (`/etc/shadow`)
+- Uso de privilégio elevado (`sudo`)
+- Comportamento incomum
+
 ---
 
 ## 💥 Impacto
-- Exposição de hashes
-- Possível quebra de senha
+- Exposição de hashes de senha
+- Possível quebra de credenciais
 - Escalada de privilégio
 - Movimento lateral
 
@@ -240,7 +264,9 @@ sudo cat /etc/shadow
 
 ## 🧠 Conclusão
 
-Este lab demonstra a evolução de um evento simples para uma detecção de alto valor, através de correlação e criação de regra customizada.
+Este laboratório demonstra um cenário real de SOC, incluindo coleta de logs, correlação de eventos e criação de detecção customizada.
+
+A criação da regra no Wazuh permitiu transformar um alerta genérico em uma detecção de alto valor, demonstrando capacidade prática de análise e melhoria de segurança.
 
 ---
 
