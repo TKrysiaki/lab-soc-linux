@@ -1,62 +1,120 @@
-# 🔍 Lab 14 — Monitoramento e Investigação de Acesso a Arquivos (auditd + Wazuh)
-
-## 📌 Objetivo
-
-Neste laboratório, o foco será monitorar e investigar acessos a arquivos sensíveis no sistema Linux utilizando o `auditd`, correlacionando os eventos com o Wazuh (SIEM).
-
-O objetivo é evoluir de uma detecção simples para uma análise comportamental, entendendo ações realizadas no sistema e identificando atividades suspeitas.
+# 🧠 LAB 14 — Monitoramento e Detecção de Acesso a Arquivos Sensíveis (auditd + Wazuh)
 
 ---
 
-## 🧠 Contexto
+## 🎯 Objetivo
 
-Após um possível acesso inicial (ex: brute force), um atacante pode tentar acessar arquivos críticos do sistema como:
-
-- `/etc/passwd`
-- `/etc/shadow`
-
-Esse tipo de atividade pode indicar:
-
-- Enumeração de usuários  
-- Tentativa de coleta de credenciais  
-- Movimentação lateral  
+Monitorar, detectar e investigar acessos a arquivos sensíveis no Linux (`/etc/passwd` e `/etc/shadow`) utilizando **auditd** e **Wazuh**, evoluindo até detecção customizada **(Detection Engineering)**.
 
 ---
 
-## 🧱 Ambiente do Lab
-
-- Kali Linux → (opcional, para simulação de ações)  
-- Ubuntu → alvo (auditd + logs + Wazuh Agent)  
-- Wazuh Server → SIEM (detecção e correlação)  
-
----
-
-## 🔍 O que será feito
-
-- Configurar o `auditd` para monitorar arquivos críticos  
-- Gerar eventos reais de acesso a arquivos  
-- Analisar logs (`/var/log/audit/audit.log`)  
-- Correlacionar eventos no Wazuh  
-- Investigar o comportamento (quem, quando e o que foi feito)  
+## 🧪 Ambiente
+- Kali Linux (ataque)
+- Ubuntu (alvo)
+- Wazuh (SIEM)
 
 ---
 
-## 🧠 Abordagem SOC
+## 📖 Cenário
 
-Este laboratório será focado em investigação:
-
-- Identificação de comportamento suspeito  
-- Análise de contexto (usuário, processo, ação)  
-- Classificação da atividade (legítima ou maliciosa)  
+Usuário `tiago` eleva privilégio com `sudo` e acessa `/etc/shadow`, simulando coleta de credenciais.
 
 ---
 
-## 🔁 Fluxo do Lab
-Ação → Log (auditd) → Detecção (Wazuh) → Investigação
+## ⚙️ Etapa 1 — Instalação do auditd
+```
+sudo apt install auditd -y
+```
 
+### 🔎 Explicação
+- `apt install` → instala pacote
+- `auditd` → serviço de auditoria
+- `-y` → confirma automaticamente
+
+📌 Função: registrar eventos de segurança no sistema
+
+```
+sudo systemctl enable auditd
+```
+```
+sudo systemctl start auditd
+```
+
+### 🔎 Explicação
+- `systemctl` → gerencia serviços
+- `enable` → inicia no boot
+- `start` → inicia agora
+
+📌 Sem isso, não há logs
+
+<img src="images/01-auditd-install-service.png" width="100%">
 
 ---
 
-## 🚀 Status
+## ⚙️ Etapa 2 — Criar regras de monitoramento
+```
+sudo auditctl -D
+```
 
-🔜 Em construção
+### 🔎 Explicação
+- `auditctl` → gerencia regras
+- `-D` → deleta todas as regras
+
+📌 Garante ambiente limpo
+
+
+```
+sudo auditctl -w /etc/passwd -p r -k passwd-monitor
+```
+
+### 🔎 Explicação detalhada
+- `-w /etc/passwd` → monitora arquivo
+- `-p r` → captura leitura
+- `-k passwd-monitor` → chave para busca
+
+📌 Detecta enumeração de usuários
+
+```
+sudo auditctl -w /etc/shadow -p r -k shadow-monitor
+```
+
+### 🔎 Explicação detalhada
+- Monitora arquivo de credenciais
+- Acesso aqui = alto risco
+- 
+<img src="images/02-auditd-rule-passwd-ok.png" width="100%">
+<img src="images/03-auditd-rule-shadow-ok.png" width="100%">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
