@@ -26,6 +26,7 @@ Usuário `tiago` eleva privilégio com `sudo` e acessa `/etc/shadow`, simulando 
 sudo apt install auditd -y
 ```
 
+
 ### 🔎 Explicação
 - `apt install` → instala pacote
 - `auditd` → serviço de auditoria
