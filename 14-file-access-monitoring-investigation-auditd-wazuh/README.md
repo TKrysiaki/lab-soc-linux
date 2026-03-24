@@ -61,6 +61,8 @@ sudo auditctl -D
 - `auditctl` → gerencia regras
 - `-D` → deleta todas as regras
 
+<img src="images/03-auditd-rule-shadow-ok.png" width="100%">
+
 📌 Garante ambiente limpo
 
 
