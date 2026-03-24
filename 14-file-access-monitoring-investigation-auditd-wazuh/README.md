@@ -23,9 +23,9 @@ Usuário `tiago` eleva privilégio com `sudo` e acessa `/etc/shadow`, simulando 
 
 ## 🔎 Investigação
 
-O usuário `tiago` executou comandos com privilégio elevado (`sudo`) e acessou o arquivo `/etc/shadow`, que contém hashes de senha.
+O usuário `tiago` realizou elevação de privilégio utilizando sudo e acessou o arquivo `/etc/shadow`, que contém hashes de senha.
 
-Esse comportamento indica possível tentativa de coleta de credenciais, comum em cenários de pós-exploração.
+Esse comportamento é altamente sensível e pode indicar tentativa de coleta de credenciais no sistema.
 
 ---
 
@@ -240,10 +240,11 @@ sudo cat /etc/shadow
 ---
 
 ## 💥 Impacto
+
 - Exposição de hashes de senha
-- Possível quebra de credenciais
+- Possível quebra de credenciais offline
 - Escalada de privilégio
-- Movimento lateral
+- Risco de movimentação lateral
 
 ---
 
@@ -264,9 +265,9 @@ sudo cat /etc/shadow
 
 ## 🧠 Conclusão
 
-Este laboratório demonstra um cenário real de SOC, incluindo coleta de logs, correlação de eventos e criação de detecção customizada.
+Este laboratório demonstra um fluxo completo de investigação em ambiente SOC, incluindo coleta de logs, correlação de eventos e criação de detecção customizada.
 
-A criação da regra no Wazuh permitiu transformar um alerta genérico em uma detecção de alto valor, demonstrando capacidade prática de análise e melhoria de segurança.
+A criação da regra no Wazuh permitiu transformar um alerta genérico em uma detecção de alto valor, evidenciando capacidade prática de análise e melhoria contínua de segurança.
 
 ---
 
