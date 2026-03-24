@@ -270,7 +270,8 @@ A criação da regra no Wazuh permitiu transformar um alerta genérico em uma de
 
 ---
 
-🎯 Habilidades Demonstradas
+## 🎯 Habilidades Demonstradas
+
 - Linux
 - auditd
 - Wazuh
