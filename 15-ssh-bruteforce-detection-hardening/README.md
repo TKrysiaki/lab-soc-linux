@@ -121,7 +121,7 @@ Esse fator eleva a criticidade, pois o atacante já está dentro da rede.
 - Severidade: Média → Alta
 - Confiança: Alta
 
-###
+### a
 
 ### 💥 Avaliação de Impacto
 - Nenhum acesso não autorizado confirmado
