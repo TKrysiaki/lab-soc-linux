@@ -65,10 +65,122 @@ grep -a "Failed password" /var/log/auth.log | head
 
 ---
 
+## 🔢 Volume do Ataque
+
+### Comando
+```
+grep -a "Failed password" /var/log/auth.log | wc -l
+```
+### Explicação
+- `wc -l` → conta o número de linhas
+- cada linha representa uma tentativa de login
+
+### Resultado
+- 133 tentativas de login falhadas
+
+### Análise
+
+Volume elevado confirma brute force automatizado.
+
+<img src="images/05-bruteforce-attempt-count.png" width="100%">
+
+---
+
+## 🔐 Verificação de Sucesso
+### Comando
+```
+grep -a "Accepted password" /var/log/auth.log
+```
+
+### Explicação
+- "Accepted password" → indica login SSH bem-sucedido
+
+### Análise
+
+Nenhum login bem-sucedido foi identificado, indicando que o ataque não resultou em comprometimento.
+
+<img src="images/03-no-successful-login.png" width="100%">
+
+---
+
+## 🌐 Origem do Ataque
+- IP de origem: `192.168.56.103`
+- Tipo: Rede interna (IP privado)
+
+### Análise
+
+Indica ataque interno ou possível movimento lateral dentro da rede.
+
+---
+
+## 🧠 Classificação
+- Tipo: Brute Force
+- Status: Sem sucesso
+- Severidade: Média a Alta
+- Confiança: Alta
+
+---
+
+## 💥 Impacto
+- Nenhum comprometimento identificado
+- Credenciais não expostas
+- Ataque ativo detectado
+
+---
+
+## 🛡️ Mitigação — Hardening do SSH
+### Etapa 1 — Editar configuração
+```
+sudo nano /etc/ssh/sshd_config
+```
+
+### Explicação
+
+Abre o arquivo de configuração do SSH para ajustes de segurança.
+
+### Etapa 2 — Desabilitar login root
+`PermitRootLogin no`
+
+### Explicação
+
+Bloqueia login direto como root, reduzindo a superfície de ataque.
+
+<img src="images/07-ssh-root-login-disabled.png" width="100%">
 
 
+### Etapa 3 — Aplicar mudanças
+```
+sudo systemctl restart ssh
+```
+### Explicação
 
+Reinicia o serviço SSH para aplicar as alterações.
 
+<img src="images/08-ssh-service-restarted.png" width="100%">
+
+---
+
+## 🎯 Conclusão
+
+O ataque de brute force foi detectado e analisado com sucesso através dos logs do sistema.
+Apesar de não haver comprometimento, medidas de hardening foram aplicadas para reforçar a segurança do serviço SSH e mitigar ataques futuros.
+
+---
+
+## 🧠 Habilidades Demonstradas
+- Análise de logs (auth.log)
+- Detecção de brute force
+- Correlação de eventos
+- Análise de timeline
+- Classificação de incidente
+- Resposta a incidente
+- Hardening de SSH
+
+---
+
+## 🔗 MITRE ATT&CK
+- T1110 — Brute Force
+- T1078 — Valid Accounts (tentativa)
 
 
 
