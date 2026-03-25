@@ -158,6 +158,15 @@ Garante que a política de segurança aplicada esteja ativa no ambiente.
 
 ---
 
+## 🚨 Resposta do Incidente
+
+- Monitoramento contínuo do usuário alvo para identificar novas tentativas de acesso  
+- Identificação e análise do IP de origem do ataque (rede interna)  
+- Aplicação de hardening no serviço SSH (desativação de login root)  
+- Reforço na detecção de tentativas de brute force via análise de logs
+
+---
+
 ## 🎯 Conclusão
 Foi identificada atividade maliciosa compatível com ataque de brute force contra o serviço SSH.
 A análise dos logs permitiu confirmar o padrão do ataque, sua origem e ausência de comprometimento.
