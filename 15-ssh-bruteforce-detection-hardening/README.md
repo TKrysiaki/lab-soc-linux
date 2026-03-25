@@ -1,7 +1,7 @@
 # 🔥 Lab 15 — Detecção de Brute Force em SSH e Hardening
 
 ## 📌 Objetivo
-Detectar, analisar e responder a um ataque de brute force no serviço SSH, aplicando um fluxo real de investigação SOC.
+Detectar, analisar e responder a uma tentativa de acesso não autorizado via brute force no serviço SSH, utilizando logs do sistema e aplicando medidas reais de mitigação.
 
 ---
 
@@ -9,13 +9,13 @@ Detectar, analisar e responder a um ataque de brute force no serviço SSH, aplic
 
 - Atacante: Kali Linux
 - Alvo: Ubuntu Server
-- Logs analisados: `/var/log/auth.log`
+- Fonte de logs: `/var/log/auth.log`
 
 ---
 
 ## 🚨 Cenário do Ataque
 
-Foi realizado um ataque de força bruta contra o serviço SSH, gerando múltiplas tentativas de login falhadas contra um usuário válido.
+Foi identificado um comportamento anômalo no serviço SSH, caracterizado por múltiplas tentativas de autenticação falhadas em curto intervalo de tempo, indicando possível ataque automatizado de força bruta.
 
 ---
 
@@ -27,160 +27,135 @@ grep -a "Failed password" /var/log/auth.log
 ```
 
 ## Explicação
-- `grep` → busca padrões dentro do log
-- `-a` → força leitura como texto (evita erro de binário)
-- `"Failed password"` → tentativas falhadas de login SSH
-- `/var/log/auth.log` → log de autenticação
+- `grep` → ferramenta de busca por padrões em arquivos
+- `-a` → força leitura do arquivo como texto, evitando problemas com encoding/binário
+- `"Failed password"` → identifica eventos de falha de autenticação SSH
+- `/var/log/auth.log` → arquivo de log responsável por eventos de autenticação no sistema
 
-## Análise
+### Análise
 
-### Foram identificadas múltiplas tentativas falhadas, caracterizando ataque de brute force.
+Foram identificadas múltiplas tentativas consecutivas de login falhadas, provenientes do mesmo endereço IP e direcionadas ao mesmo usuário.
+Esse padrão é consistente com ataque de brute force automatizado, com objetivo de descoberta de credenciais válidas.
 
 <img src="images/02-bruteforce-failed-password.png" width="100%">
 
 ---
 
 ## 📊 Análise de Timeline — Início do Ataque
-
-# Comando
+### Comando
 ```
 grep -a "Failed password" /var/log/auth.log | head
 ```
-# Explicação
-- `grep` → filtra tentativas falhadas
+### Explicação
+- `grep` → filtra eventos de interesse
+- `head` → exibe as primeiras ocorrências, permitindo identificar o início do ataque
 
-- `head` → mostra as primeiras ocorrências
+### Análise
 
+O ataque teve início em:
 
-## Análise
+`2026-03-22 20:01:31`
 
-### O ataque iniciou em:
-
-- `2026-03-22 20:01:31`
-
-### Eventos em alta frequência indicam automação.
-
+Os eventos ocorrem em alta frequência, com múltiplas tentativas por segundo, indicando execução automatizada (script/ferramenta).
 
 <img src="images/04-attack-start-timeline.png" width="100%">
 
 ---
 
 ## 🔢 Volume do Ataque
-
 ### Comando
 ```
 grep -a "Failed password" /var/log/auth.log | wc -l
 ```
+
 ### Explicação
-- `wc -l` → conta o número de linhas
-- cada linha representa uma tentativa de login
+- `wc -l` → conta o número total de linhas retornadas
+- cada linha representa uma tentativa de login falhada
 
 ### Resultado
-- 133 tentativas de login falhadas
+- 133 tentativas de autenticação falhadas
 
 ### Análise
 
-Volume elevado confirma brute force automatizado.
+O volume elevado em curto intervalo de tempo reforça a caracterização de brute force automatizado, descartando comportamento humano ou erro pontual.
 
 <img src="images/05-bruteforce-attempt-count.png" width="100%">
 
 ---
 
-## 🔐 Verificação de Sucesso
+## 🔐 Verificação de Sucesso de Login
 ### Comando
 ```
 grep -a "Accepted password" /var/log/auth.log
 ```
-
 ### Explicação
-- "Accepted password" → indica login SSH bem-sucedido
+- `"Accepted password"` → identifica autenticações bem-sucedidas no SSH
 
 ### Análise
 
-Nenhum login bem-sucedido foi identificado, indicando que o ataque não resultou em comprometimento.
+Não foram identificados eventos de login bem-sucedido, indicando que o atacante não obteve credenciais válidas.
+Apesar disso, a continuidade do ataque representa risco ativo ao ambiente.
 
 <img src="images/03-no-successful-login.png" width="100%">
 
 ---
 
-## 🌐 Origem do Ataque
+## 🌐 Identificação da Origem
 - IP de origem: `192.168.56.103`
-- Tipo: Rede interna (IP privado)
+- Tipo: Endereço IP privado (rede interna)
 
 ### Análise
 
-Indica ataque interno ou possível movimento lateral dentro da rede.
+A origem interna do ataque indica possibilidade de:
 
----
+- movimentação lateral a partir de máquina comprometida
+- ambiente de teste (Kali) simulando atacante
+- ameaça interna
 
-## 🧠 Classificação
-- Tipo: Brute Force
+Esse fator eleva a criticidade, pois o atacante já está dentro da rede.
+
+### 🧠 Classificação do Incidente
+- Tipo: Tentativa de acesso não autorizado (Brute Force)
+- Técnica: Tentativa repetitiva de autenticação
 - Status: Sem sucesso
-- Severidade: Média a Alta
+- Severidade: Média → Alta
 - Confiança: Alta
 
----
+###
 
-## 💥 Impacto
-- Nenhum comprometimento identificado
-- Credenciais não expostas
-- Ataque ativo detectado
-
----
-
-## 🛡️ Mitigação — Hardening do SSH
-### Etapa 1 — Editar configuração
-```
-sudo nano /etc/ssh/sshd_config
-```
-
-### Explicação
-
-Abre o arquivo de configuração do SSH para ajustes de segurança.
-
-### Etapa 2 — Desabilitar login root
-`PermitRootLogin no`
-
-### Explicação
-
-Bloqueia login direto como root, reduzindo a superfície de ataque.
-
-<img src="images/07-ssh-root-login-disabled.png" width="100%">
+### 💥 Avaliação de Impacto
+- Nenhum acesso não autorizado confirmado
+- Credenciais não comprometidas
+- Serviço SSH permaneceu operacional
+- Risco contínuo caso não mitigado
 
 
-### Etapa 3 — Aplicar mudanças
-```
-sudo systemctl restart ssh
-```
-### Explicação
 
-Reinicia o serviço SSH para aplicar as alterações.
 
-<img src="images/08-ssh-service-restarted.png" width="100%">
 
----
 
-## 🎯 Conclusão
 
-O ataque de brute force foi detectado e analisado com sucesso através dos logs do sistema.
-Apesar de não haver comprometimento, medidas de hardening foram aplicadas para reforçar a segurança do serviço SSH e mitigar ataques futuros.
 
----
 
-## 🧠 Habilidades Demonstradas
-- Análise de logs (auth.log)
-- Detecção de brute force
-- Correlação de eventos
-- Análise de timeline
-- Classificação de incidente
-- Resposta a incidente
-- Hardening de SSH
 
----
 
-## 🔗 MITRE ATT&CK
-- T1110 — Brute Force
-- T1078 — Valid Accounts (tentativa)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
