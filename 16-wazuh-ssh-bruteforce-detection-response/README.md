@@ -1,15 +1,10 @@
 # 🔥 Lab 16 — SSH Brute Force + Compromise + Incident Response
 
-## 📌 Scenario
+## 📌 Incident Summary
 
-Um servidor Linux foi alvo de múltiplas tentativas de login via SSH, indicando possível ataque de brute force.
+O SOC identificou múltiplas tentativas de autenticação via SSH provenientes de um único IP, caracterizando um possível ataque de brute force.
 
-Durante a investigação, foi identificado:
-- Alto volume de tentativas de login
-- Comportamento automatizado
-- Possível comprometimento de integridade de arquivo crítico
-
-O objetivo foi conduzir a investigação como um analista SOC, identificando, classificando e respondendo ao incidente.
+Durante a investigação, foi detectada modificação em arquivo crítico do sistema, elevando o incidente para possível comprometimento.
 
 ---
 
@@ -124,6 +119,15 @@ Evento capturado:
 7. Bloqueio do IP atacante
 8. Investigação forense com auditd
 
+
+---
+
+## 🚨 SOC Decision
+
+- Classificação: True Positive
+- Severidade: High
+- Ação: Bloqueio do IP + Monitoramento do host
+
 ---
 
 ## 🎯 MITRE ATT&CK
@@ -135,11 +139,11 @@ Evento capturado:
 
 ---
 
-## ⚠️ Impact
+## ⚠️ Business Impact
 
-- Tentativa de acesso não autorizado
-- Sistema inicialmente vulnerável
-- Indício de modificação maliciosa em binário crítico
+- Risco de acesso não autorizado
+- Possível comprometimento do sistema
+- Potencial escalonamento de privilégio
 
 ---
 
