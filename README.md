@@ -1,8 +1,11 @@
 # 🛡️ SOC Analyst Lab Portfolio
 
-🚨 Portfólio prático focado em **detecção de ameaças, resposta a incidentes e análise forense em ambientes Linux**.
+![Cybersecurity](https://img.shields.io/badge/Cybersecurity-SOC-blue)
+![SIEM](https://img.shields.io/badge/SIEM-Wazuh-green)
+![Linux](https://img.shields.io/badge/Linux-Ubuntu-orange)
+![Focus](https://img.shields.io/badge/Focus-Blue%20Team-red)
 
-Este repositório demonstra evolução real na área de **cibersegurança (SOC / Blue Team)** através de simulações baseadas em cenários reais.
+🚨 Portfólio prático focado em **detecção de ameaças, resposta a incidentes e análise forense em ambientes Linux**.
 
 ---
 
@@ -12,34 +15,50 @@ Este repositório demonstra evolução real na área de **cibersegurança (SOC /
 
 👉 [Acessar Lab 16](./16-ssh-brute-force-incident-response-wazuh)
 
-Simulação completa de incidente envolvendo:
+<img src="16-ssh-brute-force-incident-response-wazuh/images/02-ssh_failed_attempts_log.png" width="100%">
 
-- Ataque de brute force via SSH  
-- Detecção com SIEM (Wazuh)  
-- Bloqueio automático (Fail2ban)  
-- Análise forense (auditd)  
+### 🧠 Cenário
 
-🎯 **Demonstra atuação completa de um analista SOC**
+- 133 tentativas de login falhadas em poucos segundos  
+- Ataque automatizado via SSH  
+- Possível comprometimento de integridade do sistema  
 
 ---
 
-## 🎯 Objetivo
+### 🔍 O que foi feito
+
+- Análise de logs (`auth.log`)  
+- Correlação de eventos no SIEM (Wazuh)  
+- Detecção de arquivo comprometido  
+- Implementação de defesa com Fail2ban  
+- Análise forense com auditd  
+
+---
+
+### 🚨 Decisão do SOC
+
+- Classificação: **True Positive**  
+- Severidade: **Alta**  
+- Ação: bloqueio do atacante + monitoramento do host  
+
+---
+
+# 🎯 Objetivo
 
 Demonstrar habilidades práticas em:
 
 - Threat Detection  
 - Log Analysis  
 - Incident Response  
-- SIEM Analysis (Wazuh)  
+- SIEM Analysis  
 - Hardening  
-- Forense em sistemas Linux  
+- Forense  
 
 ---
 
-## 🧪 Labs Desenvolvidos
+# 🧪 Labs Desenvolvidos
 
-### 🔰 Fundamentos
-
+## 🔰 Fundamentos
 - [01 - Log Analysis Base](./01-log-analysis-base)  
 - [02 - SSH Bruteforce Investigation](./02-ssh-bruteforce-investigation)  
 - [03 - Log Analysis Investigation](./03-log-analysis-investigation)  
@@ -48,84 +67,78 @@ Demonstrar habilidades práticas em:
 
 ---
 
-### 🔍 Investigação de Incidentes
-
+## 🔍 Investigação
 - [06 - SSH Bruteforce Incident Investigation](./06-ssh-bruteforce-incident-investigation)  
 - [07 - Suspicious Privilege Escalation Investigation](./07-suspicious-privilege-escalation-investigation)  
-- [08 - Wazuh SIEM Bruteforce Detection](./08-wazuh-siem-bruteforce-detection)  
+- [08 - Wazuh SIEM Detection](./08-wazuh-siem-bruteforce-detection)  
 - [09 - Suspicious SSH Login Investigation](./09-suspicious-ssh-login-investigation)  
 - [10 - Unauthorized File Access Investigation](./10-unauthorized-file-access-investigation)  
 
 ---
 
-### 🔥 Nível Avançado
-
-- [11 - Suspicious File Modification Investigation](./11-Suspicious-File-Modification-Investigation)  
-- [12 - SSH Compromise Attack Chain Analysis](./12-ssh-compromise-attack-chain-analysis)  
-- [13 - SSH Bruteforce Detection & Response (Wazuh + Fail2ban)](./13-ssh-bruteforce-detection-response-wazuh-fail2ban)  
-- [14 - File Access Monitoring (auditd)](./14-file-access-monitoring-investigation-auditd)  
-
----
-
-### 🚨 Nível SOC Real
-
-- [15 - SSH Bruteforce Detection & Hardening](./15-ssh-bruteforce-detection-hardening)  
-- [16 - SSH Brute Force Incident Response (Wazuh + Fail2ban + auditd)](./16-ssh-brute-force-incident-response-wazuh)  
+## 🔥 Avançado
+- [11 - Suspicious File Modification](./11-Suspicious-File-Modification-Investigation)  
+- [12 - Attack Chain Analysis](./12-ssh-compromise-attack-chain-analysis)  
+- [13 - Detection & Response (Wazuh + Fail2ban)](./13-ssh-bruteforce-detection-response-wazuh-fail2ban)  
+- [14 - File Monitoring (auditd)](./14-file-access-monitoring-investigation-auditd)  
 
 ---
 
-## 🧠 Skills Demonstradas
+## 🚨 SOC Real
+- [15 - Detection & Hardening](./15-ssh-bruteforce-detection-hardening)  
+- [16 - Incident Response (Wazuh + Fail2ban + auditd)](./16-ssh-brute-force-incident-response-wazuh)  
+
+---
+
+# 🧠 Skills
 
 - Investigação de incidentes  
 - Correlação de eventos  
-- Análise de logs Linux  
-- Uso de SIEM (Wazuh)  
-- Hardening de serviços  
-- Resposta a ataques  
-- Forense em sistemas  
+- Análise de logs  
+- SIEM (Wazuh)  
+- Hardening  
+- Forense  
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+# 🛠️ Stack
 
-- Linux (Ubuntu/Kali)  
-- Wazuh (SIEM)  
+- Linux (Ubuntu / Kali)  
+- Wazuh  
 - Fail2ban  
 - auditd  
 - Hydra  
-- SSH  
 
 ---
 
-## 📈 Evolução
+# 📈 Evolução
 
-- Básico → análise de logs  
-- Intermediário → detecção  
-- Avançado → resposta  
-- SOC Real → investigação completa  
+- Básico → Logs  
+- Intermediário → Detecção  
+- Avançado → Resposta  
+- SOC → Investigação completa  
 
 ---
 
-## 🚀 Próximos Passos
+# 🚀 Próximos Labs
 
-- Multi-source logs (SSH + Web + Firewall)  
-- Geração de ruído (ambiente real)  
-- Correlação avançada  
+- Multi-log (SSH + Web + Firewall)  
+- Ruído real  
 - Threat Intelligence  
-- Simulação de ambiente corporativo  
+- Cenário corporativo  
 
 ---
 
-## 📌 Sobre mim
+# 📌 Sobre mim
 
-Estudante de ADS com foco em **cibersegurança (SOC / Blue Team)**.
+Focado em **SOC / Blue Team**
 
-Buscando oportunidade como:
-👉 SOC Analyst / NOC / Blue Team  
+🎯 Buscando oportunidade como:
+SOC Analyst / NOC  
 
 ---
 
-## 🔗 Contato
+# 🔗 Contato
 
 LinkedIn: https://www.linkedin.com/  
 GitHub: https://github.com/TKrysiaki  
