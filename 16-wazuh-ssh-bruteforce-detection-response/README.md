@@ -1,15 +1,13 @@
 # 🔥 Lab 16 — SSH Brute Force + Compromise + Incident Response
 
 ## 📌 Incident Summary
+🚨 Múltiplas tentativas de autenticação via SSH foram detectadas a partir de um único endereço IP, indicando um possível ataque de força bruta contra um servidor Linux.
 
-O SOC identificou múltiplas tentativas de autenticação via SSH provenientes de um único IP, caracterizando um possível ataque de brute force.
-
-Durante a investigação, foi detectada modificação em arquivo crítico do sistema, elevando o incidente para possível comprometimento.
+Durante a investigação, foi identificada modificação em um arquivo crítico do sistema, elevando o incidente para possível comprometimento do host.
 
 ---
 
 ## 🏢 Lab Environment
-
 - Kali Linux (Atacante)
 - Ubuntu Server (Alvo)
 - Wazuh SIEM
@@ -19,7 +17,6 @@ Durante a investigação, foi detectada modificação em arquivo crítico do sis
 ---
 
 ## 🧨 Attack Simulation
-
 Foi realizado um ataque de brute force contra o serviço SSH utilizando wordlist.
 
 <img src="images/01-hydra_bruteforce_start.png" width="100%">
@@ -27,7 +24,6 @@ Foi realizado um ataque de brute force contra o serviço SSH utilizando wordlist
 ---
 
 ## 🔍 Log Analysis (SSH)
-
 Análise do `/var/log/auth.log` revelou múltiplas tentativas de autenticação falhas:
 
 <img src="images/02-ssh_failed_attempts_log.png" width="100%">
@@ -109,7 +105,6 @@ Evento capturado:
 ---
 
 ## 🧠 Timeline
-
 1. Início do brute force (Hydra)
 2. Múltiplas falhas de autenticação
 3. Análise dos logs (auth.log)
@@ -123,15 +118,16 @@ Evento capturado:
 ---
 
 ## 🚨 SOC Decision
-
 - Classificação: True Positive
-- Severidade: High
-- Ação: Bloqueio do IP + Monitoramento do host
+- Severidade: Alta
+- Ações realizadas:
+  - Bloqueio do IP atacante via Fail2ban
+  - Monitoramento contínuo do host
+  - Análise de integridade de arquivos críticos
 
 ---
 
 ## 🎯 MITRE ATT&CK
-
 - T1110 — Brute Force  
 - T1078 — Valid Accounts (tentativa)  
 - T1059 — Command Execution  
@@ -140,15 +136,13 @@ Evento capturado:
 ---
 
 ## ⚠️ Business Impact
-
-- Risco de acesso não autorizado
-- Possível comprometimento do sistema
-- Potencial escalonamento de privilégio
+- Risco de acesso não autorizado ao servidor
+- Possível comprometimento da integridade do sistema
+- Potencial escalonamento de privilégios
 
 ---
 
 ## 🛠️ Mitigation
-
 - Implementação de Fail2ban
 - Monitoramento com auditd
 - Correlação via SIEM (Wazuh)
@@ -157,7 +151,6 @@ Evento capturado:
 ---
 
 ## 💡 Skills Demonstrated
-
 - Log Analysis (Linux)
 - Incident Investigation
 - Event Correlation
@@ -169,7 +162,6 @@ Evento capturado:
 ---
 
 ## 🏁 Conclusion
-
 Este laboratório simula um cenário real de SOC, cobrindo todo o ciclo de resposta a incidentes:
 
 - Detecção  
