@@ -140,5 +140,5 @@ SOC Analyst / NOC
 
 # 🔗 Contato
 
-LinkedIn: https://www.linkedin.com/  
-GitHub: https://github.com/TKrysiaki  
+LinkedIn: [https://www.linkedin.com/  ](https://www.linkedin.com/in/tiago-krysiaki-b3322b2a7/)
+Email: t.krysiaki91@gmail.com
