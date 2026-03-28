@@ -83,7 +83,7 @@ grep -a "Accepted password" /var/log/auth.log
 
 ### 4. Análise pós-login
 ```
-grep "session opened" /var/log/auth.log
+grep -a "session opened" /var/log/auth.log
 ```
 
 - Sessões abertas
