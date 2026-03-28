@@ -71,7 +71,7 @@ grep -a "192.168.56.103" /var/log/auth.log
 
 ### 3. Confirmação de comprometimento
 ```
-grep "Accepted password" /var/log/auth.log
+grep -a "Accepted password" /var/log/auth.log
 ```
 
 - Login bem-sucedido detectado
