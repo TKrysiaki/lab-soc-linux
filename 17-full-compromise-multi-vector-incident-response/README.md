@@ -18,19 +18,19 @@ O objetivo foi detectar, correlacionar e responder ao incidente utilizando a abo
 
 ---
 
-## 🖥️ Lab Environment
+## 🖥️ 🖥️ Ambiente do Laboratório
 
-- Attacker: Kali Linux
-- Target: Ubuntu Server
+- Atacante: Kali Linux
+- Alvo: Ubuntu Server
 - SIEM: Wazuh
-- Log sources:
+- Fontes de log:
   - `/var/log/apache2/access.log`
   - `/var/log/auth.log`
   - auditd (EXECVE)
 
 ---
 
-## 🌐 Attack Simulation
+## 🌐 Simulação do Ataque
 
 ### Web Enumeration
 ```
@@ -42,7 +42,7 @@ dirb http://192.168.56.107 /usr/share/wordlists/dirb/big.txt
 
 ---
 
-## 🔍 Detection & Investigation
+## 🔍 Detecção e Investigação
 
 ### 1. Monitoramento de logs web
 ```
@@ -105,7 +105,7 @@ ausearch -m EXECVE
 
 ---
 
-## 🧠 Timeline
+## 🧠 Linha do Tempo
 
 1. Reconhecimento web (dirb)
 2. Enumeração de diretórios
@@ -136,7 +136,7 @@ ausearch -m EXECVE
 
 ---
 
-## 🚨 Incident Classification
+## 🚨 Classificação do Incidente
 
 **Critical — Full System Compromise**
 
@@ -146,7 +146,7 @@ ausearch -m EXECVE
 
 ---
 
-## 🛡️ Incident Response
+## 🛡️ Resposta ao Incidente
 
 ### Decisão SOC
 ```echo "Host comprometido - isolar imediatamente da rede"```
@@ -167,7 +167,7 @@ sudo ip link set enp0s3 down
 
 ---
 
-## ⚠️ Impact Analysis
+## ⚠️ Análise de Impacto
 
 - Comprometimento total do host
 - Acesso root obtido
@@ -176,7 +176,7 @@ sudo ip link set enp0s3 down
 
 ---
 
-## 🔧 Mitigation
+## 🔧 Mitigação e Recomendações
 
 - Bloqueio de IP atacante
 - Reset de credenciais
@@ -186,7 +186,7 @@ sudo ip link set enp0s3 down
 
 ---
 
-## 🎯 Skills Demonstrated
+## 🎯 Habilidades Demonstradas
 
 - Log Analysis (Apache + SSH)
 - Attack Correlation
@@ -198,7 +198,7 @@ sudo ip link set enp0s3 down
 
 ---
 
-## 📎 Contact
+## 📎 Contato
 
 - LinkedIn: https://www.linkedin.com/in/tiago-krysiaki-b3322b2a7/
 - Email: t.krysiaki91@gmail.com
