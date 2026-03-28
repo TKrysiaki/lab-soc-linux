@@ -59,7 +59,7 @@ tail -f /var/log/apache2/access.log
 
 ### 2. Correlação com logs SSH
 ```
-grep 192.168.56.103 /var/log/auth.log
+grep -a "192.168.56.103" /var/log/auth.log
 ```
 
 - Tentativas repetidas de login
