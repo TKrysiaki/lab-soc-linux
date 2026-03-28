@@ -1,20 +1,20 @@
-# 🔴 Lab 17 — Multi-Vector Attack → Full Compromise → Incident Response
+# 🔴 Lab 17 — Ataque Multi-Vetor → Comprometimento Total → Resposta a Incidente
 
-**Simulated real-world SOC incident involving multi-stage attack, credential compromise, and full system takeover.**
+**Simulação de incidente real de SOC envolvendo ataque em múltiplas etapas, comprometimento de credenciais e controle total do sistema.**
 
 ---
 
-## 📌 Scenario
+## 📌 Cenário
 
-A Linux server was targeted by a multi-vector attack originating from a single attacker IP.
+Um servidor Linux foi alvo de um ataque multi-vetor originado de um único IP atacante.
 
-The attacker executed:
-- Web enumeration (reconnaissance)
-- SSH brute force (initial access)
-- Successful authentication
-- Privilege escalation to root
+O atacante executou:
+- Enumeração web (reconhecimento)
+- Brute force SSH (acesso inicial)
+- Autenticação bem-sucedida
+- Escalada de privilégio para root
 
-The objective was to detect, correlate, and respond to the incident using a SOC analyst approach.
+O objetivo foi detectar, correlacionar e responder ao incidente utilizando a abordagem de um analista SOC.
 
 ---
 
@@ -116,14 +116,23 @@ ausearch -m EXECVE
 
 ---
 
+## 🔍 Principais Achados
+
+- Um único IP realizou ataque multi-vetor
+- Comprometimento de credenciais confirmado
+- Escalada de privilégio para root identificada
+- Falha de visibilidade devido à ausência de configuração do auditd
+
+---
+
 ## 🧬 MITRE ATT&CK
 
-- T1046 — Network Service Discovery
-- T1083 — File and Directory Discovery
-- T1110 — Brute Force
-- T1078 — Valid Accounts
-- T1068 — Privilege Escalation
-- T1059 — Command Execution
+- T1046 — Descoberta de Serviços de Rede (Network Service Discovery)  
+- T1083 — Descoberta de Arquivos e Diretórios (File and Directory Discovery)  
+- T1110 — Força Bruta (Brute Force)  
+- T1078 — Contas Válidas (Valid Accounts)  
+- T1068 — Escalada de Privilégio (Privilege Escalation)  
+- T1059 — Execução de Comandos (Command Execution)  
 
 ---
 
