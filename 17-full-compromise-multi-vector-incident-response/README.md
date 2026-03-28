@@ -18,7 +18,7 @@ O objetivo foi detectar, correlacionar e responder ao incidente utilizando a abo
 
 ---
 
-## 🖥️ 🖥️ Ambiente do Laboratório
+## 🖥️ Ambiente do Laboratório
 
 - Atacante: Kali Linux
 - Alvo: Ubuntu Server
