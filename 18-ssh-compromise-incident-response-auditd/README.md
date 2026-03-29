@@ -1,8 +1,8 @@
-# 🛡️ LAB 18 — SSH Brute Force → Comprometimento → Contenção
+# 🛡️ LAB 18 — SSH Brute Force Incident → Compromise → Response (Auditd)
 
 ## 📌 Cenário
 
-Ataque de força bruta via SSH resultou em autenticação bem-sucedida, escalonamento de privilégio e atividade maliciosa no host alvo.
+Ataque de força bruta via SSH resultou em acesso não autorizado, escalonamento de privilégio e execução de comandos maliciosos no host alvo.
 
 ---
 ## 🧱 Ambiente do Laboratório
@@ -25,8 +25,16 @@ hydra -L users.txt -P /usr/share/wordlists/rockyou.txt ssh://192.168.56.107
 
 ---
 
+## 💥 Impacto
+- Acesso não autorizado ao sistema  
+- Execução de comandos com privilégio elevado  
+- Possível persistência (criação de usuário)
+
+---
+
 ## 🔍 Investigação
 ### 🔎 2. Falhas de login (Target)
+> Correlação de eventos por IP, usuário e linha do tempo do ataque.
 ```
 grep "Failed password" /var/log/auth.log
 ```
