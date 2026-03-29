@@ -1,4 +1,4 @@
-# 🛡️ LAB 18 — SSH Brute Force Incident → Compromise → Response (Auditd)
+# 🛡️ LAB 18 — SSH Brute Force Incident → Compromise → Containment (Auditd)
 
 ## 📌 Cenário
 
@@ -26,9 +26,9 @@ hydra -L users.txt -P /usr/share/wordlists/rockyou.txt ssh://192.168.56.107
 ---
 
 ## 💥 Impacto
-- Acesso não autorizado ao sistema  
-- Execução de comandos com privilégio elevado  
-- Possível persistência (criação de usuário)
+- Acesso não autorizado ao sistema
+- Execução de comandos com privilégio elevado
+- Criação de artefatos suspeitos no sistema
 
 ---
 
@@ -131,7 +131,8 @@ sudo iptables -L
 - T1110 — Força Bruta  
 - T1078 — Contas Válidas  
 - T1059 — Execução de Comandos  
-- T1098 — Manipulação de Conta  
+- T1098 — Manipulação de Conta
+- T1068 — Escalonamento de Privilégio
 
 ---
 
