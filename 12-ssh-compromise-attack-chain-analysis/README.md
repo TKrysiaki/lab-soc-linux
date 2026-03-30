@@ -1,341 +1,160 @@
-# 🔐 SSH Compromise Attack Chain Analysis
-## 📌 Lab Overview
-
-### This lab demonstrates a full attack lifecycle involving SSH brute force, successful authentication, privilege escalation, and persistence through password modification.
+# 🚨 Análise de Cadeia de Ataque: SSH Compromise + Privilege Escalation (SOC Analysis)
 
 ---
 
-## 🖥️ Lab Environment
-- Attacker: Kali Linux
-- Target: Ubuntu
-- Log source: /var/log/auth.log
+## 🎯 Cenário
+
+Um servidor Linux apresentou comportamento suspeito no serviço SSH, indicando tentativa de acesso não autorizado. A investigação revelou não apenas comprometimento inicial, mas também escalonamento de privilégios até root.
 
 ---
 
-## 🚨 Attack Investigation
+## 📊 Análise de Logs — Tentativas de Acesso
 
-## 🔹 Step 1 — Brute Force Detection
+O arquivo `/var/log/auth.log` registrou múltiplas falhas de autenticação via SSH:
 
-### Command:
-```
-grep "Failed password" /var/log/auth.log
-```
-- **grep** → searches for text inside files
-- **"Failed password"** → filters failed login attempts
-- **/var/log/auth.log** → system authentication log
+Esse padrão indica tentativa de brute force.
 
-## What + Why:
-
-- Identifies failed authentication attempts
-- Used to detect brute force activity
-
-
-
-## Analysis (SOC):
-- Multiple failed login attempts targeting user tiago  
-- Same source IP: 192.168.18.240  
-- Clear brute force pattern  
-
-**Event Details:**
-- IP: 192.168.18.240  
-- User: tiago  
-- Action: Multiple failed SSH login attempts  
-- Classification: Suspicious (Brute Force Attempt)   
-
-## Screenshot:
 <img src="images/01-ssh-failed-password.png" width="100%">
 
 ---
 
-## 🔹 Step 2 — Attack Correlation by IP
+## 🔍 Investigação — Correlação de IP
 
-### Command:
-```
-grep "192.168.18.240" /var/log/auth.log
-```
-- **grep** → searches for text
-- **"192.168.18.240"** → filters events from a specific IP address
-- **/var/log/auth.log** → log source
+Foi identificado que todas as tentativas são originadas do mesmo IP, caracterizando ataque automatizado.
 
-## What + Why:
-
-- Filters all activity related to attacker IP
-- Used to build attack timeline
-
-## Analysis (SOC):
-- Repeated authentication failures from the same IP  
-- Persistent connection attempts observed  
-- Indicates ongoing brute force activity  
-
-**Event Details:**
-- IP: 192.168.18.240  
-- User: tiago  
-- Action: Repeated authentication failures and connection attempts  
-- Classification: Suspicious (Ongoing Brute Force Activity)  
-
-Screenshot:
 <img src="images/02-ip-correlation-attack.png" width="100%">
 
 ---
 
-## 🔹 Step 3 — Successful Compromise
+## 🚨 Comprometimento Inicial
 
-### Command:
-```
-grep "Accepted password" /var/log/auth.log
-```
-- **grep** → searches for text
-- **"Accepted password"** → filters successful login attempts
-- **/var/log/auth.log** → authentication log
+Após diversas tentativas, o atacante conseguiu autenticação válida:
 
-## What + Why:
-
-- Detects successful authentication events
-
-## Analysis (SOC):
-- Successful SSH login detected for user tiago  
-- Same IP previously associated with brute force  
-- Indicates attacker gained access  
-
-**Event Details:**
-- IP: 192.168.18.240  
-- User: tiago  
-- Action: Successful SSH login (Accepted password)  
-- Classification: Malicious (Unauthorized Access)  
-
-## Screenshot:
 <img src="images/03-ssh-accepted-password.png" width="100%">
+
+👉 Isso confirma acesso inicial ao sistema (Initial Access)
 
 ---
 
-## 🔹 Step 4 — Privilege Escalation
+## ⚠️ Atividade Suspeita — Uso de Sudo
 
-### Command:
-
-```
-grep "sudo" /var/log/auth.log
-```
-- **grep** → searches for text
-- **"sudo"** → filters privileged command execution
-- **/var/log/auth.log** → records administrative actions
-
-## What + Why:
-
-- Detects commands executed with elevated privileges
-
-## Analysis (SOC):
-- User tiago executed commands with sudo privileges  
-- Indicates elevation to root-level access  
-- Activity occurs after successful compromise  
-
-**Event Details:**
-- IP: 192.168.18.240  
-- User: tiago  
-- Action: Execution of commands with sudo (root privileges)  
-- Classification: Malicious (Privilege Escalation)  
-
-## Screenshot:
+Logs mostram execução de comandos com privilégios elevados:
 
 <img src="images/04-sudo-activity.png" width="100%">
 
+Análise:
+
+- Usuário comprometido executando sudo  
+- Indício de tentativa de elevação de privilégio  
+
 ---
 
-## 🔹 Step 5 — Persistence Mechanism
+## 🔥 Escalonamento de Privilégio
 
-### Command:
-
-```
-grep "passwd" /var/log/auth.log
-```
-- **grep** → searches for text
-- **"passwd"** → filters password change events
-- **/var/log/auth.log** → records account modifications
-
-## What + Why:
-
-- Detects password changes
-
-## Analysis (SOC):
-- Password for user tiago changed by root  
-- Strong indicator of persistence mechanism  
-- Attacker likely securing continued access  
-
-**Event Details:**
-- IP: Local / Not logged  
-- User: root  
-- Action: Password change for user tiago  
-- Classification: Malicious (Persistence Mechanism)  
-
-## Screenshot:
+Foi identificado alteração de senha do usuário root:
 
 <img src="images/05-password-change-root.png" width="100%">
 
+👉 Isso indica comprometimento crítico do sistema
+
 ---
 
-## 🔹 Step 6 — Session Context
+## 🧠 Acesso Root Confirmado
 
-### Command:
-```
-grep "session opened" /var/log/auth.log
-```
-- **grep** → searches for text
-- **"session opened"** → filters session creation events
-- **/var/log/auth.log** → shows user login sessions
-
-## What + Why:
-
-- Shows session creation events
-
-## Analysis (SOC):
-- Session opened for user tiago with root privileges (uid=0)  
-- Confirms active session under elevated privileges  
-- Indicates post-compromise activity  
-
-**Event Details:**
-- IP: Local  
-- User: tiago (executed by root - uid=0)  
-- Action: Session opened with elevated privileges  
-- Classification: Malicious (Post-Compromise Activity)  
-
-## Screenshot:
+Sessão root foi aberta após a alteração de credenciais:
 
 <img src="images/06-session-opened-root.png" width="100%">
 
----
-
-## 🧠 Attack Timeline
-
-1. Multiple failed SSH login attempts (brute force)
-2. Persistent attack from single IP
-3. Successful login achieved
-4. Privilege escalation via sudo
-5. Password changed (persistence)
-6. Active session established
+👉 Controle total do sistema pelo atacante
 
 ---
 
-## 🎯 MITRE ATT&CK (Detailed)
+## 🧠 Análise SOC
+
+O incidente demonstra uma cadeia completa de ataque:
+
+1. Brute force SSH (tentativas falhadas)  
+2. Acesso inicial obtido (valid credentials)  
+3. Execução de comandos com sudo  
+4. Alteração de credenciais do root  
+5. Acesso root confirmado  
+
+Correlação:
+
+- Mesmo IP em todas as etapas  
+- Sequência lógica de ataque  
+- Evolução de acesso → privilégio total  
+
+Impacto:
+
+- Comprometimento total do host  
+- Controle administrativo completo  
+- Alto risco de persistência e movimentação lateral  
+
+Objetivo do atacante:
+
+- Obter acesso inicial  
+- Escalar privilégios  
+- Assumir controle total do sistema  
+
+Conclusão:
+
+Incidente crítico com comprometimento total do sistema.
+
+---
+
+## 🚨 Classificação
+
+Malicioso — ataque completo com privilege escalation bem-sucedido.
+
+---
+
+## 🛡️ Mitigação
+
+- Desabilitar autenticação por senha no SSH  
+- Implementar autenticação por chave  
+- Restringir uso de sudo  
+- Monitorar alterações em contas privilegiadas  
+- Resetar credenciais comprometidas  
+- Auditoria completa do sistema  
+
+---
+
+## 🧬 MITRE ATT&CK
 
 - T1110 — Brute Force  
 - T1078 — Valid Accounts  
 - T1548 — Abuse Elevation Control Mechanism  
-- T1098 — Account Manipulation  
-- T1059 — Command Execution  
+- TA0001 — Initial Access  
+- TA0004 — Privilege Escalation  
 
 ---
 
-## 🛡️ Mitigation
-- Implement Fail2ban
-- Disable password authentication (SSH keys only)
-- Restrict root login
-- Monitor authentication logs continuously
-- Use SIEM (Wazuh) for detection
+## 🧠 Habilidades Demonstradas
+
+- Análise de logs Linux (auth.log)  
+- Detecção de brute force  
+- Identificação de acesso não autorizado  
+- Investigação de privilege escalation  
+- Correlação de eventos  
+- Classificação de incidente crítico  
 
 ---
 
+## 📌 Conclusão
 
-## 📊 Final SOC Analysis
-- Brute force attack detected
-- Successful unauthorized access confirmed
-- Privilege escalation observed
-- Persistence mechanism identified
+Este laboratório demonstra uma cadeia completa de ataque real, onde um invasor evolui de tentativas de acesso até controle total do sistema.
 
-- Attacker Goal: Gain persistent privileged access via SSH compromise
+A análise evidencia a importância de:
 
-### 👉 Final Classification: COMPROMISED SYSTEM
-
----
-
-## 🧩 Skills Demonstrated
-- Log analysis
-- Threat detection
-- Attack correlation
-- Incident investigation
-- SOC-level reasoning
-- MITRE ATT&CK mapping
+- Monitoramento contínuo  
+- Controle de privilégios  
+- Correlação de eventos  
+- Resposta rápida a incidentes críticos  
 
 ---
 
-## 🚨 Incident Conclusion
+## 📬 Contato
 
-This activity confirms a full attack chain:
-- Brute force attack
-- Successful compromise
-- Privilege escalation
-- Persistence established
-
-Final Status: COMPROMISED SYSTEM
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki-b3322b2a7/  
+- Email: t.krysiaki91@gmail.com  
