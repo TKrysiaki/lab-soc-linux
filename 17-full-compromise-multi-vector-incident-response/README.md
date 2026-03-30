@@ -156,5 +156,7 @@ A decisão de isolamento foi baseada em:
 
 ## 📬 Contato
 
+Aberto a oportunidades em SOC / NOC / Cybersecurity Jr.
+
 - LinkedIn: https://www.linkedin.com/in/tiago-krysiaki  
 - Email: t.krysiaki91@gmail.com  
