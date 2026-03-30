@@ -1,122 +1,163 @@
-# 🚨 Detecção de Ataque Brute Force SSH com Análise SOC
+# 🚨 Detecção e Resposta a Ataque Brute Force SSH (SOC Analysis)
 
 ---
 
 ## 🎯 Cenário
 
-Foi identificado comportamento suspeito no serviço SSH de um servidor Linux, indicando tentativa de acesso não autorizado através de múltiplas autenticações falhadas.
+Foi identificado comportamento suspeito no serviço SSH de um servidor Linux, indicando tentativa de acesso não autorizado com possível comprometimento da máquina.
 
 ---
 
 ## ⚔️ Simulação de Ataque
 
-Foi executado um ataque de força bruta utilizando Hydra a partir de uma máquina atacante (Kali Linux) contra o servidor alvo (Ubuntu):
+O atacante utilizou Hydra para executar um ataque de força bruta contra o serviço SSH:
 
 hydra -l user -P rockyou.txt ssh://192.168.0.5
 
-O objetivo do atacante é descobrir credenciais válidas e obter acesso inicial ao sistema.
+O objetivo é descobrir credenciais válidas e obter acesso inicial ao sistema.
+
+<img src="images/01-hydra-attack-running.png" width="100%">
 
 ---
 
 ## 📊 Análise de Logs
 
-O arquivo `/var/log/auth.log` registrou diversas tentativas de login falhadas:
+O arquivo `/var/log/auth.log` registrou múltiplas falhas de autenticação:
 
-A presença de múltiplos eventos "Failed password" em sequência indica um padrão anômalo de autenticação.
+Esse padrão indica tentativa automatizada de acesso.
 
-<img src="images/01-ssh-failed-login-kali.png" width="100%">
-
-Esse comportamento não é típico de usuários legítimos e sugere tentativa automatizada de acesso.
+<img src="images/02-ssh-failed-logins.png" width="100%">
 
 ---
 
 ## 🔍 Investigação
 
-A análise dos eventos mostra:
+Foi identificado que todas as tentativas são originadas do mesmo IP, caracterizando ataque direcionado.
 
-- Repetição de tentativas em curto intervalo de tempo  
-- Mesmo IP de origem realizando diversas tentativas  
-- Ausência de sucesso inicial nas autenticações  
+<img src="images/03-attacker-ip-correlation.png" width="100%">
 
-Esse padrão é consistente com ferramentas de brute force como Hydra.
+O comportamento confirma uso de ferramenta automatizada (Hydra).
 
-<img src="images/02-multiple-attempts-same-ip.png" width="100%">
+---
+
+## 🚨 Comprometimento Identificado
+
+Após diversas tentativas, o atacante conseguiu autenticação válida no sistema.
+
+<img src="images/04-ssh-success-login.png" width="100%">
+
+Isso indica que o ataque foi **bem-sucedido**, elevando a gravidade do incidente.
+
+---
+
+## ⚠️ Acesso ao Sistema
+
+Após o login, foi aberta uma sessão SSH no servidor comprometido.
+
+<img src="images/05-session-opened.png" width="100%">
+
+Esse evento confirma **acesso inicial obtido pelo atacante**.
+
+---
+
+## 🧠 Análise de Execução (Pós-comprometimento)
+
+Logs do auditd mostram execução de comandos no sistema após o acesso:
+
+<img src="images/06-auditd-execve-analysis.png" width="100%">
+
+Análise:
+
+- Execução de comandos após login
+- Possível enumeração do sistema
+- Indício de atividade pós-exploração
 
 ---
 
 ## 🧠 Análise SOC
 
-O evento caracteriza um ataque de força bruta contra o serviço SSH.
+O incidente evolui de tentativa de brute force para comprometimento real do sistema.
 
-Correlação dos eventos:
-- Logs de falha de autenticação (auth.log)
-- Padrão repetitivo e automatizado
-- Origem única (IP atacante)
+Correlação completa:
 
-Detalhes:
-- IP atacante: 192.168.0.10  
-- Serviço alvo: SSH (porta 22)  
-- Técnica: tentativa de adivinhação de credenciais  
+1. Múltiplas falhas de login (auth.log)  
+2. Ataque automatizado (Hydra)  
+3. Login bem-sucedido  
+4. Abertura de sessão SSH  
+5. Execução de comandos (auditd)  
 
-Impacto potencial:
-Caso o ataque seja bem-sucedido, o invasor pode obter acesso inicial ao sistema, executar comandos remotos, movimentar lateralmente e comprometer outros ativos da rede.
+Impacto:
+
+- Acesso não autorizado confirmado  
+- Possível movimentação lateral  
+- Risco de persistência e exfiltração  
 
 Objetivo do atacante:
-Obter acesso inicial (Initial Access)
+
+- Obter acesso inicial  
+- Executar comandos no sistema comprometido  
 
 Conclusão:
-Atividade maliciosa confirmada, exigindo ação imediata.
 
-<img src="images/03-wazuh-alert-bruteforce.png" width="100%">
+Incidente crítico com comprometimento confirmado.
 
 ---
 
 ## 🚨 Classificação
 
-Malicioso — ataque de força bruta confirmado.
+Malicioso — acesso não autorizado com comprometimento do host.
 
 ---
 
-## 🛡️ Mitigação
+## 🛡️ Resposta e Mitigação
 
-Foi implementado bloqueio automático utilizando Fail2ban, impedindo novas tentativas do IP atacante.
+Ações executadas:
 
-Ações realizadas:
+- Isolamento do host comprometido  
 
-- Bloqueio do IP malicioso  
-- Limitação de tentativas de login  
-- Reforço na política de autenticação  
+<img src="images/07-host-isolation.png" width="100%">
 
-Recomendações adicionais:
+- Bloqueio do IP atacante  
 
-- Utilizar autenticação via chave SSH  
-- Desabilitar login por senha  
+<img src="images/08-block-attacker-ip.png" width="100%">
+
+Recomendações:
+
+- Desabilitar autenticação por senha  
+- Implementar autenticação por chave SSH  
 - Monitoramento contínuo via SIEM  
-
-<img src="images/04-fail2ban-ban-ip.png" width="100%">
+- Revisão de credenciais comprometidas  
 
 ---
 
 ## 🧬 MITRE ATT&CK
 
 - T1110 — Brute Force  
+- T1078 — Valid Accounts  
 - TA0001 — Initial Access  
+- TA0002 — Execution  
 
 ---
 
 ## 🧠 Habilidades Demonstradas
 
-- Análise de logs Linux (auth.log)  
-- Detecção de comportamento malicioso  
+- Análise de logs (auth.log, auditd)  
+- Detecção de brute force  
+- Identificação de comprometimento  
 - Correlação de eventos  
-- Uso de SIEM (Wazuh)  
-- Resposta a incidente com Fail2ban  
-- Classificação de ameaças  
+- Resposta a incidente (isolamento + bloqueio)  
+- Investigação pós-comprometimento  
 
 ---
 
 ## 📌 Conclusão
 
-O laboratório demonstrou um cenário realista de ataque de força bruta, desde a detecção até a resposta.
+O laboratório demonstrou um cenário completo de ataque real:
 
-A análise evidenciou a importância do monitoramento contínuo, correlação de eventos e aplicação de mecanismos automáticos de defesa para proteção de serviços críticos como SSH.
+Brute force → acesso → execução → resposta
+
+Evidenciando a importância de:
+
+- Monitoramento contínuo  
+- Correlação de eventos  
+- Resposta rápida a incidentes críticos
