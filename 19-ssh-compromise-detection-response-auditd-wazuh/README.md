@@ -8,9 +8,9 @@ Simular um comprometimento via SSH, analisar logs no host (Linux) e no SIEM (Waz
 
 ## 🧱 Ambiente do Lab
 
-- Kali Linux (Atacante)
-- Ubuntu (Alvo)
-- Wazuh (SIEM)
+- Kali Linux (Atacante)  
+- Ubuntu (Alvo)  
+- Wazuh (SIEM)  
 - Ferramentas:
   - SSH
   - auditd
@@ -18,80 +18,84 @@ Simular um comprometimento via SSH, analisar logs no host (Linux) e no SIEM (Waz
 
 ---
 
-## ⚔️ Simulação do Ataque
+## ⚙️ Preparação do Ambiente
 
-Foi realizado um acesso SSH válido a partir da máquina atacante (Kali), utilizando credenciais do usuário `tiago`.
+### Auditd ativo
 
-Após o acesso, foram executados comandos com privilégio elevado (`sudo`), simulando comportamento de pós-exploração.
+<img src="images/01-auditd-active.png" width="100%">
 
----
+### Wazuh Agent ativo
 
-## 🔎 Investigação
+<img src="images/02-wazuh-agent-active.png" width="100%">
 
-### 📌 Evidência 1 — Acesso SSH
+### Serviço SSH ativo
 
-<img src="images/01-ssh-accepted-login.png" width="100%">
+<img src="images/03-ssh-active.png" width="100%">
 
-- Log: `/var/log/auth.log`
-- Evento: `Accepted password`
-- Usuário: `tiago`
-- Origem: `192.168.56.103`
-
-**Análise SOC:**
-Autenticação bem-sucedida indica uso de credencial válida. Em contexto real, isso pode representar credenciais comprometidas.
+**Análise SOC:**  
+Ambiente preparado corretamente com coleta de logs ativa.
 
 ---
 
-### 📌 Evidência 2 — Elevação de Privilégio
+## ⚔️ Fase 1 — Tentativa de Ataque (Brute Force)
 
-<img src="images/02-sudo-access.png" width="100%">
+<img src="images/04-ssh-bruteforce-detected.png" width="100%">
+<img src="images/05-no-successful-login.png" width="100%">
 
-- Evento: `sudo`
-- Usuário: `tiago`
-- Acesso como: `root`
-
-**Análise SOC:**
-Usuário comum executando comandos como root caracteriza **Privilege Escalation**.
-
-**MITRE ATT&CK:**
-- T1548 – Abuse Elevation Control Mechanism
+**Análise SOC:**  
+Múltiplas tentativas de login falharam, caracterizando brute force.  
+Sem sucesso inicial.
 
 ---
 
-### 📌 Evidência 3 — Execução de Comandos (auditd)
+## ⚠️ Fase 2 — Falha de Defesa
 
-<img src="images/03-auditd-exec.png" width="100%">
+<img src="images/06-fail2ban-inactive.png" width="100%">
 
-- Log: `/var/log/audit/audit.log`
-- Evento: `EXECVE`
-- Comandos executados:
-  - `whoami`
-  - `ls`
-  - `tail`
-
-**Análise SOC:**
-Execução interativa de comandos indica atividade manual após acesso, típico de exploração real.
+**Análise SOC:**  
+Fail2ban desativado permitiu continuidade do ataque.
 
 ---
 
-### 📌 Evidência 4 — Detecção no Wazuh
+## 🚨 Fase 3 — Comprometimento
 
-<img src="images/04-wazuh-alert.png" width="100%">
+<img src="images/07-ssh-successful-login.png" width="100%">
 
-- Evento: `Successful sudo to ROOT executed`
+**Análise SOC:**  
+Login SSH bem-sucedido utilizando credencial válida.  
+Indica comprometimento de conta.
 
-**Análise SOC:**
-O SIEM correlacionou a atividade e gerou alerta de alto risco, confirmando comportamento suspeito.
+---
+
+## 🔎 Fase 4 — Pós-exploração (Auditd)
+
+<img src="images/08-auditd-post-exploitation.png" width="100%">
+<img src="images/09-auditd-decoded-commands.png" width="100%">
+
+**Análise SOC:**  
+Execução de comandos após acesso.  
+Comportamento típico de atacante interagindo com o sistema.
+
+---
+
+## 🧠 Fase 5 — Detecção no SIEM (Wazuh)
+
+<img src="images/10-attacker-commands-detected.png" width="100%">
+
+**Análise SOC:**  
+Wazuh detectou atividade suspeita com sucesso.  
+Correlação de eventos funcionando.
 
 ---
 
 ## 🧠 Timeline do Ataque
 
-1. Acesso SSH realizado com sucesso  
-2. Sessão autenticada  
-3. Execução de `sudo`  
-4. Execução de comandos (auditd)  
-5. Detecção e alerta no Wazuh  
+1. Serviços ativos (auditd, wazuh, ssh)  
+2. Tentativas de brute force  
+3. Defesa ausente (fail2ban)  
+4. Acesso SSH obtido  
+5. Execução de comandos  
+6. Detecção no SIEM  
 
 ---
 
@@ -99,34 +103,38 @@ O SIEM correlacionou a atividade e gerou alerta de alto risco, confirmando compo
 
 - Tipo: Comprometimento de conta  
 - Severidade: Alta  
-- Técnica: Acesso válido + elevação de privilégio  
+- Técnicas:
+  - Initial Access (SSH)
+  - Execution
+  - Privilege Escalation
 
 ---
 
 ## 🎯 Impacto
 
-- Acesso root obtido  
-- Possibilidade de controle total do sistema  
-- Risco de persistência e movimentação lateral  
+- Acesso não autorizado  
+- Possível controle total do sistema  
+- Risco de movimentação lateral  
 
 ---
 
 ## 🛡️ Mitigação
 
+- Ativar Fail2ban  
 - Bloquear IP atacante  
-- Forçar troca de senha do usuário  
-- Implementar autenticação por chave SSH  
-- Configurar Fail2ban  
-- Criar Active Response no Wazuh para bloqueio automático  
+- Trocar credenciais  
+- Usar autenticação por chave SSH  
+- Implementar Active Response no Wazuh  
 
 ---
 
 ## 💡 Aprendizados
 
-- Acesso válido não significa atividade legítima  
-- Correlação entre logs é essencial em SOC  
-- auditd fornece visibilidade detalhada de execução  
-- SIEM (Wazuh) é fundamental para detecção centralizada  
+- Defesa desativada facilita ataque  
+- Logs são essenciais para investigação  
+- auditd dá visibilidade detalhada  
+- SIEM permite correlação eficiente  
+- Ataques seguem uma cadeia clara  
 
 ---
 
