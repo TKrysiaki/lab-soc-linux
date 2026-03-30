@@ -1,212 +1,160 @@
-# 🔴 Lab 17 — Ataque Multi-Vetor → Comprometimento Total → Resposta a Incidente
-
-**Simulação de incidente real de SOC envolvendo ataque em múltiplas etapas, comprometimento de credenciais e controle total do sistema.**
+# 🚨 Multi-Vector Attack Analysis: Web Enumeration → SSH Brute Force → Incident Response
 
 ---
 
-## 📌 Cenário
+## 🎯 Cenário
 
-Um servidor Linux foi alvo de um ataque multi-vetor originado de um único IP atacante.
-
-O atacante executou:
-- Enumeração web (reconhecimento)
-- Brute force SSH (acesso inicial)
-- Autenticação bem-sucedida
-- Escalada de privilégio para root
-
-O objetivo foi detectar, correlacionar e responder ao incidente utilizando a abordagem de um analista SOC.
+Um servidor Linux exposto apresentou atividade suspeita iniciada por enumeração web, seguida por tentativa de acesso via SSH. A investigação teve como objetivo determinar se houve comprometimento real e definir a resposta adequada.
 
 ---
 
-## 🖥️ Ambiente do Laboratório
+## 🌐 Fase 1 — Enumeração Web
 
-- Atacante: Kali Linux
-- Alvo: Ubuntu Server
-- SIEM: Wazuh
-- Fontes de log:
-  - `/var/log/apache2/access.log`
-  - `/var/log/auth.log`
-  - auditd (EXECVE)
-
----
-
-## 🌐 Simulação do Ataque
-
-### Web Enumeration
-```
-dirb http://192.168.56.107 /usr/share/wordlists/dirb/big.txt
-```
-
-- Geração de múltiplas requisições HTTP
-- Identificação de diretórios e arquivos
-
----
-
-## 🔍 Detecção e Investigação
-
-### 1. Monitoramento de logs web
-```
-tail -f /var/log/apache2/access.log
-```
-
-- Alto volume de requisições
-- Múltiplos códigos 404/403
-- Padrão automatizado (não humano)
+Foi identificada atividade de enumeração utilizando ferramenta de directory brute force (dirb/gobuster).
 
 <img src="images/01-web-enumeration-dirb-attack.png" width="100%">
 
+Análise:
+
+- Múltiplas requisições HTTP  
+- Tentativa de descoberta de diretórios  
+- Indício de reconhecimento inicial  
+
+👉 Fase de Reconnaissance
+
 ---
 
-### 2. Correlação com logs SSH
-```
-grep -a "192.168.56.103" /var/log/auth.log
-```
+## ⚔️ Fase 2 — Ataque SSH
 
-- Tentativas repetidas de login
-- Ataque de brute force identificado
+Após a enumeração, foi identificado brute force contra o serviço SSH.
 
 <img src="images/02-ssh-brute-force-from-web-attacker.png" width="100%">
 
+👉 Mudança de vetor: Web → SSH
+
 ---
 
-### 3. Confirmação de comprometimento
-```
-grep -a "Accepted password" /var/log/auth.log
-```
+## 🚨 Fase 3 — Acesso Inicial
 
-- Login bem-sucedido detectado
-- Conta comprometida
+O atacante obteve sucesso na autenticação:
 
 <img src="images/03-successful-ssh-login-after-brute-force.png" width="100%">
 
+👉 Acesso inicial confirmado (Initial Access)
+
 ---
 
-### 4. Análise pós-login
-```
-grep -a "session opened" /var/log/auth.log
-```
+## 🧠 Fase 4 — Atividade Pós-Login
 
-- Sessões abertas
-- Uso de sudo → acesso root
+Foi observada abertura de sessão no sistema:
 
 <img src="images/04-post-login-session-activity.png" width="100%">
 
----
-
-### 5. Análise de execução de comandos
-```
-ausearch -m EXECVE
-```
-
-- Nenhum comando registrado
-- Falha de visibilidade (auditd não configurado)
+Porém:
 
 <img src="images/05-no-command-execution-logged.png" width="100%">
 
----
+Análise:
 
-## 🧠 Linha do Tempo
-
-1. Reconhecimento web (dirb)
-2. Enumeração de diretórios
-3. Brute force SSH
-4. Login bem-sucedido
-5. Escalada de privilégio (sudo → root)
-6. Atividade pós-comprometimento (sem visibilidade)
+- Sem execução clara de comandos  
+- Sem evidência de ações maliciosas imediatas  
+- Possível acesso inicial sem exploração ativa  
 
 ---
 
-## 🔍 Principais Achados
+## 🧠 Análise SOC
 
-- Um único IP realizou ataque multi-vetor
-- Comprometimento de credenciais confirmado
-- Escalada de privilégio para root identificada
-- Falha de visibilidade devido à ausência de configuração do auditd
+Correlação dos eventos:
 
----
+1. Enumeração web (reconhecimento)  
+2. Ataque brute force SSH  
+3. Login bem-sucedido  
+4. Sessão aberta  
+5. Ausência de comandos executados  
 
-## 🧬 MITRE ATT&CK
+Interpretação:
 
-- T1046 — Descoberta de Serviços de Rede (Network Service Discovery)  
-- T1083 — Descoberta de Arquivos e Diretórios (File and Directory Discovery)  
-- T1110 — Força Bruta (Brute Force)  
-- T1078 — Contas Válidas (Valid Accounts)  
-- T1068 — Escalada de Privilégio (Privilege Escalation)  
-- T1059 — Execução de Comandos (Command Execution)  
+- Cadeia de ataque incompleta  
+- Comprometimento inicial confirmado  
+- Sem evidência de pós-exploração ativa  
 
----
+Risco:
 
-## 🚨 Classificação do Incidente
+Alto — acesso válido ao sistema permite execução futura de ações maliciosas
 
-**Critical — Full System Compromise**
+Problema crítico:
 
-- Acesso inicial obtido
-- Escalada de privilégio confirmada
-- Falta de visibilidade pós-comprometimento
+- Falta de visibilidade (logs incompletos)  
+- Não é possível garantir ausência de atividade  
 
 ---
 
-## 🛡️ Resposta ao Incidente
+## ⚖️ Decisão do Analista
 
-### Decisão SOC
-```echo "Host comprometido - isolar imediatamente da rede"```
+Mesmo sem evidência de execução de comandos:
+
+👉 O acesso não autorizado já caracteriza incidente de segurança
+
+Decisão:
+
+Isolamento imediato do host para contenção
+
+---
+
+## 🛡️ Resposta a Incidente
+
+Decisão de isolamento:
 
 <img src="images/06-incident-response-isolate-host-decision.png" width="100%">
 
----
-
-### Contenção
-```
-sudo ip link set enp0s3 down
-```
-
-- Interface de rede desativada
-- Comunicação com atacante interrompida
+Execução:
 
 <img src="images/07-host-isolation-network-down.png" width="100%">
 
 ---
 
-## ⚠️ Análise de Impacto
+## 🚨 Classificação
 
-- Comprometimento total do host
-- Acesso root obtido
-- Possível persistência e movimentação lateral
-- Falha de logging (auditd)
+Malicioso — acesso não autorizado com risco de comprometimento ativo.
 
 ---
 
-## 🔧 Mitigação e Recomendações
+## 🧬 MITRE ATT&CK
 
-- Bloqueio de IP atacante
-- Reset de credenciais
-- Hardening SSH (fail2ban, disable root login)
-- Configuração de auditd
-- Monitoramento contínuo via SIEM
-
----
-
-## 🎯 Habilidades Demonstradas
-
-- Log Analysis (Apache + SSH)
-- Attack Correlation
-- Incident Detection
-- Timeline Reconstruction
-- MITRE ATT&CK Mapping
-- Incident Response (Containment)
-- SOC Analyst Mindset
+- T1595 — Active Scanning  
+- T1110 — Brute Force  
+- T1078 — Valid Accounts  
+- TA0001 — Initial Access  
+- TA0007 — Discovery  
 
 ---
 
-## 📎 Contato
+## 🧠 Habilidades Demonstradas
 
-- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki-b3322b2a7/
-- Email: t.krysiaki91@gmail.com
+- Análise multi-vetor (Web + SSH)  
+- Correlação de eventos  
+- Identificação de ataque em cadeia  
+- Tomada de decisão em cenário ambíguo  
+- Resposta a incidente (containment)  
+- Pensamento analítico de SOC  
 
+---
 
+## 📌 Conclusão
 
+Este laboratório demonstra um cenário realista onde múltiplos vetores são utilizados em sequência para comprometer um sistema.
 
+Mesmo na ausência de evidências claras de pós-exploração, o acesso não autorizado representa um risco crítico, exigindo ação imediata.
 
+A decisão de isolamento foi baseada em:
 
+- Cadeia de ataque identificada  
+- Acesso confirmado  
+- Falta de visibilidade confiável  
 
+---
 
+## 📬 Contato
+
+- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki  
+- Email: t.krysiaki91@gmail.com  
