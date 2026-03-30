@@ -156,5 +156,5 @@ A análise evidencia a importância de:
 
 ## 📬 Contato
 
-- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki-b3322b2a7/  
+- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki
 - Email: t.krysiaki91@gmail.com  
