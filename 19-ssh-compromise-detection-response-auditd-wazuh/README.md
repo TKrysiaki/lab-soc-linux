@@ -88,7 +88,7 @@ Correlação de eventos funcionando.
 
 ## 📊 Detecção no SIEM (Wazuh Dashboard)
 
-<img src="images/12-wazuh-event-details.png" width="100%">
+<img src="images/11-wazuh-event-details.png" width="100%">
 
 **Análise SOC:**
 
