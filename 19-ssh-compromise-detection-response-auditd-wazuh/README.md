@@ -180,5 +180,7 @@ A análise reforça a importância de:
 
 ## 📬 Contato
 
-- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki
+Aberto a oportunidades em SOC / NOC / Cybersecurity Jr.
+
+- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki  
 - Email: t.krysiaki91@gmail.com  
