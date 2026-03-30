@@ -1,212 +1,161 @@
-# SOC Lab — SSH Brute Force Detection with Wazuh SIEM + Fail2ban
-
-## Overview
-
-### This lab demonstrates the complete security monitoring cycle used in a SOC environment:
-
-- Attack simulation
-
-- Log generation
-
-- SIEM detection
-
-- MITRE ATT&CK classification
-
-- Automated incident response
-
-### The environment simulates a real brute force attack against an SSH service, detected by Wazuh SIEM and automatically mitigated using Fail2ban.
+# 🚨 Detecção de Brute Force SSH com Wazuh + Resposta com Fail2ban
 
 ---
 
-## Lab Architecture
+## 🎯 Cenário
 
-Attacker: Kali Linux
-
-Target: Ubuntu Server
-
-SIEM: Wazuh Server
-
-Attack Tool: Hydra
-
-Defense Tool: Fail2ban
-
-```
-Attacker: Kali Linux (Hydra)
-        │
-        ▼
-Target: Ubuntu Server (SSH)
-        │
-        ▼
-Logs: /var/log/auth.log
-        │
-        ▼
-Detection: Wazuh SIEM
-        │
-        ▼
-MITRE ATT&CK: T1110 – Brute Force
-        │
-        ▼
-Response: Fail2ban blocks attacker IP
-```
+Um servidor Linux foi alvo de tentativas de acesso não autorizado via SSH. O objetivo foi detectar o ataque utilizando Wazuh (SIEM) e implementar resposta automática com Fail2ban.
 
 ---
 
-## Attack Simulation
+## 📊 Análise de Logs — Tentativas de Login
 
-The attack was performed using Hydra, attempting a brute force login against the SSH service.
-```bash
-hydra -l tiago -P /usr/share/wordlists/rockyou.txt ssh://192.168.18.239
-```
-This command attempts multiple password combinations from a wordlist against the SSH service to simulate a brute force attack scenario.
+Foram identificadas falhas de autenticação no SSH:
 
-## Log Evidence
+<img src="images/01-ssh-failed-login-kali.png" width="100%">
 
-Ubuntu system logs captured the attack attempts:
+Logs locais confirmam tentativas inválidas:
 
 <img src="images/04-ubuntu-auth-log-ssh-failed.png" width="100%">
 
-### Example log entry:
-```bash
-Failed password for tiago from 192.168.18.240 port 53030 ssh2
-```
 ---
 
-## Detection in Wazuh SIEM
+## 📡 Detecção no SIEM (Wazuh)
 
-Wazuh detected the authentication failures and generated security alerts.
+O Wazuh detectou eventos de autenticação falhada:
+
+<img src="images/02-wazuh-ssh-authentication-failed.png" width="100%">
+
+Detalhes do evento:
+
+<img src="images/03-wazuh-ssh-event-details.png" width="100%">
+
+Múltiplos eventos correlacionados:
 
 <img src="images/07-wazuh-multiple-ssh-failed-events.png" width="100%">
 
-Alert details:
-
-- Rule ID: 5760
-
-- Service: sshd
-
-- Log source: /var/log/auth.log
+Alerta gerado:
 
 <img src="images/08-wazuh-ssh-alert-details.png" width="100%">
 
----
-
-## MITRE ATT&CK Classification
-
-The attack was mapped to the MITRE ATT&CK framework.
-
-Technique:
-
-T1110 — Brute Force
+Classificação MITRE no Wazuh:
 
 <img src="images/09-wazuh-mitre-password-guessing.png" width="100%">
 
 ---
 
-## Automated Response with Fail2ban
+## ⚔️ Simulação de Ataque
 
-To mitigate brute force attacks, Fail2ban was configured to automatically block IP addresses after multiple failed login attempts.
+Foi executado brute force com Hydra:
 
-Configuration used:
-```bash
-[sshd]
-enabled = true
-maxretry = 3
-bantime = 3600
-findtime = 600
-```
-This configuration blocks an IP address after 3 failed authentication attempts within a 10-minute window. The offending IP is then banned for 1 hour, preventing further login attempts.
+<img src="images/05-hydra-ssh-bruteforce-kali.png" width="100%">
 
-<img src="images/14-fail2ban-ssh-3-attempts-config.png" width="100%">
+Logs confirmam volume elevado de tentativas:
+
+<img src="images/06-ubuntu-ssh-bruteforce-logs.png" width="100%">
 
 ---
 
-## Automated Response with Fail2ban
+## 🧠 Análise SOC
 
-Fail2ban was configured to block IP addresses after 3 failed login attempts.
+O comportamento identificado caracteriza ataque de força bruta contra o serviço SSH.
 
-Configuration:
-```bash
-[sshd]
-enabled = true
-maxretry = 3
-bantime = 3600
-findtime = 600
-```
-<img src="images/14-fail2ban-ssh-3-attempts-config.png" width="100%">
+Evidências:
+
+- Múltiplas falhas consecutivas de login  
+- Detecção correlacionada no SIEM (Wazuh)  
+- Origem consistente (mesmo IP)  
+- Padrão automatizado (Hydra)  
+
+Correlação:
+
+- auth.log (host)  
+- alertas Wazuh (SIEM)  
+- atividade do atacante (Kali)  
+
+Impacto:
+
+- Risco de comprometimento do sistema  
+- Possibilidade de acesso não autorizado  
+
+Objetivo do atacante:
+
+- Descobrir credenciais válidas  
+- Obter acesso inicial ao sistema  
+
+Conclusão:
+
+Atividade maliciosa confirmada.
 
 ---
 
-## Attack Mitigation
+## 🚨 Classificação
 
-After detecting multiple failed logins, Fail2ban automatically blocked the attacker IP.
+Malicioso — tentativa de brute force detectada.
+
+---
+
+## 🛡️ Resposta com Fail2ban
+
+Instalação:
+
+<img src="images/10-install-fail2ban.png" width="100%">
+
+Serviço ativo:
+
+<img src="images/11-fail2ban-service-running.png" width="100%">
+
+Jail SSH configurada:
+
+<img src="images/12-fail2ban-ssh-jail-active.png" width="100%">
+
+Bloqueio após múltiplas tentativas:
+
+<img src="images/13-fail2ban-ssh-bruteforce-block.png" width="100%">
+
+Configuração de limite:
+
+<img src="images/14-fail2ban-ssh-3-attempts-config.png" width="100%">
+
+Teste de ataque:
+
+<img src="images/15-hydra-ssh-test-fail2ban.png" width="100%">
+
+IP bloqueado:
 
 <img src="images/16-fail2ban-ip-blocked.png" width="100%">
 
-Blocked IP:
-```bash
-192.168.18.240
-```
+---
+
+## 🧬 MITRE ATT&CK
+
+- T1110 — Brute Force  
+- TA0001 — Initial Access  
 
 ---
 
-## Security Monitoring Capabilities Demonstrated
+## 🧠 Habilidades Demonstradas
 
-✔ SSH brute force detection
-✔ Log analysis
-✔ SIEM alert investigation
-✔ MITRE ATT&CK mapping
-✔ Automated incident response
-✔ Threat monitoring workflow
-
----
-
-## Technologies Used
-
-- Wazuh SIEM
-
-- Ubuntu Server
-
-- Kali Linux
-
-- Hydra
-
-- Fail2ban
-
-- SSH
-
-- MITRE ATT&CK Framework
+- Análise de logs Linux (auth.log)  
+- Monitoramento com SIEM (Wazuh)  
+- Detecção de ataque brute force  
+- Correlação de eventos  
+- Implementação de resposta automática (Fail2ban)  
+- Hardening de serviço SSH  
 
 ---
 
-## Skills Demonstrated
+## 📌 Conclusão
 
-Security Monitoring
-Log Analysis
-Threat Detection
-Incident Response
-SIEM Investigation
-Linux Security Hardening
+O laboratório demonstrou a detecção eficaz de um ataque de brute force utilizando SIEM (Wazuh) e a implementação de uma resposta automatizada com Fail2ban.
+
+A integração entre monitoramento e defesa permitiu identificar e bloquear o atacante rapidamente, reduzindo o risco de comprometimento.
 
 ---
 
-## Author
+## 📬 Contato
 
-### Tiago
-Cybersecurity Student | SOC / Blue Team Focus
+Aberto a oportunidades em SOC / NOC / Cybersecurity Jr.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki  
+- Email: t.krysiaki91@gmail.com  
