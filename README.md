@@ -1,81 +1,89 @@
-## 🎯 Cenário
+# 🚨 SOC Analyst Lab Portfolio (Linux + SIEM + Detection Engineering)
 
-Foi identificado um possível comportamento suspeito no serviço SSH de um servidor Linux, indicando tentativa de acesso não autorizado.
-
----
-
-## ⚔️ Simulação de Ataque
-
-Foi executado um ataque de força bruta utilizando Hydra contra o serviço SSH:
-
-hydra -l user -P rockyou.txt ssh://192.168.0.5
+Este repositório demonstra experiência prática em operações de segurança (SOC), com foco em detecção, investigação e resposta a incidentes em ambientes Linux.
 
 ---
 
-## 📊 Análise de Logs
+## 🎯 Objetivo
 
-Os logs em /var/log/auth.log apresentaram múltiplas tentativas de login falhadas:
+Simular cenários reais de segurança para desenvolver habilidades práticas em:
 
-Failed password for user from 192.168.0.10
-
----
-
-## 🔍 Investigação
-
-- Volume alto de tentativas em curto período
-- Mesmo IP repetindo tentativas
-- Padrão típico de brute force
+- Análise de logs (auth.log, auditd)
+- Detecção de ameaças (Wazuh SIEM)
+- Investigação de incidentes
+- Correlação de eventos
+- Resposta e mitigação
 
 ---
 
-## 🧠 Análise SOC
+## 🖥️ Ambiente
 
-O evento caracteriza um ataque de força bruta contra o serviço SSH.
-
-- IP atacante: 192.168.0.10
-- Alvo: servidor SSH
-- Técnica: tentativa de adivinhação de credenciais
-
-Risco:
-Alto — possibilidade de comprometimento da conta
-
-Objetivo do atacante:
-Obter acesso inicial ao sistema
+- Kali Linux (Atacante)
+- Ubuntu Server (Alvo)
+- Wazuh (SIEM)
+- auditd (Host logging)
+- Fail2ban (Defesa)
 
 ---
 
-## 🚨 Classificação
+## 🔥 Labs em Destaque
 
-Malicioso — ataque confirmado
+### 🚨 Comprometimento e Resposta
 
----
-
-## 🛡️ Mitigação
-
-- Bloqueio automático com Fail2ban
-- Restrição de tentativas de login
-- Recomendação de uso de chave SSH
+- 🔗 [Lab 19 - SSH Compromise + Detection + Response](https://github.com/TKrysiaki/lab-soc-linux/tree/main/19-ssh-compromise-detection-response-auditd-wazuh)
+- 🔗 [Lab 18 - SSH Compromise + Incident Response (auditd)](https://github.com/TKrysiaki/lab-soc-linux/tree/main/18-ssh-compromise-incident-response-auditd)
 
 ---
 
-## 🧬 MITRE ATT&CK
+### 🧠 Análise e Decisão SOC
 
-- T1110 — Brute Force
-- TA0001 — Initial Access
+- 🔗 [Lab 17 - Multi-Vector Attack + SOC Decision](https://github.com/TKrysiaki/lab-soc-linux/tree/main/17-full-compromise-multi-vector-incident-response)
+- 🔗 [Lab 12 - SSH Attack Chain + Privilege Escalation](https://github.com/TKrysiaki/lab-soc-linux/tree/main/12-ssh-compromise-attack-chain-analysis)
 
 ---
 
-## 📸 Evidências
+### 📡 Detecção e Monitoramento
 
-<img src="images/01-ssh-failed-login-kali.png" width="100%">
-<img src="images/02-wazuh-alert-bruteforce.png" width="100%">
-<img src="images/03-fail2ban-ban-ip.png" width="100%">
+- 🔗 [Lab 14 - auditd + Wazuh Custom Detection](https://github.com/TKrysiaki/lab-soc-linux/tree/main/14-file-access-monitoring-investigation-auditd)
+- 🔗 [Lab 08 - Wazuh + Brute Force Detection](https://github.com/TKrysiaki/lab-soc-linux/tree/main/08-wazuh-siem-bruteforce-detection)
+
+---
+
+### 🔍 Investigação
+
+- 🔗 [Lab 10 - Unauthorized Access + Credential Dumping](https://github.com/TKrysiaki/lab-soc-linux/tree/main/10-unauthorized-file-access-investigation)
+
+---
+
+### 🛡️ Hardening
+
+- 🔗 [Lab 15 - SSH Hardening after Brute Force](https://github.com/TKrysiaki/lab-soc-linux/tree/main/15-ssh-bruteforce-detection-hardening)
 
 ---
 
 ## 🧠 Habilidades Demonstradas
 
 - Análise de logs Linux
-- Detecção de ataque
-- Uso de SIEM (Wazuh)
-- Resposta a incidente
+- Detecção de ataques (Brute Force, Credential Access)
+- Correlação de eventos (Host + SIEM)
+- Investigação de incidentes
+- Response (containment e mitigação)
+- Detection Engineering (regras no Wazuh)
+- Hardening de serviços
+
+---
+
+## 📈 Progressão dos Labs
+
+Os laboratórios seguem uma evolução prática:
+
+Brute Force → Detecção → Comprometimento → Pós-exploração → Resposta → Hardening
+
+---
+
+## 📬 Contato
+
+Aberto a oportunidades em SOC / NOC / Cybersecurity Jr.
+
+- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki  
+- Email: t.krysiaki91@gmail.com  
