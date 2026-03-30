@@ -161,3 +161,12 @@ Evidenciando a importância de:
 - Monitoramento contínuo  
 - Correlação de eventos  
 - Resposta rápida a incidentes críticos
+
+---
+
+## 📬 Contato
+
+Aberto a oportunidades em SOC / NOC / Cybersecurity Jr.
+
+- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki  
+- Email: t.krysiaki91@gmail.com  
