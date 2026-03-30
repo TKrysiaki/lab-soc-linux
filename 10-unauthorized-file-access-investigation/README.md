@@ -1,162 +1,140 @@
-# 🔍 Lab 10 - Unauthorized File Access Investigation
-
-## 🎯 Objective
-Detect and investigate unauthorized access attempts to sensitive files in a Linux environment using log analysis.
+# 🚨 Investigação de Acesso Não Autorizado e Tentativa de Leitura de Credenciais (SOC Analysis)
 
 ---
 
-## 🖥️ Lab Environment
+## 🎯 Cenário
 
-- Attacker: Kali Linux
-- Target: Ubuntu Server
-- Access method: SSH
-- Logs analyzed: /var/log/auth.log
+Foi identificado acesso bem-sucedido via SSH em um servidor Linux. A investigação teve como objetivo analisar possíveis ações maliciosas realizadas após o login.
 
 ---
 
-## ⚔️ Attack Simulation
+## 🚨 Acesso Inicial
 
-### SSH access from attacker machine:
-```
-ssh tiago@192.168.18.237
-```
-This command establishes an SSH connection from the attacker machine to the target system.
-
-> Analysis:
-> SSH access represents an initial access vector.
-> A successful login may indicate unauthorized access or the use of valid credentials by an attacker.
+Login SSH realizado com sucesso:
 
 <img src="images/01-ssh-login-success.png" width="100%">
 
+👉 Indica acesso válido ao sistema
+
 ---
 
+## ⚠️ Tentativa de Acesso Sensível
 
-### Attempt to access sensitive file:
-```
-cat /etc/shadow
-```
-This command attempts to access the sensitive file **/etc/shadow**, which stores hashed user credentials.
-
-> **Analysis:**
-> 
-> Access to this file is restricted to privileged users.  
-> Any attempt to read it may indicate **credential access attempts** or **privilege escalation activity**.
+Foi detectada tentativa de acesso ao arquivo `/etc/shadow`, que contém hashes de senha:
 
 <img src="images/02-shadow-access-attempt.png" width="100%">
 
----
-
-## 🔎 Investigation
-
-### Search for sensitive file access:
-```
-grep shadow /var/log/auth.log
-```
-> **Analysis:**
-> 
-> This command filters authentication logs looking for references to **/etc/shadow**, a sensitive file related to user credentials.  
-> Any interaction may indicate **suspicious activity or credential access attempts**.
+Evidência nos logs:
 
 <img src="images/03-shadow-log-evidence.png" width="100%">
 
----
+Análise:
 
-### Search for privilege escalation:
-```
-grep sudo /var/log/auth.log
-```
-This command filters authentication logs to identify actions executed with sudo, which indicates privilege escalation.
-> Analysis:
-> The use of sudo represents a privilege escalation event, allowing execution of commands as root.
-> Monitoring these actions is critical, as attackers often leverage elevated privileges to modify the system or access sensitive data.
-
-<img src="images/04-sudo-commands-log.png" width="100%"> 
+- Acesso a arquivo crítico do sistema  
+- Indicativo de tentativa de coleta de credenciais  
+- Comportamento altamente suspeito  
 
 ---
 
-### Build attack timeline:
-```
-grep "2026-03-17" /var/log/auth.log
-```
-This command filters authentication logs to display events from a specific date, enabling timeline analysis.
+## 🧠 Uso de Privilégios Elevados
 
-> Analysis:
-> Creating a timeline is essential in SOC investigations to correlate events and understand attack progression.
-> It allows identification of key actions such as initial access, privilege escalation, and suspicious commands execution.
+Execução de comandos com sudo:
+
+<img src="images/04-sudo-commands-log.png" width="100%">
+
+Análise:
+
+- Usuário elevando privilégios  
+- Possível tentativa de obter acesso root  
+- Indicativo de exploração pós-login  
+
+---
+
+## 📊 Linha do Tempo do Ataque
+
+Sequência dos eventos:
 
 <img src="images/05-attack-timeline.png" width="100%">
 
----
+Fluxo identificado:
 
-## 🕒 Timeline of Events
-
-- Successful SSH login detected
-- Session opened for user
-- Execution of sudo commands
-- Suspicious command executed:
-  - apt install shadow
-
-> **Analysis:**
-> Timeline analysis helps identify the sequence of attacker actions, including initial access, privilege escalation, and post-exploitation activity.
-> 
- ---
-
-## 🚨 Findings
-
-- Attempt to access sensitive file (/etc/shadow)
-- Use of privilege escalation via sudo
-- Execution of commands related to the authentication system
-- Indicators of suspicious activity
+1. Login SSH bem-sucedido  
+2. Tentativa de acesso ao `/etc/shadow`  
+3. Execução de comandos com sudo  
 
 ---
 
-## 🧠 Conclusion
+## 🧠 Análise SOC
 
-### Suspicious activity was identified following SSH access, including privilege escalation and interaction with sensitive system components.
-The behavior suggests a potential attempt to access or manipulate authentication data.
+O comportamento indica possível comprometimento de conta seguido de tentativa de coleta de credenciais e elevação de privilégios.
+
+Correlação:
+
+- Login válido (auth.log)  
+- Tentativa de acesso a arquivo sensível  
+- Uso de sudo após login  
+
+Impacto:
+
+- Risco de exposição de credenciais  
+- Possível escalonamento de privilégio  
+- Comprometimento potencial do sistema  
+
+Objetivo do atacante:
+
+- Obter hashes de senha  
+- Escalar privilégios  
+- Manter persistência  
+
+Conclusão:
+
+Atividade maliciosa altamente suspeita, com indícios de pós-exploração.
 
 ---
 
-## 🛡️ Mitigation
+## 🚨 Classificação
 
-- Restrict sudo privileges
-- Monitor access to sensitive files
-- Implement alerting for suspicious commands
-- Review authentication logs regularly
+Malicioso — tentativa de acesso a credenciais sensíveis com uso de privilégios elevados.
 
 ---
 
-## 🧰 Skills Demonstrated
+## 🧬 MITRE ATT&CK
 
-- Linux Log Analysis
-- SSH Investigation
-- Privilege Escalation Detection
-- Threat Analysis
-- Timeline Correlation
+- T1003 — OS Credential Dumping  
+- T1078 — Valid Accounts  
+- T1548 — Abuse Elevation Control Mechanism  
+- TA0001 — Initial Access  
+- TA0004 — Privilege Escalation  
+- TA0006 — Credential Access  
 
+---
 
+## 🧠 Habilidades Demonstradas
 
+- Análise de logs Linux  
+- Identificação de acesso suspeito  
+- Detecção de tentativa de credential dumping  
+- Investigação de uso de sudo  
+- Construção de timeline de ataque  
+- Correlação de eventos  
 
+---
 
+## 📌 Conclusão
 
+O laboratório demonstra um cenário de pós-comprometimento, onde um invasor utiliza credenciais válidas para acessar o sistema e tenta extrair informações sensíveis e elevar privilégios.
 
+A análise reforça a importância de:
 
+- Monitoramento de arquivos críticos  
+- Controle de privilégios  
+- Correlação de eventos após login  
 
+---
 
+## 📬 Contato
 
+Aberto a oportunidades em SOC / NOC / Cybersecurity Jr.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki  
+- Email: t.krysiaki91@gmail.com  
