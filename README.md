@@ -77,11 +77,26 @@ Simular cenários reais de segurança para desenvolver habilidades práticas em:
 
 ---
 
+## 🔄 Attack Lifecycle Coverage
+
+Os laboratórios cobrem diferentes estágios de um ataque real:
+
+- Reconhecimento
+- Brute Force (Initial Access)
+- Comprometimento
+- Pós-exploração
+- Detecção (SIEM)
+- Investigação
+- Resposta a incidente
+- Hardening
+
+---
+
 ## 📈 Progressão dos Labs
 
 Os laboratórios seguem uma evolução prática:
 
-Brute Force → Detecção → Comprometimento → Pós-exploração → Resposta → Hardening
+Reconhecimento → Initial Access (Brute Force) → Comprometimento → Pós-exploração → Detecção → Investigação → Resposta → Hardening
 
 ---
 
