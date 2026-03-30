@@ -86,6 +86,22 @@ Comportamento típico de atacante interagindo com o sistema.
 Wazuh detectou atividade suspeita com sucesso.  
 Correlação de eventos funcionando.
 
+## 📊 Detecção no SIEM (Wazuh Dashboard)
+
+<img src="images/12-wazuh-event-details.png" width="100%">
+
+**Análise SOC:**
+
+Evento identificado no Wazuh indicando falha de autenticação via SSH.
+
+Campos relevantes:
+- `data.srcip`: 192.168.56.103 (IP atacante)
+- `data.dstuser`: tiago (usuário alvo)
+- `rule.description`: PAM: User login failed
+- `location`: /var/log/auth.log
+
+A visualização no SIEM permite identificar rapidamente a origem do ataque, o usuário alvo e a frequência das tentativas, facilitando a correlação com outros eventos e a resposta ao incidente.
+
 ---
 
 ## 🧠 Timeline do Ataque
