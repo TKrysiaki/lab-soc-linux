@@ -1,6 +1,10 @@
-# 🚨 SOC Analyst Lab Portfolio (Linux + SIEM + Detection Engineering)
+# 🚨 SOC Analyst Lab Portfolio
 
-Este repositório demonstra experiência prática em operações de segurança (SOC), com foco em detecção, investigação e resposta a incidentes em ambientes Linux.
+SOC Analyst Jr | Blue Team | Detection & Incident Response | Open to Work
+
++100 ataques simulados | Detecção com SIEM | Resposta a incidentes reais em ambiente controlado
+
+Este repositório apresenta laboratórios práticos focados em cenários reais de SOC, incluindo brute force, comprometimento de sistemas, pós-exploração, correlação de eventos e resposta a incidentes.
 
 ---
 
