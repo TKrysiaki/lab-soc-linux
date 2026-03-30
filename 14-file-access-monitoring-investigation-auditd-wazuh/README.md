@@ -1,323 +1,144 @@
-# 🧠 LAB 14 — Monitoramento e Detecção de Acesso a Arquivos Sensíveis (auditd + Wazuh)
+# 🚨 Monitoramento de Acesso a Arquivos Sensíveis com auditd + Detecção Customizada no Wazuh
 
 ---
 
-## 🎯 Objetivo
+## 🎯 Cenário
 
-Monitorar, detectar e investigar acessos a arquivos sensíveis no Linux (`/etc/passwd` e `/etc/shadow`) utilizando **auditd** e **Wazuh**, evoluindo até detecção customizada **(Detection Engineering)**.
-
----
-
-## 🧪 Ambiente
-- Kali Linux (ataque)
-- Ubuntu (alvo)
-- Wazuh (SIEM)
+Foi implementado monitoramento de arquivos sensíveis em um servidor Linux utilizando auditd, com integração ao Wazuh para detecção de acessos não autorizados ao arquivo `/etc/shadow`.
 
 ---
 
-## 📖 Cenário
+## ⚙️ Configuração do Monitoramento (auditd)
 
-Usuário `tiago` eleva privilégio com `sudo` e acessa `/etc/shadow`, simulando coleta de credenciais.
-
----
-
-## 🔎 Investigação
-
-O usuário `tiago` realizou elevação de privilégio utilizando sudo e acessou o arquivo `/etc/shadow`, que contém hashes de senha.
-
-Esse comportamento é altamente sensível e pode indicar tentativa de coleta de credenciais no sistema.
-
----
-
-## ⚙️ Etapa 1 — Instalação do auditd
-```
-sudo apt install auditd -y
-```
-
-
-### 🔎 Explicação
-- `apt install` → instala pacote
-- `auditd` → serviço de auditoria
-- `-y` → confirma automaticamente
-
-📌 Função: registrar eventos de segurança no sistema
-
-```
-sudo systemctl enable auditd
-```
-```
-sudo systemctl start auditd
-```
-
-### 🔎 Explicação
-- `systemctl` → gerencia serviços
-- `enable` → inicia no boot
-- `start` → inicia agora
-
-📌 Sem isso, não há logs
+Instalação e ativação do auditd:
 
 <img src="images/01-auditd-install-service.png" width="100%">
 
----
-
-## ⚙️ Etapa 2 — Criar regras de monitoramento
-```
-sudo auditctl -D
-```
-
-### 🔎 Explicação
-- `auditctl` → gerencia regras
-- `-D` → deleta todas as regras
-
-📌 Garante ambiente limpo
-
-
-```
-sudo auditctl -w /etc/passwd -p r -k passwd-monitor
-```
-
-### 🔎 Explicação detalhada
-- `-w /etc/passwd` → monitora arquivo
-- `-p r` → captura leitura
-- `-k passwd-monitor` → chave para busca
-
-📌 Detecta enumeração de usuários
-
-```
-sudo auditctl -w /etc/shadow -p r -k shadow-monitor
-```
-
-### 🔎 Explicação detalhada
-- Monitora arquivo de credenciais
-- Acesso aqui = alto risco
+Criação de regra para monitorar `/etc/passwd`:
 
 <img src="images/02-auditd-rule-passwd-ok.png" width="100%">
 
+Criação de regra para monitorar `/etc/shadow`:
+
+<img src="images/03-auditd-rule-shadow-ok.png" width="100%">
+
+👉 Agora qualquer acesso a esses arquivos será registrado
 
 ---
 
-## ⚙️ Etapa 3 — Gerar evento
-```
-sudo cat /etc/shadow
-```
+## 🚨 Evento Detectado — Acesso ao Shadow
 
-### 🔎 Explicação
-- `cat` → lê conteúdo do arquivo
-- `sudo` → executa como root
-
-📌 Simula atacante acessando credenciais
+Foi realizada tentativa de acesso ao `/etc/shadow`:
 
 <img src="images/04-shadow-access-event.png" width="100%">
 
----
-
-## ⚙️ Etapa 4 — Analisar logs
-```
-sudo ausearch -k shadow-monitor
-```
-
-### 🔎 Explicação
-- `ausearch` → busca eventos do auditd
-- `-k` → filtra pela chave definida
-
-### 📌 Retorna:
-
-- usuário
-- comando
-- arquivo acessado
-- timestamp
+Eventos registrados pelo auditd:
 
 <img src="images/05-auditd-shadow-events.png" width="100%">
 
 ---
 
-## 🔗 Etapa 5 — Wazuh (detecção inicial)
+## 📡 Detecção no SIEM (Wazuh)
+
+O Wazuh identificou o evento:
 
 <img src="images/06-wazuh-detection-shadow.png" width="100%">
 
-## 🔧 Detection Engineering (Melhoria de Detecção)
-
-A regra padrão do Wazuh detecta apenas o uso de sudo, o que gera alertas genéricos.
-
-Foi criada uma regra customizada para identificar especificamente o acesso ao arquivo `/etc/shadow`, aumentando a precisão e a severidade da detecção.
-
 ---
 
-### 🔎 Análise
-- Regra 5402 → detecta apenas uso de sudo
-- ❌ Baixo valor analítico (não contextualiza o comportamento)
+## 🛠️ Criação de Regra Customizada
 
-➡️ Problema:
-Não identifica o acesso a arquivos sensíveis, gerando alertas genéricos.
-
----
-
-## 🔧 Etapa 6 — Detection Engineering
-### 📍 Editar regra
-```
-sudo nano /var/ossec/etc/rules/local_rules.xml
-```
-
-### 🔎 Explicação
-- `nano` → editor
-- arquivo → regras customizadas do Wazuh
-
-### 📍 Regra criada
-```
-<rule id="100100" level="12">
-  <if_sid>5402</if_sid>
-  <match>/etc/shadow</match>
-  <description>Alto risco: acesso ao /etc/shadow via sudo</description>
-  <mitre>
-    <id>T1003</id>
-  </mitre>
-</rule>
-```
-
-### 🔎 Explicação
-- `if_sid 5402` → evento base (sudo)
-- `match /etc/shadow` → filtra alvo crítico
-- `level 12` → alerta alto
-- MITRE → credential dumping
-
-📌 Agora a detecção é contextual
+Foi criada uma regra personalizada no Wazuh para detectar acesso ao `/etc/shadow`:
 
 <img src="images/07-wazuh-custom-rule-created.png" width="100%">
 
-### 📍 Reiniciar serviço
-```
-sudo systemctl restart wazuh-manager
-```
-
-### 🔎 Explicação
-- recarrega regras
-- obrigatório após alteração
+Reinício do serviço:
 
 <img src="images/08-wazuh-restart-ok.png" width="100%">
 
 ---
 
-## ⚙️ Etapa 7 — Teste da regra
-```
-sudo cat /etc/shadow
-```
+## 🔥 Validação da Detecção
 
-📌 Gera novo evento para validar regra
+Novo acesso ao `/etc/shadow` disparou alerta customizado:
 
-### 🔥 Resultado final no Wazuh
+<img src="images/09-shadow-access-trigger-custom.png" width="100%">
+
+Alerta gerado no Wazuh:
 
 <img src="images/10-wazuh-custom-alert.png" width="100%">
 
-### 📊 Timeline
-```bash
-18:55 → auditd iniciado  
-18:56 → regras criadas  
-18:57 → acesso ao shadow  
-19:01 → alerta padrão  
-19:32 → alerta customizado (alto risco)
-```
+---
+
+## 🧠 Análise SOC
+
+O acesso ao arquivo `/etc/shadow` representa um comportamento altamente sensível e potencialmente malicioso.
+
+Evidências:
+
+- Evento capturado pelo auditd  
+- Logs detalhando acesso ao arquivo crítico  
+- Detecção e alerta no SIEM (Wazuh)  
+- Regra customizada validada  
+
+Correlação:
+
+- Host (auditd) → evento bruto  
+- SIEM (Wazuh) → detecção e alerta  
+
+Impacto:
+
+- Possível exposição de hashes de senha  
+- Risco de credential dumping  
+- Potencial escalonamento de privilégio  
+
+Objetivo do atacante:
+
+- Coletar credenciais  
+- Escalar privilégios  
+- Comprometer o sistema  
+
+Conclusão:
+
+Atividade altamente suspeita com alto impacto potencial.
 
 ---
 
-## 🔍 Análise SOC
-- Usuário: tiago
-- Ação: leitura de credencial
-- Método: sudo + cat
-- Resultado: sucesso
+## 🚨 Classificação
 
-➡️ Comportamento suspeito real
-
----
-
-## ⚖️ Classificação
-
-**True Positive — Atividade Suspeita**
-
-- Acesso a arquivo sensível (`/etc/shadow`)
-- Uso de privilégio elevado (`sudo`)
-- Comportamento incomum
-
----
-
-## 💥 Impacto
-
-- Exposição de hashes de senha
-- Possível quebra de credenciais offline
-- Escalada de privilégio
-- Risco de movimentação lateral
+Malicioso — tentativa de acesso a credenciais sensíveis.
 
 ---
 
 ## 🧬 MITRE ATT&CK
-- T1003 → Credential Dumping
-- T1548.003 → Sudo abuse
-- T1078 → Valid accounts
+
+- T1003 — OS Credential Dumping  
+- TA0006 — Credential Access  
 
 ---
 
-## 🚨 Resposta
-- Revisar sudo
-- Monitorar usuário
-- Hardening
-- Melhorar regras
+## 🧠 Habilidades Demonstradas
+
+- Configuração de auditd  
+- Monitoramento de arquivos críticos  
+- Integração com SIEM (Wazuh)  
+- Criação de regras customizadas  
+- Detecção de comportamento sensível  
+- Análise de eventos de segurança  
 
 ---
 
-## 🧠 Conclusão
+## 📌 Conclusão
 
-Este laboratório demonstra um fluxo completo de investigação em ambiente SOC, incluindo coleta de logs, correlação de eventos e criação de detecção customizada.
+O laboratório demonstrou a implementação de monitoramento ativo de arquivos críticos e a criação de detecção personalizada no SIEM.
 
-A criação da regra no Wazuh permitiu transformar um alerta genérico em uma detecção de alto valor, evidenciando capacidade prática de análise e melhoria contínua de segurança.
-
----
-
-## 🎯 Habilidades Demonstradas
-
-- Linux
-- auditd
-- Wazuh
-- Log Analysis
-- Correlação
-- MITRE
-- Detection Engineering
+A abordagem permite identificar rapidamente tentativas de acesso a credenciais, fortalecendo a capacidade de resposta a incidentes.
 
 ---
 
-## 🔥 Resultado Final
+## 📬 Contato
 
-👉 Fluxo completo de SOC
-👉 Detecção + investigação + melhoria
+Aberto a oportunidades em SOC / NOC / Cybersecurity Jr.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki  
+- Email: t.krysiaki91@gmail.com  
