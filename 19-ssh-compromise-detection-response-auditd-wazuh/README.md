@@ -1,160 +1,184 @@
-# 🔐 Lab 19 - SSH Compromise Detection & Response (Auditd + Wazuh)
-
-## 🎯 Objetivo
-
-Simular um comprometimento via SSH, analisar logs no host (Linux) e no SIEM (Wazuh), correlacionar eventos e conduzir uma investigação completa no estilo SOC.
+# 🚨 Detecção de Brute Force SSH com Falha de Defesa e Pós-Exploração (SOC Analysis)
 
 ---
 
-## 🧱 Ambiente do Lab
+## 🎯 Cenário
 
-- Kali Linux (Atacante)  
-- Ubuntu (Alvo)  
-- Wazuh (SIEM)  
-- Ferramentas:
-  - SSH
-  - auditd
-  - Wazuh
+Um servidor Linux exposto via SSH apresentou comportamento suspeito, indicando tentativa de acesso não autorizado. Durante a análise, foi identificado que o mecanismo de defesa (Fail2ban) estava inativo, aumentando o risco de comprometimento.
 
 ---
 
-## ⚙️ Preparação do Ambiente
+## 🛠️ Validação do Ambiente
 
-### Auditd ativo
+Verificação dos serviços de monitoramento e segurança:
+
+- auditd ativo (coleta de eventos)
+- Wazuh agent ativo (envio para SIEM)
+- Serviço SSH ativo
 
 <img src="images/01-auditd-active.png" width="100%">
-
-### Wazuh Agent ativo
-
 <img src="images/02-wazuh-agent-active.png" width="100%">
-
-### Serviço SSH ativo
-
 <img src="images/03-ssh-active.png" width="100%">
 
-**Análise SOC:**  
-Ambiente preparado corretamente com coleta de logs ativa.
-
 ---
 
-## ⚔️ Fase 1 — Tentativa de Ataque (Brute Force)
+## ⚔️ Ataque Detectado
+
+O SIEM identificou tentativa de brute force contra o serviço SSH.
 
 <img src="images/04-ssh-bruteforce-detected.png" width="100%">
-<img src="images/05-no-successful-login.png" width="100%">
-
-**Análise SOC:**  
-Múltiplas tentativas de login falharam, caracterizando brute force.  
-Sem sucesso inicial.
 
 ---
 
-## ⚠️ Fase 2 — Falha de Defesa
+## 📊 Análise de Logs
+
+Inicialmente, não houve sucesso nas tentativas de login:
+
+<img src="images/05-no-successful-login.png" width="100%">
+
+Porém, foi identificado um fator crítico:
 
 <img src="images/06-fail2ban-inactive.png" width="100%">
 
-**Análise SOC:**  
-Fail2ban desativado permitiu continuidade do ataque.
+👉 Fail2ban inativo = ausência de bloqueio automático
+
+Isso permite continuidade do ataque.
 
 ---
 
-## 🚨 Fase 3 — Comprometimento
+## 🚨 Comprometimento
+
+Após múltiplas tentativas, o atacante conseguiu acesso válido ao sistema:
 
 <img src="images/07-ssh-successful-login.png" width="100%">
 
-**Análise SOC:**  
-Login SSH bem-sucedido utilizando credencial válida.  
-Indica comprometimento de conta.
+Isso confirma comprometimento do host.
 
 ---
 
-## 🔎 Fase 4 — Pós-exploração (Auditd)
+## 🧠 Pós-Exploração (Auditd)
+
+Eventos do auditd mostram execução de comandos após o acesso:
 
 <img src="images/08-auditd-post-exploitation.png" width="100%">
+
+Decodificação dos comandos executados:
+
 <img src="images/09-auditd-decoded-commands.png" width="100%">
 
-**Análise SOC:**  
-Execução de comandos após acesso.  
-Comportamento típico de atacante interagindo com o sistema.
-
----
-
-## 🧠 Fase 5 — Detecção no SIEM (Wazuh)
+Comandos detectados:
 
 <img src="images/10-attacker-commands-detected.png" width="100%">
 
-**Análise SOC:**  
-Wazuh detectou atividade suspeita com sucesso.  
-Correlação de eventos funcionando.
+Análise:
 
-## 📊 Detecção no SIEM (Wazuh Dashboard)
+- Enumeração do sistema
+- Possível reconhecimento interno
+- Preparação para persistência ou movimentação lateral
+
+---
+
+## 📡 Correlação no SIEM (Wazuh)
+
+Detalhes do evento no Wazuh:
 
 <img src="images/11-wazuh-event-details.png" width="100%">
 
-**Análise SOC:**
+Correlação:
 
-Evento identificado no Wazuh indicando falha de autenticação via SSH.
-
-Campos relevantes:
-- `data.srcip`: 192.168.56.103 (IP atacante)
-- `data.dstuser`: tiago (usuário alvo)
-- `rule.description`: PAM: User login failed
-- `location`: /var/log/auth.log
-
-A visualização no SIEM permite identificar rapidamente a origem do ataque, o usuário alvo e a frequência das tentativas, facilitando a correlação com outros eventos e a resposta ao incidente.
+- Tentativas de brute force
+- Login bem-sucedido
+- Execução de comandos
 
 ---
 
-## 🧠 Timeline do Ataque
+## 🧠 Análise SOC
 
-1. Serviços ativos (auditd, wazuh, ssh)  
-2. Tentativas de brute force  
-3. Defesa ausente (fail2ban)  
-4. Acesso SSH obtido  
-5. Execução de comandos  
-6. Detecção no SIEM  
+O incidente evidencia uma cadeia completa de ataque:
 
----
+1. Tentativa de brute force  
+2. Falha no mecanismo de defesa (Fail2ban inativo)  
+3. Acesso inicial obtido  
+4. Execução de comandos no sistema  
+5. Atividade pós-comprometimento  
 
-## 🚨 Classificação do Incidente
+Fatores críticos:
 
-- Tipo: Comprometimento de conta  
-- Severidade: Alta  
-- Técnicas:
-  - Initial Access (SSH)
-  - Execution
-  - Privilege Escalation
+- Defesa inativa permitiu sucesso do ataque  
+- Atacante conseguiu acesso legítimo (valid account)  
+- Execução de comandos indica controle do sistema  
 
----
+Impacto:
 
-## 🎯 Impacto
-
-- Acesso não autorizado  
-- Possível controle total do sistema  
+- Comprometimento total do host  
 - Risco de movimentação lateral  
+- Possível exfiltração de dados  
+
+Objetivo do atacante:
+
+- Obter acesso inicial  
+- Explorar o sistema internamente  
+
+Conclusão:
+
+Incidente crítico com falha de defesa e comprometimento confirmado.
+
+---
+
+## 🚨 Classificação
+
+Malicioso — acesso não autorizado com execução de comandos no sistema.
 
 ---
 
 ## 🛡️ Mitigação
 
-- Ativar Fail2ban  
+Ações recomendadas:
+
+- Ativar e configurar Fail2ban  
 - Bloquear IP atacante  
-- Trocar credenciais  
-- Usar autenticação por chave SSH  
-- Implementar Active Response no Wazuh  
+- Resetar credenciais comprometidas  
+- Implementar autenticação por chave SSH  
+- Monitoramento contínuo via SIEM  
 
 ---
 
-## 💡 Aprendizados
+## 🧬 MITRE ATT&CK
 
-- Defesa desativada facilita ataque  
-- Logs são essenciais para investigação  
-- auditd dá visibilidade detalhada  
-- SIEM permite correlação eficiente  
-- Ataques seguem uma cadeia clara  
+- T1110 — Brute Force  
+- T1078 — Valid Accounts  
+- T1059 — Command Execution  
+- TA0001 — Initial Access  
+- TA0002 — Execution  
 
 ---
 
-## 📎 Contato
+## 🧠 Habilidades Demonstradas
 
-- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki-b3322b2a7/  
+- Análise de logs Linux (auth.log, auditd)  
+- Detecção de brute force  
+- Identificação de falha de defesa  
+- Correlação de eventos (SIEM + host)  
+- Investigação de pós-exploração  
+- Classificação de incidente  
+- Resposta a incidente  
+
+---
+
+## 📌 Conclusão
+
+Este laboratório demonstra um cenário realista onde uma falha de configuração de segurança (Fail2ban inativo) permitiu a evolução de um ataque de brute force até o comprometimento completo do sistema.
+
+A análise reforça a importância de:
+
+- Controles de defesa ativos  
+- Monitoramento contínuo  
+- Correlação de eventos  
+- Resposta rápida a incidentes  
+
+---
+
+## 📬 Contato
+
+- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki
 - Email: t.krysiaki91@gmail.com  
