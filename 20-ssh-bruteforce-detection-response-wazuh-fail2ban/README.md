@@ -48,6 +48,7 @@ O Wazuh detectou múltiplas falhas de autenticação:
 
 
 ## 🧬 MITRE ATT&CK
+
 -  T1110 → Brute Force
 -  T1021.004 → Remote Services (SSH)
   
@@ -115,6 +116,7 @@ Após nova tentativa de ataque:
 ---
 
 ## 🔐 Medidas de Segurança
+
 - Implementação de Fail2ban
 - Limitação de tentativas de login
 - Uso de autenticação por chave SSH
