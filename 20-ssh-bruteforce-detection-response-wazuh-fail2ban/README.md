@@ -135,5 +135,7 @@ Após nova tentativa de ataque:
 ---
 
 📬 Contato
+
 LinkedIn: https://www.linkedin.com/in/tiago-krysiaki
+
 Email: t.krysiaki91@gmail.com
