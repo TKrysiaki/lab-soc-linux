@@ -1,3 +1,17 @@
+## 🏗️ Arquitetura do Ambiente
+
+```mermaid
+graph LR
+    A[Kali Linux - Attacker] -->|SSH Brute Force / HTTP Enum| B[Ubuntu Server - Target]
+    B -->|Logs (auth.log / syslog)| C[Wazuh Agent]
+    C --> D[Wazuh Manager]
+    D --> E[Wazuh Dashboard]
+    D -->|Active Response| B
+    D -->|Block IP| F[pfSense Firewall]
+    F -->|Bloqueio em nível de rede|
+
+
+
 # 🔥 Lab 21 — Detecção, Correlação e Resposta Automática a Ataque SSH + Recon Web com Wazuh
 
 ---
