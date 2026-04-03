@@ -99,11 +99,11 @@ sudo grep "Failed password" /var/log/auth.log
 ---
 
 ### 🔹 Web (access.log)
-
+```
 sudo cat /var/log/apache2/access.log | grep 192.168.56.103
 ```
 <img src="images/10-accesslog-gobuster.png" width="100%">
-```
+
 ---
 
 ## 📌 Análise:
