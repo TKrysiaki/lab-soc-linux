@@ -248,9 +248,13 @@ hydra -l tiago -P /usr/share/wordlists/rockyou.txt ssh://192.168.56.107
 Este lab reproduz um cenário real de SOC:
 
 ✔️ Detecção
+
 ✔️ Investigação
+
 ✔️ Correlação
+
 ✔️ Resposta
+
 ✔️ Automação
 
 ➡️ Nível profissional real
