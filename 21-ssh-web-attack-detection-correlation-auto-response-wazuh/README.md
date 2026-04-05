@@ -1,273 +1,180 @@
-# 🔥 Lab 21 — Detecção, Correlação e Resposta Automática a Ataque SSH + Recon Web com Wazuh
-
----
-
-## 📌 Resumo Executivo
-
-Foi identificado um ataque coordenado originado do IP **192.168.56.103**, combinando brute force SSH e enumeração web.  
-A correlação de eventos permitiu identificar comportamento malicioso e aplicar bloqueio automático via Wazuh, interrompendo o ataque em tempo real.
+# 🔐 Detecção e Resposta a Brute Force SSH com Wazuh + TheHive
 
 ---
 
 ## 🎯 Visão Geral
 
-Este laboratório simula um cenário real de SOC, onde um atacante tenta:
+Este laboratório simula um cenário real de SOC (Security Operations Center), onde um atacante realiza um ataque de força bruta contra um serviço SSH.
 
-- Obter acesso via força bruta (SSH)
-- Mapear a aplicação web (recon)
+O objetivo é demonstrar como um analista SOC:
 
-O objetivo é executar o ciclo completo de resposta a incidente:
-**Detecção → Investigação → Correlação → Resposta**
-
----
-
-## 🧱 Ambiente
-
-| Máquina | Função |
-|--------|--------|
-| Kali   | Atacante |
-| Ubuntu | Alvo |
-| Wazuh  | SIEM |
+- Detecta atividade maliciosa
+- Correlaciona eventos
+- Investiga alertas
+- Responde ao incidente
+- Valida a contenção
 
 ---
 
-## 🚨 Ataque
+## 🧠 Por que este Lab é importante
 
-### 🔴 Hydra (Brute Force SSH)
+Este não é apenas um laboratório de análise de logs.
+
+Ele demonstra:
+
+- Simulação de ataque real
+- Detecção com SIEM
+- Processo de investigação
+- Resposta a incidente
+- Validação técnica
+
+➡️ Representa o fluxo real de um SOC
+
+---
+
+## 🖥️ Arquitetura do Laboratório
+
+- Atacante: Ubuntu (script automatizado)
+- Alvo: Windows (SSH habilitado)
+- SIEM: Wazuh
+- Resposta a Incidentes: TheHive
+
+---
+
+## ⚔️ Simulação de Ataque
+
+O ataque foi executado com um script automatizado contendo:
+
+- Hydra (brute force SSH)
+- Nmap (reconhecimento)
+- Feroxbuster (enumeração web)
+- Netcat (banner grabbing)
+
+### Execução
 
 ```
-hydra -l tiago -P /usr/share/wordlists/rockyou.txt ssh://192.168.56.107
+python3 adversary_simulator.py
 ```
+<img src="images/01-attack-hydra-bruteforce.png" width="100%">
 
-### 📌 O que aconteceu:
+### 🔍 Análise
+- Múltiplas tentativas de login
+- Alta frequência
+- Comportamento automatizado
 
-- Tentativas massivas de login
-- Alto volume em curto tempo
-- Padrão claro de brute force
-
-<img src="images/06-hydra-success.png" width="100%">
+➡️ Indica ataque de brute force
 
 ---
 
-## 🔴 Gobuster (Recon Web)
+## 🔎 Detecção (Wazuh)
+
+O Wazuh detectou múltiplas falhas de autenticação:
+
+- Event ID: 4625
+- Regra: authentication_failed
+- Correlação por frequência (firedtimes)
+<img src="images/02-wazuh-ssh-failed-login.png" width="100%">
+
+
+### 🧠 Análise SOC
+- Falhas repetidas
+- Usuário inválido
+- Curto intervalo entre tentativas
+
+➡️ Classificado como brute force
+
+---
+
+## 🚨 Geração de Alerta (TheHive)
+
+O alerta foi enviado automaticamente ao TheHive:
+
+- Severidade: HIGH
+- Fonte: Wazuh
+- Tipo: SSH Attack
+<img src="images/03-thehive-alerts-ssh-bruteforce.png" width="100%">
+
+---
+
+## 🧠 Análise do Incidente
+
+Detalhamento do alerta:
+
+<img src="images/04-thehive-alert-details.png" width="100%">
+
+### 📌 Classificação
+- Tipo: Brute Force SSH
+- Severidade: HIGH
+- Status: Malicioso
+
+### 📌 MITRE ATT&CK
+- T1078 – Valid Accounts
+
+### 📌 Evidências
+- Tentativas > 10
+- Falhas de autenticação
+- Padrão automatizado
+
+---
+
+## 🛡️ Resposta (Contenção)
+
+Bloqueio do IP atacante via firewall do Windows:
 ```
-gobuster dir -u http://192.168.56.107 -w /usr/share/wordlists/dirb/common.txt
+New-NetFirewallRule -DisplayName "Block Attacker" -Direction Inbound -RemoteAddress 192.168.56.110 -Action Block
 ```
+<img src="images/05-firewall-block-ip.png" width="100%">
 
-### 📌 O que aconteceu:
-
-- Requisições automatizadas
-- Múltiplos caminhos testados
-- Respostas 404 em sequência
-
-<img src="images/07-gobuster-enumeracao.png" width="100%">
+### 🎯 Resultado
+- IP bloqueado
+- Ataque interrompido
 
 ---
 
-## 🔍 Detecção (Wazuh)
-
-O Wazuh identificou:
-
-- Falhas de autenticação SSH
-- Tentativas repetidas
-- Eventos anômalos de acesso web
-
-<img src="images/08-wazuh-alertas.png" width="100%">
-
-## 📌 Análise SOC:
-
-- Volume + repetição = ataque automatizado
-- Regra de brute force acionada
-
----
-
-## 🕵️ Investigação
-### 🔹 SSH (auth.log)
+## 📋 Verificação da Regra
 ```
-sudo grep "Failed password" /var/log/auth.log
+Get-NetFirewallRule | findstr Block
 ```
-
-<img src="images/09-authlog-failed-password.png" width="100%">
-
-### 📌 Análise:
-
-- Campo "from" revela IP atacante
-- Padrão repetitivo confirma brute force
-
-### ➡️ IP: 192.168.56.103
+<img src="images/06-firewall-rules-list.png" width="100%">
 
 ---
 
-### 🔹 Web (access.log)
+## ✅ Validação
+
+Teste de conectividade após o bloqueio:
 ```
-sudo cat /var/log/apache2/access.log | grep 192.168.56.103
+nc -vz 192.168.56.110 22
 ```
-<img src="images/10-accesslog-gobuster.png" width="100%">
+<img src="images/07-block-test-timeout.png" width="100%">
+
+### ✔️ Resultado
+- Timeout na conexão
+- Firewall realizando DROP
+
+➡️ Contenção validada com sucesso
 
 ---
 
-## 📌 Análise:
+## 🧠 Conclusão
 
-- User-Agent: gobuster
-- Muitas requisições em sequência
-- Enumeração automatizada
+Este laboratório demonstra um fluxo completo de operação SOC:
 
----
-
-## 🔗 Correlação
-
-Mesmo IP em:
-
-- SSH brute force
-- Web recon
-
-### 📌 Conclusão:
-➡️ Ataque coordenado multi-vetor
+1. Simulação de ataque
+2. Detecção via SIEM
+3. Correlação de eventos
+4. Análise do incidente
+5. Resposta ativa
+6. Validação técnica
 
 ---
 
-## 🧠 Timeline
-<img src="images/12-timeline-wazuh.png" width="100%">
-
-### 📌 Interpretação:
-
-1. Falhas SSH iniciam  
-2. Volume aumenta  
-3. Recon web começa  
-4. Login ocorre  
-5. Uso de sudo  
-6. Bloqueio
-
-➡️ Ataque evoluiu até acesso
-
----
-
-## 🧪 Enriquecimento
-<img src="images/11-virustotal-ip.png" width="100%">
-
-### 📌 Resultado:
-
-- IP privado
-- Sem reputação externa
-
-➡️ Conclusão:
-**Malicioso no contexto interno**
-
----
-
-## 🎯 Classificação
-- Tipo: Brute Force + Recon + Initial Access
-- Severidade: Média
-
-MITRE:
-
-- T1110
-- T1046
-- T1078
-
----
-
-## ⚠️ Impacto
-- Comprometimento de credenciais
-- Acesso inicial ao sistema
-- Possível escalonamento
-- Risco lateral
-
----
-
-## 🧠 Decisão do Analista
-
-Diante da correlação:
-
-- Ataque confirmado
-- Alto risco de persistência
-
-➡️ Ação:
-**bloqueio imediato do IP**
-
----
-
-## 🛡️ Resposta
-🔹 Manual
-```
-sudo iptables -I INPUT 1 -s 192.168.56.103 -j DROP
-```
-<img src="images/13-iptables-topo-correto.png" width="100%">
-
-### 📌 Análise:
-
-- Regra no topo = prioridade máxima
-
----
-
-## 🔹 Validação
-```
-hydra -l tiago -P /usr/share/wordlists/rockyou.txt ssh://192.168.56.107
-```
-<img src="images/14-hydra-bloqueado.png" width="100%">
-
-### 📌 Resultado:
-
-- Timeout
-- Conexão negada
-
-➡️ Ataque contido
-
----
-
-## 🔹 Automação (Wazuh)
-```
-<active-response>
-  <command>firewall-drop</command>
-  <location>local</location>
-  <level>10</level>
-</active-response>
-```
-
-<img src="images/15-wazuh-bloqueio-automatico.png" width="100%">
-
-
-📌 Resultado:
-
-- Bloqueio automático
-- Sem intervenção humana
-
----
-
-## 🔐 Melhorias
-- pfSense (bloqueio na rede)
-- MFA SSH
-- Hardening SSH
-- Regras customizadas
-- Threat Intel
-
----
-
-## 📊 Conclusão
-
-Este lab reproduz um cenário real de SOC:
-
-✔️ Detecção
-
-✔️ Investigação
-
-✔️ Correlação
-
-✔️ Resposta
-
-✔️ Automação
-
-➡️ Nível profissional real
-
----
-
-🧠 Skills
-- Análise de logs
+## 🚀 Habilidades Demonstradas
+- Análise de logs (Windows / SSH)
 - SIEM (Wazuh)
-- Incident response
-- Correlação
-- Firewall
-- Detection engineering
+- Resposta a incidentes (TheHive)
+- Detecção de ameaças
+- Gestão de firewall
+- Fluxo de investigação SOC
 
 ---
 
@@ -276,60 +183,6 @@ Este lab reproduz um cenário real de SOC:
 LinkedIn: https://www.linkedin.com/in/tiago-krysiaki
 
 Email: t.krysiaki91@gmail.com
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
