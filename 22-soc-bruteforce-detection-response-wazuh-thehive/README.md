@@ -1,74 +1,93 @@
-# 🔐 Lab SOC - Detecção e Resposta a Brute Force SSH (Wazuh + TheHive)
+# 🔐 Detecção e Resposta a Brute Force SSH com Wazuh + TheHive
 
 ---
 
-## 📌 Visão Geral
+## 🎯 Visão Geral
 
-Este laboratório simula um cenário real de SOC (Security Operations Center), onde um ataque de força bruta via SSH é executado, detectado, analisado e mitigado.
+Este laboratório simula um cenário real de SOC (Security Operations Center), onde um atacante realiza um ataque de força bruta contra um serviço SSH.
 
-## Fluxo completo:
+O objetivo é demonstrar como um analista SOC:
 
-Ataque → Detecção → Alerta → Análise → Resposta → Validação
-
+- Detecta atividade maliciosa
+- Correlaciona eventos
+- Investiga alertas
+- Responde ao incidente
+- Valida a contenção
 
 ---
 
-## 🖥️ Ambiente do Laboratório
+## 🧠 Por que este Lab é importante
 
-| Componente | Função |
-|-----------|--------|
-| Ubuntu (Attacker) | Execução do ataque automatizado |
-| Windows (Target) | Máquina alvo com SSH habilitado |
-| Wazuh Server | SIEM (detecção e correlação) |
-| TheHive | Gestão de incidentes |
+Este não é apenas um laboratório de análise de logs.
+
+Ele demonstra:
+
+- Simulação de ataque real
+- Detecção com SIEM
+- Processo de investigação
+- Resposta a incidente
+- Validação técnica
+
+➡️ Representa o fluxo real de um SOC
+
+---
+
+## 🖥️ Arquitetura do Laboratório
+
+- Atacante: Ubuntu (script automatizado)
+- Alvo: Windows (SSH habilitado)
+- SIEM: Wazuh
+- Resposta a Incidentes: TheHive
 
 ---
 
 ## ⚔️ Simulação de Ataque
 
-Foi utilizado um script automatizado simulando comportamento real de atacante:
+O ataque foi executado com um script automatizado contendo:
 
-- Hydra (Brute Force SSH)
-- Nmap (Recon)
-- Feroxbuster (Web enum)
-- Netcat (Banner grabbing)
-- Modos: Burst + Stealth
+- Hydra (brute force SSH)
+- Nmap (reconhecimento)
+- Feroxbuster (enumeração web)
+- Netcat (banner grabbing)
 
-### Execução do ataque
+### Execução
 
 ```
 python3 adversary_simulator.py
 ```
 <img src="images/01-attack-hydra-bruteforce.png" width="100%">
 
-### Análise SOC
+### 🔍 Análise
+- Múltiplas tentativas de login
+- Alta frequência
+- Comportamento automatizado
 
-Múltiplas tentativas de login em curto intervalo indicam automação e possível brute force.
+➡️ Indica ataque de brute force
 
 ---
 
 ## 🔎 Detecção (Wazuh)
 
-O Wazuh identificou eventos de falha de autenticação:
+O Wazuh detectou múltiplas falhas de autenticação:
 
 - Event ID: 4625
 - Regra: authentication_failed
-- Frequência elevada (firedtimes)
+- Correlação por frequência (firedtimes)
 <img src="images/02-wazuh-ssh-failed-login.png" width="100%">
 
 
-### Análise SOC
-- Diversas falhas consecutivas
+### 🧠 Análise SOC
+- Falhas repetidas
 - Usuário inválido
-- Padrão repetitivo
+- Curto intervalo entre tentativas
 
-➡️ Indício claro de brute force
+➡️ Classificado como brute force
 
 ---
 
-## 🚨 Alerta (TheHive)
+## 🚨 Geração de Alerta (TheHive)
 
-O alerta foi automaticamente enviado ao TheHive:
+O alerta foi enviado automaticamente ao TheHive:
 
 - Severidade: HIGH
 - Fonte: Wazuh
@@ -77,45 +96,42 @@ O alerta foi automaticamente enviado ao TheHive:
 
 ---
 
-## 🧠 Análise do Alerta
+## 🧠 Análise do Incidente
 
-Detalhamento do evento:
+Detalhamento do alerta:
 
 <img src="images/04-thehive-alert-details.png" width="100%">
 
-Classificação
+### 📌 Classificação
 - Tipo: Brute Force SSH
 - Severidade: HIGH
 - Status: Malicioso
 
-
-MITRE ATT&CK
+### 📌 MITRE ATT&CK
 - T1078 – Valid Accounts
 
-Evidências
-- Attempts > 10
-- Falha de autenticação
-- Comportamento automatizado
+### 📌 Evidências
+- Tentativas > 10
+- Falhas de autenticação
+- Padrão automatizado
 
 ---
 
-## 🛡️ Resposta (Containment)
+## 🛡️ Resposta (Contenção)
 
-Bloqueio do IP atacante no Windows:
+Bloqueio do IP atacante via firewall do Windows:
 ```
 New-NetFirewallRule -DisplayName "Block Attacker" -Direction Inbound -RemoteAddress 192.168.56.110 -Action Block
 ```
 <img src="images/05-firewall-block-ip.png" width="100%">
 
-### Análise SOC
-
-Ação de contenção aplicada para interromper tentativa de acesso não autorizado.
+### 🎯 Resultado
+- IP bloqueado
+- Ataque interrompido
 
 ---
 
 ## 📋 Verificação da Regra
-
-Confirmação da regra no firewall:
 ```
 Get-NetFirewallRule | findstr Block
 ```
@@ -125,13 +141,13 @@ Get-NetFirewallRule | findstr Block
 
 ## ✅ Validação
 
-Teste de conectividade após bloqueio:
+Teste de conectividade após o bloqueio:
 ```
 nc -vz 192.168.56.110 22
 ```
 <img src="images/07-block-test-timeout.png" width="100%">
 
-Resultado
+### ✔️ Resultado
 - Timeout na conexão
 - Firewall realizando DROP
 
@@ -141,53 +157,32 @@ Resultado
 
 ## 🧠 Conclusão
 
-Este laboratório demonstra um ciclo completo de resposta a incidentes em um ambiente SOC:
+Este laboratório demonstra um fluxo completo de operação SOC:
 
-- Detecção de ataque real
-- Correlação de eventos
-- Análise baseada em evidências
-- Resposta ativa
-- Validação técnica
+1. Simulação de ataque
+2. Detecção via SIEM
+3. Correlação de eventos
+4. Análise do incidente
+5. Resposta ativa
+6. Validação técnica
 
 ---
 
-## 🚀 Skills Desenvolvidas
-
+## 🚀 Habilidades Demonstradas
 - Análise de logs (Windows / SSH)
 - SIEM (Wazuh)
-- Incident Response (TheHive)
-- Detecção de brute force
-- Firewall (Windows)
-- Validação de contenção
+- Resposta a incidentes (TheHive)
+- Detecção de ameaças
+- Gestão de firewall
+- Fluxo de investigação SOC
 
 ---
 
-📬 Contato
+## 📬 Contato
 
 LinkedIn: https://www.linkedin.com/in/tiago-krysiaki
 
 Email: t.krysiaki91@gmail.com
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
