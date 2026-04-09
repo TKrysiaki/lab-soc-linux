@@ -73,7 +73,7 @@ sudo tail -f /var/log/auth.log
 
 ## 🔍 Verificação de Comprometimento
 ```
-sudo grep "Accepted password" /var/log/auth.log
+sudo grep -a "Accepted password" /var/log/auth.log
 ```
 
 ### 🧠 Resultado
