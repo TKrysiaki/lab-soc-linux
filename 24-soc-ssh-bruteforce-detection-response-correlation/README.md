@@ -113,9 +113,11 @@ Resultado:
 ## 🛡️ Resposta ao Incidente
 
 ### Bloqueio do IP atacante via Fail2ban.
-```
+
 <img src="images/06-fail2ban-ip-banned.png" width="100%">
-Ação executada:
+
+### Ação executada:
+```
 sudo fail2ban-client set sshd banip 192.168.56.106
 ```
 
