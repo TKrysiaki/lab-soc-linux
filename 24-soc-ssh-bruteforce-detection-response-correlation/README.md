@@ -134,7 +134,81 @@ sudo fail2ban-client set sshd banip 192.168.56.106
 
 **👉 Mitigação efetiva**
 
+---
 
+## 🌍 Threat Intelligence
+
+### Consulta do IP no AbuseIPDB:
+
+<img src="images/07-threat-intel-abuseipdb-private-ip.png" width="100%">
+
+### Resultado:
+- IP privado (ambiente interno)
+- Sem registros públicos
+
+**👉 Cenário controlado (lab)**
+
+---
+
+## ⚙️ Detection Engineering (Wazuh)
+
+### Criação de regra customizada para elevar severidade:
+
+<img src="images/09-wazuh-custom-rule-bruteforce.png" width="100%">
+
+```
+<rule id="100200" level="10">
+  <if_sid>5551</if_sid>
+  <description>SSH Brute Force Detected</description>
+</rule>
+```
+
+### 📌 Objetivo:
+- Reutilizar detecção existente (5551)
+- Elevar prioridade para nível crítico
+- Melhorar visibilidade no SOC
+
+---
+
+## 🔗 Timeline do Ataque
+1. Início do brute force (Hydra)
+2. Múltiplas tentativas SSH
+3. Logs registrados (auth.log)
+4. Detecção pelo Wazuh
+5. Análise manual confirmando TP
+6. Verificação de impacto (sem acesso)
+7. Bloqueio do IP (Fail2ban)
+8. Validação da mitigação
+
+---
+
+## 🎯 Conclusão
+
+### Este laboratório demonstra um fluxo completo de operação SOC:
+
+```Detecção → Análise → Correlação → Decisão → Resposta```
+
+**O ataque foi corretamente identificado como True Positive, sem comprometimento do sistema, e mitigado com sucesso através de bloqueio automatizado.**
+
+---
+
+## 🧠 Habilidades Demonstradas
+- Análise de logs Linux
+- Investigação de tráfego de rede
+- Correlação SIEM (Wazuh)
+- Classificação de alertas SOC
+- Resposta a incidentes
+- Detection Engineering
+- Uso de Threat Intelligence
+
+--- 
+
+## 📬 Contato
+
+- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki  
+- Email: t.krysiaki91@gmail.com  
+
+🎯 Buscando oportunidades em SOC / NOC (Segurança da Informação)
 
 
 
