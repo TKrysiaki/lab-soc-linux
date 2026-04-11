@@ -49,7 +49,7 @@ Simular cenários reais de segurança para desenvolver habilidades práticas em:
 ### 🧠 Análise e Decisão SOC
 
 - 🔗 [Lab 24 - SSH Brute Force Detection, Correlation & Response](https://github.com/TKrysiaki/lab-soc-linux/tree/main/24-soc-ssh-bruteforce-detection-response-correlation)
-- 🔗 [Lab 23 - SOC Investigation + Detection Engineering (Wazuh)](https://github.com/TKrysiaki/lab-soc-linux/tree/main/23-wazuh-detection-engineering-investigation)
+- 🔗 [Lab 23 - SOC Investigation + Detection Engineering (Wazuh)](https://github.com/TKrysiaki/lab-soc-linux/tree/6be79eb222ed46ac4d515e376510e9a0f154f636/23-soc-incident-response-bruteforce-correlation-threatintel)
 - 🔗 [Lab 17 - Multi-Vector Attack + SOC Decision](https://github.com/TKrysiaki/lab-soc-linux/tree/main/17-full-compromise-multi-vector-incident-response)
 - 🔗 [Lab 12 - SSH Attack Chain + Privilege Escalation](https://github.com/TKrysiaki/lab-soc-linux/tree/main/12-ssh-compromise-attack-chain-analysis)
 
