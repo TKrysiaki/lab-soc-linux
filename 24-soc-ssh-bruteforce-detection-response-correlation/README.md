@@ -101,6 +101,25 @@ Resultado:
 
 ---
 
+## 🧠 Classificação SOC
+- Tipo: Brute Force SSH
+- MITRE ATT&CK: T1110
+- Classificação: True Positive (TP)
+- Severidade: Média
+- Impacto: Tentativa sem sucesso
+
+---
+
+## 🛡️ Resposta ao Incidente
+
+### Bloqueio do IP atacante via Fail2ban.
+```
+<img src="images/06-fail2ban-ip-banned.png" width="100%">
+Ação executada:
+sudo fail2ban-client set sshd banip 192.168.56.106
+```
+
+---
 
 
 
