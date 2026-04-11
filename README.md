@@ -57,7 +57,7 @@ Simular cenários reais de segurança para desenvolver habilidades práticas em:
 
 ### 📡 Detecção e Monitoramento
 
-- 🔗 [Lab 14 - auditd + Wazuh Custom Detection](https://github.com/TKrysiaki/lab-soc-linux/tree/main/14-file-access-monitoring-investigation-auditd)
+- 🔗 [Lab 14 - auditd + Wazuh Custom Detection](https://github.com/TKrysiaki/lab-soc-linux/tree/2d736bdeef13f8ebf92e11feec6f5e733787f7d2/14-file-access-monitoring-investigation-auditd-wazuh)
 - 🔗 [Lab 08 - Wazuh + Brute Force Detection](https://github.com/TKrysiaki/lab-soc-linux/tree/main/08-wazuh-siem-bruteforce-detection)
 
 ---
