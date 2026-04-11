@@ -34,4 +34,4 @@
 
 <img src="images/01-hydra-ssh-attack.png" width="100%">
 
-### O ataque gerou múltiplas tentativas de autenticação com diferentes usuários, simulando um cenário real de brute force.
+> O ataque gerou múltiplas tentativas de autenticação com diferentes usuários, simulando um cenário real de brute force.
