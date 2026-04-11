@@ -91,6 +91,7 @@
 ```
 sudo grep "Accepted password" /var/log/auth.log | grep "192.168.56.106" | wc -l
 ```
+
 Resultado:
 - 0 logins bem-sucedidos
 
