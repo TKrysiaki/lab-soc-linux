@@ -88,11 +88,12 @@
 ### Verificação de logins bem-sucedidos:
 
 <img src="images/05-no-successful-login.png" width="100%">
-```
 
+```
 sudo grep "Accepted password" /var/log/auth.log | grep "192.168.56.106" | wc -l
-
 ```
+
+
 
 Resultado:
 - 0 logins bem-sucedidos
