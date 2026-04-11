@@ -50,7 +50,7 @@
 - Portas de origem variando
 - Intervalos curtos
 
-> 👉 Padrão típico de ataque automatizado
+**👉 Padrão típico de ataque automatizado**
 
 ---
 
@@ -79,7 +79,7 @@
 - Diversos usuários testados
 - Mesmo IP atacante
 
-> 👉 Confirma tentativa de força bruta
+**👉 Confirma tentativa de força bruta**
 
 ---
 
@@ -94,11 +94,10 @@ sudo grep "Accepted password" /var/log/auth.log | grep "192.168.56.106" | wc -l
 ```
 
 
-
 Resultado:
 - 0 logins bem-sucedidos
 
-> 👉 Sistema não comprometido
+**👉 Sistema não comprometido**
 
 ---
 
