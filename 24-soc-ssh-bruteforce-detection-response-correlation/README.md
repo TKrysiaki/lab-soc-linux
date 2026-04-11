@@ -106,7 +106,7 @@ Resultado:
 - MITRE ATT&CK: T1110
 - Classificação: True Positive (TP)
 - Severidade: Média
-- Impacto: Tentativa sem sucesso
+- Impacto: Sem impacto direto, tentativa bloqueada antes de comprometimento  
 
 ---
 
