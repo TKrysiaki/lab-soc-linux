@@ -2,9 +2,15 @@
 
 SOC Analyst Jr | Blue Team | Detection & Incident Response | Open to Work
 
-+100 ataques simulados | Detecção com SIEM | Resposta a incidentes reais em ambiente controlado
++100 ataques simulados | Detecção com SIEM | Resposta a incidentes em ambiente controlado
 
-Este repositório apresenta laboratórios práticos focados em cenários reais de SOC, incluindo brute force, comprometimento de sistemas, pós-exploração, correlação de eventos e resposta a incidentes.
+Este repositório apresenta laboratórios práticos focados em cenários reais de SOC, incluindo brute force, comprometimento de sistemas, correlação de eventos, threat intelligence e resposta a incidentes.
+
+---
+
+## 📌 Resumo Executivo
+
+Este portfólio demonstra a execução de cenários reais de segurança com foco em detecção, análise e resposta a incidentes, simulando o fluxo completo de um analista SOC: alerta → investigação → decisão → ação.
 
 ---
 
@@ -22,11 +28,12 @@ Simular cenários reais de segurança para desenvolver habilidades práticas em:
 
 ## 🖥️ Ambiente
 
-- Kali Linux (Atacante)
+- Ubuntu (Atacante)
 - Ubuntu Server (Alvo)
 - Wazuh (SIEM)
 - auditd (Host logging)
 - Fail2ban (Defesa)
+- Wireshark / tcpdump (Network Analysis)
 
 ---
 
@@ -41,6 +48,8 @@ Simular cenários reais de segurança para desenvolver habilidades práticas em:
 
 ### 🧠 Análise e Decisão SOC
 
+- 🔗 [Lab 24 - SSH Brute Force Detection, Correlation & Response](https://github.com/TKrysiaki/lab-soc-linux/tree/main/24-soc-ssh-bruteforce-detection-response-correlation)
+- 🔗 [Lab 23 - SOC Investigation + Detection Engineering (Wazuh)](https://github.com/TKrysiaki/lab-soc-linux/tree/main/23-wazuh-detection-engineering-investigation)
 - 🔗 [Lab 17 - Multi-Vector Attack + SOC Decision](https://github.com/TKrysiaki/lab-soc-linux/tree/main/17-full-compromise-multi-vector-incident-response)
 - 🔗 [Lab 12 - SSH Attack Chain + Privilege Escalation](https://github.com/TKrysiaki/lab-soc-linux/tree/main/12-ssh-compromise-attack-chain-analysis)
 
@@ -67,13 +76,14 @@ Simular cenários reais de segurança para desenvolver habilidades práticas em:
 
 ## 🧠 Habilidades Demonstradas
 
-- Análise de logs Linux
-- Detecção de ataques (Brute Force, Credential Access)
-- Correlação de eventos (Host + SIEM)
-- Investigação de incidentes
-- Response (containment e mitigação)
-- Detection Engineering (regras no Wazuh)
-- Hardening de serviços
+- Análise de logs Linux  
+- Detecção de ataques (Brute Force, Credential Access)  
+- Correlação de eventos (Host + SIEM)  
+- Investigação de incidentes  
+- Resposta a incidentes (containment e mitigação)  
+- Detection Engineering (regras customizadas no Wazuh)  
+- Análise de tráfego de rede (Wireshark, tcpdump)  
+- Threat Intelligence (AbuseIPDB)  
 
 ---
 
@@ -81,28 +91,26 @@ Simular cenários reais de segurança para desenvolver habilidades práticas em:
 
 Os laboratórios cobrem diferentes estágios de um ataque real:
 
-- Reconhecimento
-- Brute Force (Initial Access)
-- Comprometimento
-- Pós-exploração
-- Detecção (SIEM)
-- Investigação
-- Resposta a incidente
-- Hardening
+- Reconhecimento  
+- Initial Access (Brute Force - T1110)  
+- Comprometimento  
+- Pós-exploração  
+- Detecção (SIEM)  
+- Investigação  
+- Resposta a incidente  
+- Hardening  
 
 ---
 
 ## 📈 Progressão dos Labs
 
-Os laboratórios seguem uma evolução prática:
-
-Reconhecimento → Initial Access (Brute Force) → Comprometimento → Pós-exploração → Detecção → Investigação → Resposta → Hardening
+Reconhecimento → Initial Access → Comprometimento → Pós-exploração → Detecção → Investigação → Resposta → Hardening
 
 ---
 
 ## 📬 Contato
 
-Aberto a oportunidades em SOC / NOC / Cybersecurity Jr.
+🎯 Buscando oportunidades em SOC / NOC / Cybersecurity Jr
 
 - LinkedIn: https://www.linkedin.com/in/tiago-krysiaki  
 - Email: t.krysiaki91@gmail.com  
