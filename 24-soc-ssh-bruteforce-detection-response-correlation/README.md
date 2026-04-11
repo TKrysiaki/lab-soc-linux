@@ -123,7 +123,16 @@ sudo fail2ban-client set sshd banip 192.168.56.106
 
 ---
 
+## 🚫 Validação do Bloqueio
 
+### Teste de conexão após bloqueio:
+
+<img src="images/08-ssh-blocked-fail2ban.png" width="100%">
+
+### Resultado:
+```Conexão recusada```
+
+**👉 Mitigação efetiva**
 
 
 
