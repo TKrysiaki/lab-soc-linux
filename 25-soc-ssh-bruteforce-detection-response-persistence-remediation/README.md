@@ -63,6 +63,7 @@ Após o acesso, o atacante executou ações para manter persistência:
 - Uso de privilégios elevados (sudo) após comprometimento inicial, indicando controle total do host.
 
 **👉 Classificação: True Positive (TP)**
+
 **👉 Severidade: Crítica**
 
 ---
