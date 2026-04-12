@@ -30,4 +30,12 @@ A análise foi conduzida como um cenário real de SOC, incluindo detecção, cor
 
 ---
 
+## 🚨 Confirmação do Comprometimento
 
+### Login bem-sucedido após brute force:
+
+<img src="images/08-ssh-successful-login.png" width="100%">
+
+### Sessão aberta no sistema:
+
+<img src="images/10-ssh-session-opened-tiago.png" width="100%">
