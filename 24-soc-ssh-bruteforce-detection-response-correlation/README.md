@@ -5,7 +5,7 @@
 
 ## 🎯 Visão Geral
 
-### Este laboratório simula um ataque de brute force SSH em ambiente controlado, com foco em:
+Este laboratório simula um ataque de brute force SSH em ambiente controlado, com foco em:
 
 - Detecção via logs e SIEM (Wazuh)
 - Análise de tráfego de rede (Wireshark/tcpdump)
@@ -30,17 +30,17 @@
 
 ## 🚨 Simulação do Ataque
 
-### Ataque automatizado utilizando Hydra contra serviço SSH.
+Ataque automatizado utilizando Hydra contra serviço SSH.
 
 <img src="images/01-hydra-ssh-attack.png" width="100%">
 
-### O ataque gerou múltiplas tentativas de autenticação com diferentes usuários, simulando um cenário real de brute force.
+O ataque gerou múltiplas tentativas de autenticação com diferentes usuários, simulando um cenário real de brute force.
 
 ---
 
 ## 🌐 Análise de Rede
 
-### Captura de tráfego focada na porta 22 (SSH).
+Captura de tráfego focada na porta 22 (SSH).
 
 <img src="images/02-ssh-bruteforce-wireshark.png" width="100%">
 
@@ -56,7 +56,7 @@
 
 ## 📊 Detecção no Wazuh
 
-### Alerta gerado com base nos logs do sistema (/var/log/auth.log).
+Alerta gerado com base nos logs do sistema (/var/log/auth.log).
 
 <img src="images/03-wazuh-ssh-bruteforce-alert.png" width="100%">
 
@@ -70,7 +70,7 @@
 
 ## 🧾 Análise de Logs
 
-### Investigação direta no auth.log.
+Investigação direta no auth.log.
 
 <img src="images/04-authlog-ssh-bruteforce.png" width="100%">
 
@@ -85,7 +85,7 @@
 
 ## 🔎 Validação de Comprometimento
 
-### Verificação de logins bem-sucedidos:
+Verificação de logins bem-sucedidos:
 
 <img src="images/05-no-successful-login.png" width="100%">
 
@@ -112,7 +112,7 @@ Resultado:
 
 ## 🛡️ Resposta ao Incidente
 
-### Bloqueio do IP atacante via Fail2ban.
+Bloqueio do IP atacante via Fail2ban.
 
 <img src="images/06-fail2ban-ip-banned.png" width="100%">
 
@@ -125,11 +125,11 @@ sudo fail2ban-client set sshd banip 192.168.56.106
 
 ## 🚫 Validação do Bloqueio
 
-### Teste de conexão após bloqueio:
+Teste de conexão após bloqueio:
 
 <img src="images/08-ssh-blocked-fail2ban.png" width="100%">
 
-### Resultado:
+Resultado:
 ```Conexão recusada```
 
 **👉 Mitigação efetiva**
@@ -138,11 +138,11 @@ sudo fail2ban-client set sshd banip 192.168.56.106
 
 ## 🌍 Threat Intelligence
 
-### Consulta do IP no AbuseIPDB:
+Consulta do IP no AbuseIPDB:
 
 <img src="images/07-threat-intel-abuseipdb-private-ip.png" width="100%">
 
-### Resultado:
+Resultado:
 - IP privado (ambiente interno)
 - Sem registros públicos
 
@@ -152,7 +152,7 @@ sudo fail2ban-client set sshd banip 192.168.56.106
 
 ## ⚙️ Detection Engineering (Wazuh)
 
-### Criação de regra customizada para elevar severidade:
+Criação de regra customizada para elevar severidade:
 
 <img src="images/09-wazuh-custom-rule-bruteforce.png" width="100%">
 
@@ -163,7 +163,7 @@ sudo fail2ban-client set sshd banip 192.168.56.106
 </rule>
 ```
 
-### 📌 Objetivo:
+📌 Objetivo:
 - Reutilizar detecção existente (5551)
 - Elevar prioridade para nível crítico
 - Melhorar visibilidade no SOC
@@ -184,7 +184,7 @@ sudo fail2ban-client set sshd banip 192.168.56.106
 
 ## 🎯 Conclusão
 
-### Este laboratório demonstra um fluxo completo de operação SOC:
+Este laboratório demonstra um fluxo completo de operação SOC:
 
 ```Detecção → Análise → Correlação → Decisão → Resposta```
 
