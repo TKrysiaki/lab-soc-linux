@@ -1,8 +1,8 @@
 # 🚨 Detecção e Resposta a Brute Force SSH com Persistência (Wazuh + Fail2ban)
 ## 📌 Visão Geral
 
-### Este laboratório simula um ataque de brute force SSH com sucesso, seguido de criação de persistência (backdoor) no sistema.
-A análise foi conduzida como um cenário real de SOC, incluindo detecção, correlação, investigação, resposta e remediação.
+Este laboratório simula um ataque de brute force SSH com sucesso, seguido de criação de persistência (backdoor) no sistema.
+O atacante obteve acesso inicial e estabeleceu persistência no sistema através de criação de usuário e chave SSH, permitindo acesso contínuo mesmo após troca de senha.
 
 ---
 
@@ -16,7 +16,7 @@ A análise foi conduzida como um cenário real de SOC, incluindo detecção, cor
 
 ## 🎯 Simulação do Ataque
 
-### O atacante executou múltiplas tentativas de login via SSH até obter sucesso.
+O atacante executou múltiplas tentativas de login via SSH até obter sucesso.
 
 <img src="images/04-first-attack-event.png" width="100%"> <img src="images/07-ssh-failed-login-count.png" width="100%">
 
@@ -24,7 +24,7 @@ A análise foi conduzida como um cenário real de SOC, incluindo detecção, cor
 
 ## 🔍 Detecção e Correlação
 
-### O Wazuh identificou comportamento suspeito e correlacionou eventos de falha com login bem-sucedido.
+O Wazuh identificou comportamento suspeito e correlacionou eventos de falha com login bem-sucedido.
 
 <img src="images/02-filter-ip-attack-wazuh.png" width="100%"> <img src="images/03-accepted-login-correlation.png" width="100%">
 
@@ -32,11 +32,11 @@ A análise foi conduzida como um cenário real de SOC, incluindo detecção, cor
 
 ## 🚨 Confirmação do Comprometimento
 
-### Login bem-sucedido após brute force:
+Login bem-sucedido após brute force:
 
 <img src="images/08-ssh-successful-login.png" width="100%">
 
-### Sessão aberta no sistema:
+Sessão aberta no sistema:
 
 <img src="images/10-ssh-session-opened-tiago.png" width="100%">
 
@@ -44,7 +44,7 @@ A análise foi conduzida como um cenário real de SOC, incluindo detecção, cor
 
 ## 💥 Ações do Atacante (Pós-Exploração)
 
-### Após o acesso, o atacante executou ações para manter persistência:
+Após o acesso, o atacante executou ações para manter persistência:
 
 - Criação de usuário malicioso
 - Definição de senha
@@ -60,16 +60,25 @@ A análise foi conduzida como um cenário real de SOC, incluindo detecção, cor
 - Ataque identificado como Brute Force SSH (T1110)
 - Comprometimento confirmado via login válido
 - Persistência estabelecida via SSH Authorized Keys (T1098.004)
-- Escalada de privilégio utilizando sudo
+- Uso de privilégios elevados (sudo) após comprometimento inicial, indicando controle total do host.
 
 **👉 Classificação: True Positive (TP)**
 **👉 Severidade: Crítica**
 
 ---
 
+## 🧬 MITRE ATT&CK
+
+- T1110 – Brute Force
+- T1078 – Valid Accounts
+- T1098.004 – SSH Authorized Keys
+- T1136 – Create Account
+
+---
+
 ## 🛡️ Resposta ao Incidente
 
-### Bloqueio do IP atacante via Fail2ban:
+Bloqueio do IP atacante via Fail2ban:
 
 <img src="images/09-fail2ban-ban-ip.png" width="100%">
 
@@ -88,15 +97,15 @@ A análise foi conduzida como um cenário real de SOC, incluindo detecção, cor
 
 ## 🔎 Validação Pós-Incidente
 
-### Auditoria de usuários:
+Auditoria de usuários:
 
 <img src="images/15-users-audit-no-backdoor.png" width="100%">
 
-### Monitoramento após mitigação:
+Monitoramento após mitigação:
 
 <img src="images/16-post-mitigation-monitoring.png" width="100%">
 
-### Validação do Fail2ban:
+Validação do Fail2ban:
 
 <img src="images/17-fail2ban-status-validation.png" width="100%">
 
@@ -104,7 +113,7 @@ A análise foi conduzida como um cenário real de SOC, incluindo detecção, cor
 
 ## 🎯 Conclusão
 
-### O laboratório demonstrou um ciclo completo de atuação SOC:
+O laboratório demonstrou um ciclo completo de atuação SOC:
 
 - Detecção de ataque
 - Correlação de eventos
