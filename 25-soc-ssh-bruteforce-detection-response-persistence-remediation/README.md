@@ -132,7 +132,7 @@ A análise foi conduzida como um cenário real de SOC, incluindo detecção, cor
 - LinkedIn: https://www.linkedin.com/in/tiago-krysiaki
 - Email: t.krysiaki91@gmail.com
 
-# 🎯 Buscando oportunidades em SOC / NOC (Segurança da Informação)
+## 🎯 Buscando oportunidades em SOC / NOC (Segurança da Informação)
 
 
 
