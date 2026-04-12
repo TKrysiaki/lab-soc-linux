@@ -39,3 +39,117 @@ A análise foi conduzida como um cenário real de SOC, incluindo detecção, cor
 ### Sessão aberta no sistema:
 
 <img src="images/10-ssh-session-opened-tiago.png" width="100%">
+
+---
+
+## 💥 Ações do Atacante (Pós-Exploração)
+
+### Após o acesso, o atacante executou ações para manter persistência:
+
+- Criação de usuário malicioso
+- Definição de senha
+- Inclusão em grupo
+- Criação de diretório .ssh
+- Inserção de chave em authorized_keys
+
+<img src="images/11-attacker-commands-executed.png" width="100%">
+
+---
+
+## 🧠 Análise SOC
+- Ataque identificado como Brute Force SSH (T1110)
+- Comprometimento confirmado via login válido
+- Persistência estabelecida via SSH Authorized Keys (T1098.004)
+- Escalada de privilégio utilizando sudo
+
+**👉 Classificação: True Positive (TP)**
+**👉 Severidade: Crítica**
+
+---
+
+## 🛡️ Resposta ao Incidente
+
+### Bloqueio do IP atacante via Fail2ban:
+
+<img src="images/09-fail2ban-ban-ip.png" width="100%">
+
+---
+
+## 🧹 Remediação
+- Remoção do usuário malicioso (backdoor)
+- Exclusão de diretórios persistentes
+- Reset de senha do usuário comprometido
+
+<img src="images/13-backdoor-user-removed-validation.png" width="100%"> 
+
+<img src="images/14-password-reset-tiago-success.png" width="100%">
+
+---
+
+## 🔎 Validação Pós-Incidente
+
+### Auditoria de usuários:
+
+<img src="images/15-users-audit-no-backdoor.png" width="100%">
+
+### Monitoramento após mitigação:
+
+<img src="images/16-post-mitigation-monitoring.png" width="100%">
+
+### Validação do Fail2ban:
+
+<img src="images/17-fail2ban-status-validation.png" width="100%">
+
+---
+
+## 🎯 Conclusão
+
+### O laboratório demonstrou um ciclo completo de atuação SOC:
+
+- Detecção de ataque
+- Correlação de eventos
+- Confirmação de comprometimento
+- Identificação de persistência
+- Resposta imediata
+- Remediação completa
+- Validação pós-incidente
+
+**👉 O ambiente foi restaurado com sucesso, eliminando acesso do atacante.**
+
+---
+
+## 🧠 Skills Desenvolvidas
+- Análise de logs SSH
+- Correlação de eventos (Wazuh)
+- Investigação de incidentes
+- Detecção de persistência
+- Resposta com Fail2ban
+- Remediação de acesso não autorizado
+
+---
+
+## 📞 Contato
+- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki
+- Email: t.krysiaki91@gmail.com
+
+# 🎯 Buscando oportunidades em SOC / NOC (Segurança da Informação)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
