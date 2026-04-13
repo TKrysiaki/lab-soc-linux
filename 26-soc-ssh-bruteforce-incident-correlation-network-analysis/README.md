@@ -141,6 +141,7 @@ Apesar da ausência de ações claras de pós-exploração, o acesso não autori
 ## 📬 Contato
 
 LinkedIn: https://www.linkedin.com/in/tiago-krysiaki
+
 Email: t.krysiaki91@gmail.com
 
 
