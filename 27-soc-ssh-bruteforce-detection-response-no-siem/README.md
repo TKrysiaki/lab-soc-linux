@@ -31,7 +31,7 @@ O ataque foi realizado por meio de script automatizado, simulando brute force co
 
 Foi observado alto volume de tentativas de login mal-sucedidas em curto período, indicando comportamento automatizado.
 
-<img src="01-bruteforce-ssh-failed-login.png" width="100%">
+<img src="images/01-bruteforce-ssh-failed-login.png" width="100%">
 
 ---
 
