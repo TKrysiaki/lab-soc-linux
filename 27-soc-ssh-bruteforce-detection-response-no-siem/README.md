@@ -49,7 +49,7 @@ sudo tail -f /var/log/auth.log | grep "Failed password"
 - Mesmo IP (`192.168.56.108`)
 - Tentativas contra usuário `root`
 
-<img src="01-bruteforce-ssh-failed-login.png" width="100%">
+<img src="images/01-bruteforce-ssh-failed-login.png" width="100%">
 
 ---
 
@@ -59,7 +59,7 @@ sudo grep "Accepted password" /var/log/auth.log
 ```
 Nenhum login bem-sucedido foi identificado.
 
-<img src="02-no-successful-login.png" width="100%">
+<img src="images/02-no-successful-login.png" width="100%">
 
 ---
 
@@ -67,7 +67,7 @@ Nenhum login bem-sucedido foi identificado.
 
 Mitigação realizada com Fail2ban, bloqueando o IP atacante.
 
-<img src="03-mitigacao-fail2ban-bloqueio-ip.png" width="100%">
+<img src="images/03-mitigacao-fail2ban-bloqueio-ip.png" width="100%">
 
 ---
 
@@ -77,7 +77,7 @@ sudo tail -f /var/log/auth.log
 ```
 Nenhuma nova tentativa identificada após bloqueio.
 
-<img src="04-validacao-mitigacao-ataque-bloqueado.png" width="100%">
+<img src="images/04-validacao-mitigacao-ataque-bloqueado.png" width="100%">
 
 ---
 
@@ -85,7 +85,7 @@ Nenhuma nova tentativa identificada após bloqueio.
 
 IP analisado no VirusTotal → sem reputação maliciosa (IP privado).
 
-<img src="05-threat-intel-ip-interno-clean.png" width="100%">
+<img src="images/05-threat-intel-ip-interno-clean.png" width="100%">
 
 ---
 
@@ -95,7 +95,7 @@ sudo grep "session opened" /var/log/auth.log
 ```
 Nenhuma evidência de atividade maliciosa.
 
-<img src="06-pos-exploracao-nao-identificada.png" width="100%">
+<img src="images/06-pos-exploracao-nao-identificada.png" width="100%">
 
 ---
 
