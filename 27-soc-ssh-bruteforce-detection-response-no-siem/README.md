@@ -118,6 +118,20 @@ Nenhuma evidência de atividade maliciosa.
 
 ---
 
+## 🧠 Skills Desenvolvidas
+
+- Análise manual de logs (auth.log)
+- Detecção de brute force sem SIEM
+- Investigação de incidentes (SOC workflow)
+- Correlação de eventos (log + comportamento)
+- Resposta a incidentes (Fail2ban)
+- Validação de mitigação
+- Threat Intelligence (VirusTotal)
+- Classificação de incidentes (TP / severidade)
+- Mapeamento MITRE ATT&CK (T1110)
+
+---
+
 ## 🧾 Conclusão
 
 Este laboratório demonstrou a detecção e resposta a um ataque de brute force sem uso de `SIEM`, utilizando análise manual de logs como principal fonte de evidência.
