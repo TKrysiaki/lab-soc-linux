@@ -15,7 +15,6 @@
   Ataque identificado e contido com sucesso, sem evidência de comprometimento.
 
 
-
   ---
 
 ## 🌐 Ambiente
@@ -29,7 +28,7 @@
 
 O ataque foi realizado por meio de script automatizado, simulando brute force contra o serviço SSH.
 
-Foi observado alto volume de tentativas de login mal-sucedidas em curto período, indicando comportamento automatizado.
+Alto volume de tentativas de login mal-sucedidas foi identificado em curto intervalo de tempo.
 
 
 ---
