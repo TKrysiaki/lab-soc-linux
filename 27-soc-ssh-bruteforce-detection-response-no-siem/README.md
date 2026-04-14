@@ -135,13 +135,13 @@ Nenhuma evidência de atividade maliciosa.
 
 ## 🧾 Conclusão
 
-Este laboratório demonstrou a detecção e resposta a um ataque de brute force sem uso de `SIEM`, utilizando análise manual de logs como principal fonte de evidência.
+Este laboratório demonstrou a detecção e resposta a um ataque de brute force sem uso de SIEM, utilizando análise manual de logs como principal fonte de evidência.
 
 O ataque foi identificado por múltiplas tentativas de login mal-sucedidas via SSH. A investigação confirmou que não houve autenticação bem-sucedida, descartando comprometimento.
 
-A mitigação foi aplicada com `Fail2ban`, bloqueando o IP atacante e interrompendo o ataque. A validação confirmou a eficácia da resposta.
+A mitigação foi aplicada com Fail2ban, bloqueando o IP atacante e interrompendo o ataque. A validação confirmou a eficácia da resposta.
 
-A análise de `Threat Intelligence` indicou tratar-se de um IP privado, e não foram identificadas evidências de pós-exploração.
+A análise de Threat Intelligence indicou tratar-se de um IP privado, e não foram identificadas evidências de pós-exploração.
 
 O incidente foi tratado e encerrado com sucesso no nível N1.
 
