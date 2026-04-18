@@ -24,11 +24,6 @@ O ambiente apresentava exposição do serviço SSH, permitindo interação remot
 
 Identificação do serviço SSH ativo na máquina alvo.
 
-**Comando utilizado:**
-```
-nmap -p 22 192.168.122.102
-```
-
 <img src="images/01-nmap-scan-ssh-open.png" width="100%">
 
 ---
