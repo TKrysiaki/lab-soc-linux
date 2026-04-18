@@ -98,9 +98,7 @@ grep "Failed password" /var/log/auth.log | grep "192.168.122.50" | wc -l
 
 Foram correlacionados eventos utilizando auditd para identificar ações após o comprometimento.
 
----
-
-## 🔎 Execução de comandos
+### 🔎 Execução de comandos
 
 Indica atividades realizadas no sistema após o acesso.
 
