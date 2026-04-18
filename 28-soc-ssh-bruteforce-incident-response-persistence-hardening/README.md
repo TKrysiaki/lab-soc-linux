@@ -100,7 +100,7 @@ Foram correlacionados eventos utilizando auditd para identificar ações após o
 
 ---
 
-### 🔎 Execução de comandos
+**🔎 Execução de comandos**
 
 Indica atividades realizadas no sistema após o acesso.
 
