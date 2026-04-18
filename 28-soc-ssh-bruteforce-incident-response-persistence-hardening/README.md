@@ -291,6 +291,6 @@ Foram aplicadas medidas de contenção, erradicação e hardening, reduzindo a s
 
 Aberto a oportunidades como SOC Analyst / Cybersecurity.
 
-- LinkedIn: [https://www.linkedin.com/in/SEU-USUARIO ](https://www.linkedin.com/in/tiago-krysiaki)
-- GitHub: [https://github.com/SEU-USUARIO  ](https://github.com/TKrysiaki)
+- LinkedIn: [https://www.linkedin.com/in/tiago-krysiaki ](https://www.linkedin.com/in/tiago-krysiaki)
+- GitHub: [https://github.com/TKrysiaki  ](https://github.com/TKrysiaki)
 
