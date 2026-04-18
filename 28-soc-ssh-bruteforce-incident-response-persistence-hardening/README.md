@@ -216,3 +216,56 @@ Foram aplicadas medidas de contenção, erradicação e hardening, reduzindo a s
 - Necessidade de hardening em serviços expostos  
 - Correlação de múltiplas fontes de log  
 - Aplicação prática de frameworks de segurança  
+
+---
+
+## 📊 15. Classificação do Incidente
+
+- **Tipo:** Brute Force (SSH)
+- **MITRE ATT&CK:** T1110 — Brute Force  
+- **Classificação:** True Positive (TP)  
+- **Severidade:** Alta  
+
+---
+
+## 🧩 16. Correlação em SIEM (Simulação SOC)
+
+Embora a análise tenha sido realizada manualmente via logs, o comportamento observado corresponde a eventos que seriam correlacionados em um SIEM (ex: Wazuh).
+
+### 🔎 Eventos correlacionados:
+
+- Múltiplos eventos de falha de autenticação (Failed password)
+- Origem única (192.168.122.50)
+- Alto volume em curto período (brute force)
+- Evento de sucesso (Accepted password)
+- Execução de comandos com sudo
+- Criação de usuário (persistência)
+
+### 🧠 Interpretação:
+
+Esses eventos seriam agrupados como:
+> “Multiple SSH authentication failures followed by successful login”
+
+---
+
+## 🧬 17. Pós-Exploração
+
+Após o acesso inicial, foram realizadas ações típicas de pós-exploração:
+
+- Criação de usuário para persistência (`suporte`)
+- Execução de comandos com privilégio elevado (sudo)
+- Alteração de credenciais
+
+👉 Indica comprometimento ativo do sistema
+
+---
+
+## 🧠 18. Resumo Executivo (1 linha)
+
+Ataque de brute force via SSH resultou em acesso não autorizado, persistência no sistema e execução de ações privilegiadas, sendo detectado, contido e mitigado com sucesso.
+
+---
+
+## 🧠 19. Narrativa Profissional (Entrevista)
+
+> Foi identificado um ataque de brute force contra o serviço SSH, evidenciado por múltiplas falhas de autenticação. Após o comprometimento, o atacante estabeleceu persistência via criação de usuário e executou comandos com privilégio elevado. Realizei a contenção com bloqueio via Fail2ban, erradicação removendo o usuário malicioso e apliquei hardening no serviço para prevenir recorrência.
