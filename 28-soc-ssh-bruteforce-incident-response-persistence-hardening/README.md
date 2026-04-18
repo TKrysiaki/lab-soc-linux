@@ -4,27 +4,37 @@
 
 ## 🎯 1. Visão Geral
 
-Foi identificado um ataque de brute force contra o serviço SSH (porta 22) em um servidor Linux, resultando em acesso não autorizado, execução de comandos e criação de persistência no sistema.
+Durante o monitoramento do ambiente, foi identificado um comportamento anômalo envolvendo múltiplas tentativas de autenticação no serviço SSH (porta 22), caracterizando um ataque de brute force.
+
+A análise confirmou acesso não autorizado, execução de comandos com privilégio elevado e criação de persistência no sistema.
 
 - **Alvo:** 192.168.122.102  
 - **Atacante:** 192.168.122.50  
 - **Serviço afetado:** SSH  
 - **Severidade:** Alta  
-- **Classificação:** True Positive  
+- **Classificação:** True Positive (TP)  
 
 ---
 
-## ⚔️ 2. Vetor de Ataque
+## 🛰️ 2. Monitoramento
 
-O atacante realizou múltiplas tentativas de autenticação utilizando brute force até obter sucesso com credenciais válidas.
+O ambiente apresentava exposição do serviço SSH, permitindo interação remota.
 
 ### 🔍 Descoberta de serviço
+
+Identificação do serviço SSH ativo na máquina alvo.
 
 <img src="images/01-nmap-scan-ssh-open.png" width="100%">
 
 ---
 
-### 💣 Execução do ataque (Hydra)
+## ⚔️ 3. Vetor de Ataque
+
+Foi identificado ataque de brute force contra o serviço SSH, explorando credenciais fracas.
+
+### 💣 Execução do ataque
+
+Múltiplas tentativas automatizadas de autenticação.
 
 <img src="images/02-hydra-bruteforce-credenciais.png" width="100%">
 
@@ -32,15 +42,27 @@ O atacante realizou múltiplas tentativas de autenticação utilizando brute for
 
 ### 🔓 Acesso inicial
 
+Confirmação de acesso ao sistema utilizando credencial comprometida.
+
 <img src="images/03-ssh-login-acesso-inicial.png" width="100%">
 
 ---
 
-## 🔍 3. Detecção
+## 🔍 4. Detecção
 
 A detecção foi realizada através da análise de logs do sistema.
 
+---
+
 ### 📄 Tentativas falhadas
+
+Indicam tentativa de brute force contra o serviço SSH.
+
+**Comando utilizado:**
+
+```
+grep "Failed password" /var/log/auth.log
+```
 
 <img src="images/06-logs-ssh-failed-password.png" width="100%">
 
@@ -48,21 +70,44 @@ A detecção foi realizada através da análise de logs do sistema.
 
 ### 📄 Autenticação bem-sucedida
 
+Confirma que o atacante conseguiu acesso ao sistema.
+
+**Comando utilizado:**
+```
+grep "Accepted password" /var/log/auth.log
+```
+
 <img src="images/07-logs-ssh-accepted-password.png" width="100%">
 
 ---
 
 ### 📊 Quantificação do ataque
 
+Permite medir o volume de tentativas realizadas pelo atacante.
+
+**Comando utilizado:**
+```
+grep "Failed password" /var/log/auth.log | grep "192.168.122.50" | wc -l
+```
+
 <img src="images/08-quantificacao-tentativas-bruteforce.png" width="100%">
 
 ---
 
-## 🧠 4. Investigação
+## 🧠 5. Investigação
 
-Foram correlacionados eventos utilizando auditd para identificar ações pós-comprometimento.
+Foram correlacionados eventos utilizando auditd para identificar ações após o comprometimento.
+
+---
 
 ### 🔎 Execução de comandos
+
+Indica atividades realizadas no sistema após o acesso.
+
+**Comando utilizado:**
+```
+grep EXECVE /var/log/audit/audit.log
+```
 
 <img src="images/09-auditd-execve-ssh.png" width="100%">
 
@@ -70,202 +115,186 @@ Foram correlacionados eventos utilizando auditd para identificar ações pós-co
 
 ### 🔎 Uso de privilégios (sudo)
 
+Evidencia execução de comandos com privilégio elevado.
+
+**Comando utilizado:**
+```
+grep sudo /var/log/audit/audit.log
+```
+
 <img src="images/10-auditd-sudo-privilege-escalation.png" width="100%">
 
 ---
 
 ### 🔎 Alteração de senha
 
+Indica manipulação de credenciais no sistema.
+
+**Comando utilizado:**
+```
+grep passwd /var/log/audit/audit.log
+```
+
 <img src="images/12-auditd-passwd-alteracao-senha.png" width="100%">
 
 ---
 
-## 🧬 5. Persistência
+## 🧬 6. Persistência
 
-Foi identificado que o atacante criou um usuário para manter acesso ao sistema.
+Foi identificado que o atacante criou um novo usuário para manter acesso ao sistema.
+
+**Comando utilizado:**
+```
+cat /etc/passwd | grep suporte
+```
 
 <img src="images/11-auditd-useradd-persistencia.png" width="100%">
 
-**Validação adicional:**
-- Arquivo: `/etc/passwd`
-- Usuário identificado: `suporte`
-
 ---
 
-## 🌐 6. Threat Intelligence
+## 🌐 7. Threat Intelligence
+
+Consulta do IP de origem em base externa.
 
 <img src="images/14-threat-intel-abuseipdb-ip.png" width="100%">
 
 **Observação:**  
-O IP pertence a uma faixa privada (RFC1918), não sendo aplicável para análise de reputação externa.
+IP pertence à faixa privada (RFC1918), não aplicável para reputação externa.
 
 ---
 
-## 🕒 7. Timeline do Incidente
+## 🕒 8. Timeline do Incidente
 
-- 10:01 — Início de múltiplas tentativas de login (Failed password)  
-- 10:03 — Aumento do volume de tentativas (brute force)  
-- 10:05 — Autenticação bem-sucedida (Accepted password)  
-- 10:06 — Acesso ao sistema via SSH  
-- 10:07 — Criação de usuário (persistência)  
-- 10:08 — Execução de comandos com sudo  
-- 10:10 — Detecção do incidente  
-- 10:12 — Contenção (Fail2ban)  
-- 10:15 — Erradicação (remoção do usuário)  
-- 10:18 — Hardening aplicado  
+- 10:01 — Início de tentativas falhadas  
+- 10:03 — Aumento do volume (brute force)  
+- 10:05 — Login bem-sucedido  
+- 10:06 — Acesso ao sistema  
+- 10:07 — Criação de usuário  
+- 10:08 — Execução com sudo  
+- 10:10 — Detecção  
+- 10:12 — Contenção  
+- 10:15 — Erradicação  
+- 10:18 — Hardening  
 
 ---
 
-## 🚨 8. Resposta ao Incidente
+## 🚨 9. Resposta ao Incidente
+
+---
 
 ### 🔒 Contenção
 
-<img src="images/15-resposta-contencao-fail2ban.png" width="100%">
+Bloqueio do IP atacante para interromper o ataque.
 
-- Bloqueio do IP atacante via Fail2ban  
+**Comando utilizado:**
+```
+sudo fail2ban-client set sshd banip 192.168.122.50
+```
+
+<img src="images/15-resposta-contencao-fail2ban.png" width="100%">
 
 ---
 
 ### 🧹 Erradicação
 
-<img src="images/16-resposta-erradicacao-usuario.png" width="100%">
+Remoção do usuário malicioso criado durante o ataque.
 
-- Remoção do usuário malicioso (`suporte`)  
+**Comando utilizado:**
+```
+sudo userdel -r suporte
+```
+
+<img src="images/16-resposta-erradicacao-usuario.png" width="100%">
 
 ---
 
 ### 🛡️ Hardening
 
+Aplicação de medidas para prevenir novos ataques.
+
+**Configuração aplicada:**
+```
+PermitRootLogin no
+PasswordAuthentication no
+```
+
 <img src="images/17-hardening-ssh-config.png" width="100%">
 
-Configurações aplicadas:
-- `PermitRootLogin no`  
-- `PasswordAuthentication no`  
-
 ---
 
-## ⚠️ 9. Impacto
+## ⚠️ 10. Impacto
 
-- Acesso não autorizado ao sistema  
-- Execução de comandos com privilégio elevado  
+- Acesso não autorizado  
+- Execução de comandos privilegiados  
 - Criação de persistência  
 - Risco de movimentação lateral  
-- Potencial comprometimento de dados  
+- Possível comprometimento de dados  
 
 ---
 
-## 🔎 10. Causa Raiz (Root Cause)
+## 🔎 11. Causa Raiz
 
-- Uso de credenciais fracas  
+- Credenciais fracas  
 - Autenticação por senha habilitada  
 - Ausência de proteção contra brute force  
-- Falta de hardening no serviço SSH  
+- Falta de hardening no serviço  
 
 ---
 
-## 🧩 11. Frameworks
+## 🧩 12. Frameworks
 
-### 🔹 MITRE ATT&CK
+**MITRE ATT&CK**
 - T1110 — Brute Force  
 
----
+**NIST**
+- Detect → Logs  
+- Respond → Contenção  
+- Recover → Hardening  
 
-### 🔹 NIST Cybersecurity Framework
-- Detect → Identificação via logs  
-- Respond → Contenção do incidente  
-- Recover → Hardening do sistema  
-
----
-
-### 🔹 CIS Controls
+**CIS Controls**
 - Control 5 — Account Management  
 - Control 6 — Access Control  
 - Control 8 — Audit Logs  
 
 ---
 
-### 🔹 ISO 27001
-- A.9 — Access Control  
-- A.12 — Logging and Monitoring  
-- A.16 — Incident Management  
+## 📊 13. Classificação
+
+- Tipo: Brute Force  
+- Severidade: Alta  
+- Classificação: True Positive (TP)  
 
 ---
 
-## ✅ 12. Recomendações
+## 🧬 14. Pós-Exploração
 
-- Implementar autenticação via chave SSH  
-- Desabilitar autenticação por senha  
-- Utilizar Fail2ban ou equivalente  
-- Monitoramento contínuo de logs  
-- Aplicar políticas de senha forte  
-- Implementar SIEM para correlação de eventos  
+- Criação de usuário (`suporte`)  
+- Execução com privilégio elevado  
+- Alteração de credenciais  
 
 ---
 
-## 🧠 13. Conclusão
+## 🧠 15. Conclusão
 
-O incidente foi identificado, analisado e tratado com sucesso, seguindo as etapas de detecção, investigação e resposta.  
+O incidente foi identificado, investigado e respondido com sucesso seguindo o fluxo de monitoramento, detecção, investigação e resposta.
 
 Foram aplicadas medidas de contenção, erradicação e hardening, reduzindo a superfície de ataque e prevenindo recorrência.
 
 ---
 
-## 🚀 14. Lições Aprendidas
+## 🚀 16. Lições Aprendidas
 
-- Importância do monitoramento contínuo  
-- Necessidade de hardening em serviços expostos  
-- Correlação de múltiplas fontes de log  
-- Aplicação prática de frameworks de segurança  
-
----
-
-## 📊 15. Classificação do Incidente
-
-- **Tipo:** Brute Force (SSH)
-- **MITRE ATT&CK:** T1110 — Brute Force  
-- **Classificação:** True Positive (TP)  
-- **Severidade:** Alta  
+- Monitoramento contínuo é essencial  
+- Hardening reduz significativamente o risco  
+- Correlação de logs é fundamental  
+- Resposta estruturada melhora a eficiência do SOC
 
 ---
 
-## 🧩 16. Correlação em SIEM (Simulação SOC)
+## 📬 Contato
 
-Embora a análise tenha sido realizada manualmente via logs, o comportamento observado corresponde a eventos que seriam correlacionados em um SIEM (ex: Wazuh).
+Aberto a oportunidades como SOC Analyst / Cybersecurity.
 
-### 🔎 Eventos correlacionados:
+- LinkedIn: [https://www.linkedin.com/in/SEU-USUARIO ](https://www.linkedin.com/in/tiago-krysiaki)
+- GitHub: [https://github.com/SEU-USUARIO  ](https://github.com/TKrysiaki)
 
-- Múltiplos eventos de falha de autenticação (Failed password)
-- Origem única (192.168.122.50)
-- Alto volume em curto período (brute force)
-- Evento de sucesso (Accepted password)
-- Execução de comandos com sudo
-- Criação de usuário (persistência)
-
-### 🧠 Interpretação:
-
-Esses eventos seriam agrupados como:
-> “Multiple SSH authentication failures followed by successful login”
-
----
-
-## 🧬 17. Pós-Exploração
-
-Após o acesso inicial, foram realizadas ações típicas de pós-exploração:
-
-- Criação de usuário para persistência (`suporte`)
-- Execução de comandos com privilégio elevado (sudo)
-- Alteração de credenciais
-
-👉 Indica comprometimento ativo do sistema
-
----
-
-## 🧠 18. Resumo Executivo (1 linha)
-
-Ataque de brute force via SSH resultou em acesso não autorizado, persistência no sistema e execução de ações privilegiadas, sendo detectado, contido e mitigado com sucesso.
-
----
-
-## 🧠 19. Narrativa Profissional (Entrevista)
-
-> Foi identificado um ataque de brute force contra o serviço SSH, evidenciado por múltiplas falhas de autenticação. Após o comprometimento, o atacante estabeleceu persistência via criação de usuário e executou comandos com privilégio elevado. Realizei a contenção com bloqueio via Fail2ban, erradicação removendo o usuário malicioso e apliquei hardening no serviço para prevenir recorrência.
