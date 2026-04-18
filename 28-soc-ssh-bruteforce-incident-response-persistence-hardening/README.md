@@ -178,8 +178,6 @@ IP pertence à faixa privada (RFC1918), não aplicável para reputação externa
 
 ## 🚨 9. Resposta ao Incidente
 
----
-
 ### 🔒 Contenção
 
 Bloqueio do IP atacante para interromper o ataque.
