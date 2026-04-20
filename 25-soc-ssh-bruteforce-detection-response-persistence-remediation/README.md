@@ -1,8 +1,15 @@
 # 🚨 Detecção e Resposta a Brute Force SSH com Persistência (Wazuh + Fail2ban)
-## 📌 Visão Geral
+## 📌 Overview
+Simulação de ataque SSH brute force com comprometimento e persistência via criação de usuário e SSH key. Detecção realizada com Wazuh e resposta com Fail2ban.
 
-Este laboratório simula um ataque de brute force SSH com sucesso, seguido de criação de persistência (backdoor) no sistema.
-O atacante obteve acesso inicial e estabeleceu persistência no sistema através de criação de usuário e chave SSH, permitindo acesso contínuo mesmo após troca de senha.
+- Acesso: ✔ Sim
+- Persistência: ✔ Sim
+- Severidade: 🔴 Crítica
+
+---
+
+## 📄 Detailed Incident Report
+➡️ ./report.md
 
 ---
 
@@ -44,13 +51,11 @@ Sessão aberta no sistema:
 
 ## 💥 Ações do Atacante (Pós-Exploração)
 
-Após o acesso, o atacante executou ações para manter persistência:
+Após o comprometimento inicial, foram identificadas ações de pós-exploração visando persistência no host:
 
-- Criação de usuário malicioso
-- Definição de senha
-- Inclusão em grupo
-- Criação de diretório .ssh
-- Inserção de chave em authorized_keys
+- Criação de conta maliciosa (T1136)
+- Escalada de privilégio via sudo
+- Persistência via SSH Authorized Keys (T1098.004)
 
 <img src="images/11-attacker-commands-executed.png" width="100%">
 
@@ -143,23 +148,3 @@ O laboratório demonstrou um ciclo completo de atuação SOC:
 - Email: t.krysiaki91@gmail.com
 
 ## 🎯 Buscando oportunidades em SOC / NOC (Segurança da Informação)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
