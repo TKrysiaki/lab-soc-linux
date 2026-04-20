@@ -1,26 +1,20 @@
 # 🚨 Lab 26 — Detecção e Resposta a Brute Force SSH com Correlação Completa
-## 🎯 Visão Geral
+## 📌 Overview
+Ataque SSH brute force com comprometimento inicial detectado via Wazuh, correlacionado com logs e tráfego de rede.
 
-Neste laboratório, simulei um ataque real de brute force SSH, conduzindo uma investigação completa no formato de um analista SOC.
+- Acesso: ✔ Sim  
+- Persistência: ❌ Não  
+- Severidade: 🔴 Alta  
 
-O foco não foi apenas detectar o ataque, mas correlacionar eventos, confirmar comprometimento e tomar decisão.
+## 📄 Detailed Incident Report
+➡️ [Ver relatório completo](./report.md)
 
----
 
-## 🧪 Ambiente
-- Atacante: Ubuntu
-- Alvo: Ubuntu (SSH ativo)
-- SIEM: Wazuh
-- Ferramentas:
-  - Hydra (ataque)
-  - Logs Linux (auth.log)
-  - tcpdump (rede)
- 
 ---
 
 ## ⚔️ Simulação de Ataque
 
-Ataque de brute force via SSH com múltiplos usuários e IPs.
+Ataque caracterizado por múltiplas tentativas de autenticação SSH provenientes de diferentes IPs, indicando brute force distribuído.
 
 ---
 
@@ -61,13 +55,10 @@ Identificado login bem-sucedido:
 
 ## 💻 Pós-Comprometimento
 
-Análise de comandos executados:
+Nenhuma evidência de persistência ou alteração significativa no sistema após o acesso inicial.
 
 <img src="images/04-history-commands.png" width="100%">
 
-- Sem criação de usuários
-- Sem persistência evidente
-- Atividade limitada
 
 ---
 
@@ -103,7 +94,7 @@ Captura de tráfego durante o ataque:
 
 ---
 
-## 🧠 Correlação (Timeline)
+## 🧠 Timeline do Incidente
 ```
 Brute force (192.168.56.105)
 → múltiplas falhas
