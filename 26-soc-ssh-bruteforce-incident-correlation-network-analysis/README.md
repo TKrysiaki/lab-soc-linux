@@ -4,7 +4,9 @@ Ataque SSH brute force com comprometimento inicial detectado via Wazuh, correlac
 
 - Acesso: ✔ Sim  
 - Persistência: ❌ Não  
-- Severidade: 🔴 Alta  
+- Severidade: 🔴 Alta
+
+---
 
 ## 📄 Detailed Incident Report
 ➡️ [Ver relatório completo](./report.md)
