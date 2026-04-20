@@ -158,4 +158,5 @@ A persistência foi removida e medidas de hardening foram aplicadas, reduzindo a
 Aberto a oportunidades como SOC Analyst.
 
 LinkedIn: https://www.linkedin.com/in/tiago-krysiaki
+
 GitHub: https://github.com/TKrysiaki
