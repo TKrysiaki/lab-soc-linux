@@ -45,6 +45,8 @@ grep "Accepted password" /var/log/auth.log
 <img src="images/06-logs-ssh-failed-password.png" width="100%"> 
 <img src="images/07-logs-ssh-accepted-password.png" width="100%">
 
+---
+
 ## 🧠 Investigation
 
 🔎 Atividade pós-comprometimento
