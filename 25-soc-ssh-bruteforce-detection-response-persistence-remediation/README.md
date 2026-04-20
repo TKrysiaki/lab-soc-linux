@@ -9,7 +9,7 @@ Simulação de ataque SSH brute force com comprometimento e persistência via cr
 ---
 
 ## 📄 Detailed Incident Report
-➡️ ./report.md
+➡️ [Ver relatório completo](./report.md)
 
 ---
 
