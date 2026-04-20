@@ -1,6 +1,6 @@
 # 🚨 Detecção e Resposta a Brute Force SSH com Persistência (Wazuh + Fail2ban)
 ## 📌 Overview
-Simulação de ataque SSH brute force com comprometimento e persistência via criação de usuário e SSH key. Detecção realizada com Wazuh e resposta com Fail2ban.
+Ataque SSH brute force com comprometimento e persistência detectado via Wazuh e mitigado com Fail2ban.
 
 - Acesso: ✔ Sim
 - Persistência: ✔ Sim
