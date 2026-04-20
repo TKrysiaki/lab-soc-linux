@@ -15,7 +15,11 @@
   Ataque identificado e contido com sucesso, sem evidência de comprometimento.
 
 
+➡️ [Ver relatório completo](./report.md)
+
+
   ---
+  
 
 ## 🌐 Ambiente
 - Máquina atacante: Ubuntu Linux
