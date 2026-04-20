@@ -9,7 +9,7 @@
   Brute Force SSH (sem sucesso)
 - **Ferramentas utilizadas**:
 
-    `/var/log/auth.log`, Fail2ban, VirusTotal
+    `/var/log/auth.log` e Fail2ban
 - **Resultado final**:
 
   Ataque identificado e contido com sucesso, sem evidência de comprometimento.
