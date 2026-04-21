@@ -1,5 +1,7 @@
 # 🛡️ SOC Linux Labs – Monitoring, Detection, Investigation, Classification & Response
 
+Practical SOC labs demonstrating real-world detection, investigation, and response using Wazuh (SIEM).
+
 Hands-on labs focused on **Security Operations Center (SOC)** practices using **Linux, Wazuh (SIEM), auditd, and log analysis**.
 
 ---
@@ -19,6 +21,17 @@ Simulate real-world attack scenarios and cover the full SOC workflow:
 ## 🧠 SOC Methodology
 
 Monitoring → Detection → Investigation → Classification → Response
+
+---
+
+## 🚨 Key Skills Demonstrated
+
+- SIEM monitoring and alerting (Wazuh)
+- Brute force detection and correlation
+- Log analysis (auth.log, auditd)
+- Incident investigation (timeline + IoCs)
+- Threat classification (MITRE ATT&CK)
+- Response and remediation (Fail2ban, hardening)
 
 ---
 
@@ -77,9 +90,10 @@ Each lab includes:
 - Advanced Wazuh correlation rules  
 
 ---
+
 ## 🧑‍💻 Author
 
 Tiago Krysiaki  
-Foco: SOC N1 | Blue Team | Threat Detection
+Focus: SOC N1 | Blue Team | Threat Detection  
 
-LikidIn: https://www.linkedin.com/in/tiago-krysiaki
+LinkedIn: https://www.linkedin.com/in/tiago-krysiaki
