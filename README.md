@@ -39,11 +39,11 @@ Hands-on experience analyzing security events, investigating incidents, and appl
 
 ## 🧠 Methodology
 
-**Detection → Investigation → Response**
+**Monitoring → Detection → Investigation → Response**
 
-Based on:
+Aligned with real SOC workflows and based on:
 - MITRE ATT&CK  
-- Real SOC practices  
+- Blue Team practices  
 
 ---
 
