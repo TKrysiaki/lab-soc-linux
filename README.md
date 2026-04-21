@@ -42,14 +42,14 @@ Monitoring → Detection → Investigation → Classification → Response
 | Lab | Description | Technologies | MITRE |
 |-----|------------|-------------|-------|
 | [29](https://github.com/TKrysiaki/lab-soc-linux/tree/main/29-soc-ssh-bruteforce-detection-response-persistence-log-tampering) | SSH brute force + persistence + log tampering | Wazuh, auth.log | T1110, T1078 |
-| [28](https://github.com/TKrysiaki/lab-soc-linux/tree/main/28-soc-ssh-bruteforce-incident-response-persistence) | Incident with persistence | Wazuh, Linux | T1110 |
+| [28](https://github.com/TKrysiaki/lab-soc-linux/tree/main/28-soc-ssh-bruteforce-incident-response-persistence-hardening) | Incident with persistence | Wazuh, Linux | T1110 |
 | [27](https://github.com/TKrysiaki/lab-soc-linux/tree/main/27-soc-ssh-bruteforce-detection-response-no-siem) | Detection without SIEM | Linux logs | T1110 |
-| [26](https://github.com/TKrysiaki/lab-soc-linux/tree/main/26-soc-ssh-bruteforce-incident-correlation-network) | Network correlation | Wazuh, logs | T1110 |
+| [26](https://github.com/TKrysiaki/lab-soc-linux/tree/main/26-soc-ssh-bruteforce-incident-correlation-network-analysis) | Network correlation | Wazuh, logs | T1110 |
 | [25](https://github.com/TKrysiaki/lab-soc-linux/tree/main/25-soc-ssh-bruteforce-detection-response-persistence-remediation) | Detection + response + remediation | Wazuh, Fail2ban | T1110 |
 | [24](https://github.com/TKrysiaki/lab-soc-linux/tree/main/24-soc-ssh-bruteforce-detection-response-correlation) | Event correlation | Wazuh | T1110 |
-| [23](https://github.com/TKrysiaki/lab-soc-linux/tree/main/23-soc-incident-response-bruteforce-correlation) | Incident investigation | Wazuh | T1110 |
-| [22](https://github.com/TKrysiaki/lab-soc-linux/tree/main/22-soc-bruteforce-detection-response-wazuh) | SIEM-based detection | Wazuh | T1110 |
-| [21](https://github.com/TKrysiaki/lab-soc-linux/tree/main/21-ssh-web-attack-detection-correlation) | Web attack + correlation | Wazuh | T1190 |
+| [23](https://github.com/TKrysiaki/lab-soc-linux/tree/main/23-soc-incident-response-bruteforce-correlation-threatintel) | Incident investigation | Wazuh | T1110 |
+| [22](https://github.com/TKrysiaki/lab-soc-linux/tree/main/22-soc-bruteforce-detection-response-wazuh-thehive) | SIEM-based detection | Wazuh | T1110 |
+| [21](https://github.com/TKrysiaki/lab-soc-linux/tree/main/21-ssh-web-attack-detection-correlation-auto-response-wazuh) | Web attack + correlation | Wazuh | T1190 |
 | [20](https://github.com/TKrysiaki/lab-soc-linux/tree/main/20-ssh-bruteforce-detection-response-wazuh-fail2ban) | Wazuh + Fail2ban | Wazuh | T1110 |
 
 ---
