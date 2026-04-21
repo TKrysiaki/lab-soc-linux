@@ -103,7 +103,7 @@ PasswordAuthentication no
 - Autenticação por senha desativada  
 - authorized_keys limpo  
 
-<img src="images/12-authorized-keys-empty.png.png" width="100%">
+<img src="images/12-authorized-keys-empty.png" width="100%">
 
 ---
 
