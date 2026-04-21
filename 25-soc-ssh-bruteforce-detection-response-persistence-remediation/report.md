@@ -22,7 +22,7 @@ Ataque de brute force SSH resultou em acesso não autorizado e persistência no 
 - IP: [192.168.56.139]
 - Porta: 22/TCP
 - Usuários alvo: root, admin, ubuntu
-- Arquivo: /home/[user]/.ssh/authorized_keys
+- Arquivo: /home/tiago/.ssh/authorized_keys
 - Padrão: múltiplos "Failed password"
 
 ---
