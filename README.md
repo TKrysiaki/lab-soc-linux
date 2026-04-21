@@ -1,78 +1,92 @@
-# 🚨 SOC Analyst Lab Portfolio (Linux)
+# 🛡️ SOC Linux Labs – Detection, Investigation & Response
 
-Real-world SOC labs focused on **Threat Detection, Investigation, and Incident Response**.
-
-28+ hands-on labs simulating real attack scenarios using **Wazuh SIEM, Linux logs, and network analysis**.
+Laboratórios práticos focados em operações de **SOC (Security Operations Center)** utilizando **Linux, Wazuh (SIEM), auditd e análise de logs**.
 
 ---
 
-## 🎯 Profile
+## 🎯 Objetivo
 
-SOC Analyst Jr | Blue Team | Open to Work  
+Simular cenários reais de ataque e resposta, cobrindo:
 
-Hands-on experience analyzing security events, investigating incidents, and applying response actions following real SOC workflows.
-
----
-
-## 🔥 Featured Labs
-
-- 🔗 [Lab 28 — SSH Brute Force + Persistence + Incident Response](https://github.com/TKrysiaki/lab-soc-linux/tree/main/28-soc-ssh-bruteforce-incident-response-persistence-hardening)  
-- 🔗 [Lab 25 — Detection + Response + Persistence + Remediation](https://github.com/TKrysiaki/lab-soc-linux/tree/main/25-soc-ssh-bruteforce-detection-response-persistence-remediation)  
-- 🔗 [Lab 24 — Detection + Correlation (Wazuh)](https://github.com/TKrysiaki/lab-soc-linux/tree/main/24-soc-ssh-bruteforce-detection-response-correlation)  
-
-👉 See full lab list below
+- monitoramento
+- Detection
+- Investigation (timeline + IoCs)
+- Classification (MITRE ATT&CK)
+- Response (containment + remediation)
 
 ---
 
-## 🧠 Skills Demonstrated
+## 🧠 Metodologia SOC
+Monitoring → Detection → Investigation → Classification → Response
 
-- Log analysis (auth.log, auditd, syslog)
-- Threat detection (Brute Force, Unauthorized Access, Persistence)
-- SIEM monitoring & correlation (Wazuh)
-- Incident investigation (timeline + attacker behavior)
-- Incident response (containment & mitigation)
-- Detection engineering (custom rules)
-- Network traffic analysis (Wireshark, tcpdump)
-- Threat intelligence (AbuseIPDB)
 
 ---
 
-## 🧠 Methodology
+## 🧰 Ferramentas
 
-**Monitoring → Detection → Investigation → Response → Hardening**
-
-Continuous improvement cycle based on:
-- MITRE ATT&CK  
-- Real SOC operations   
-
----
-
-## 🧪 Labs (Progression)
-
-From basic log analysis to advanced incident response:
-
-- Foundations → Log analysis & SSH basics  
-- Investigation → Incident analysis & correlation  
-- Compromise → Attack chain understanding  
-- Response → Containment & mitigation  
-- Advanced → Persistence, remediation & SOC decision-making  
+- Wazuh (SIEM)
+- auditd
+- auth.log
+- Fail2ban
+- iptables
+- Linux CLI
 
 ---
 
-## ⚙️ Environment
+## 📊 Labs em Destaque
 
-- Ubuntu (Attacker & Target)  
-- Wazuh (SIEM)  
-- auditd  
-- Fail2ban  
-- Wireshark / tcpdump  
+| Lab | Descrição | Tecnologias | MITRE |
+|-----|----------|------------|-------|
+| [29](https://github.com/TKrysiaki/lab-soc-linux/tree/main/29-soc-ssh-bruteforce-detection-response-persistence-log-tampering) | SSH brute force + persistence + log tampering | Wazuh, auth.log | T1110, T1078 |
+| [28](https://github.com/TKrysiaki/lab-soc-linux/tree/main/28-soc-ssh-bruteforce-incident-response-persistence) | Incidente com persistência | Wazuh, Linux | T1110 |
+| [27](https://github.com/TKrysiaki/lab-soc-linux/tree/main/27-soc-ssh-bruteforce-detection-response-no-siem) | Detecção sem SIEM | Linux logs | T1110 |
+| [26](https://github.com/TKrysiaki/lab-soc-linux/tree/main/26-soc-ssh-bruteforce-incident-correlation-network) | Correlação de rede | Wazuh, logs | T1110 |
+| [25](https://github.com/TKrysiaki/lab-soc-linux/tree/main/25-soc-ssh-bruteforce-detection-response-persistence-remediation) | Detecção + resposta + remediação | Wazuh, Fail2ban | T1110 |
+| [24](https://github.com/TKrysiaki/lab-soc-linux/tree/main/24-soc-ssh-bruteforce-detection-response-correlation) | Correlação de eventos | Wazuh | T1110 |
+| [23](https://github.com/TKrysiaki/lab-soc-linux/tree/main/23-soc-incident-response-bruteforce-correlation) | Investigação de incidente | Wazuh | T1110 |
+| [22](https://github.com/TKrysiaki/lab-soc-linux/tree/main/22-soc-bruteforce-detection-response-wazuh) | Detecção com SIEM | Wazuh | T1110 |
+| [21](https://github.com/TKrysiaki/lab-soc-linux/tree/main/21-ssh-web-attack-detection-correlation) | Ataque web + correlação | Wazuh | T1190 |
+| [20](https://github.com/TKrysiaki/lab-soc-linux/tree/main/20-ssh-bruteforce-detection-response-wazuh-fail2ban) | Wazuh + Fail2ban | Wazuh | T1110 |
 
 ---
 
-## 📬 Contact
+## 📂 Estrutura dos Labs
 
-🎯 Open to SOC Analyst Tier 1 opportunities  
+Cada lab contém:
 
-- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki  
-- GitHub: https://github.com/TKrysiaki  
-- Email: t.krysiaki91@gmail.com  
+- `README.md` → visão geral
+- `report.md` → relatório SOC detalhado
+- evidências (logs, alertas, prints)
+
+---
+
+## 🔍 Exemplo de Detecção (Wazuh)
+
+- Rule: `40112`
+- Evento: múltiplas falhas de login + sucesso
+- Classificação:
+  - T1110 – Brute Force
+  - T1078 – Valid Accounts
+
+---
+
+## 🚀 Próximos Labs
+
+- Web shell detection (Linux)
+- DNS tunneling / exfiltration
+- Correlação avançada no Wazuh
+
+---
+
+## 📎 Repositório
+
+👉 https://github.com/TKrysiaki/lab-soc-linux
+
+---
+
+## 🧑‍💻 Autor
+
+Tiago Krysiaki  
+Foco: SOC N1 | Blue Team | Threat Detection
+
+LikidIn: https://www.linkedin.com/in/tiago-krysiaki
