@@ -1,16 +1,26 @@
 # 🚨 SOC Analyst Lab Portfolio (Linux)
 
-Hands-on SOC labs simulating real-world attacks focused on **Threat Detection, Investigation, and Incident Response**.
+Real-world SOC labs focused on **Detection, Investigation, and Incident Response**.
 
-+100 simulated attack scenarios | SIEM-based detection | Controlled lab environment
+28+ hands-on labs | Wazuh SIEM | Linux log analysis | Blue Team workflow
 
 ---
 
 ## 🎯 Profile
 
-SOC Analyst Jr | Blue Team | Open to Work
+SOC Analyst Jr | Blue Team | Open to Work  
 
-Practical experience investigating security events using logs, SIEM, and network analysis, following real SOC workflows.
+Practical experience analyzing security events using logs, SIEM, and network traffic, following real SOC workflows.
+
+---
+
+## 🔥 Featured Labs
+
+- 🔗 [Lab 28 — SSH Brute Force + Persistence + Incident Response](https://github.com/TKrysiaki/lab-soc-linux/tree/main/28-soc-ssh-bruteforce-incident-response-persistence-hardening)  
+- 🔗 [Lab 24 — Detection + Correlation (Wazuh)](https://github.com/TKrysiaki/lab-soc-linux/tree/main/24-soc-ssh-bruteforce-detection-response-correlation)  
+- 🔗 [Lab 17 — Full Compromise Multi-Vector](https://github.com/TKrysiaki/lab-soc-linux/tree/main/17-full-compromise-multi-vector-incident-response)  
+
+👉 See full lab list below
 
 ---
 
@@ -21,58 +31,85 @@ Practical experience investigating security events using logs, SIEM, and network
 - SIEM monitoring & correlation (Wazuh)
 - Incident investigation (timeline + attacker behavior)
 - Incident response (containment & mitigation)
-- Detection engineering (custom Wazuh rules)
+- Detection engineering (custom rules)
 - Network traffic analysis (Wireshark, tcpdump)
 - Threat intelligence (AbuseIPDB)
 
 ---
 
-## 🧪 Labs
+## 🧪 Labs (Completed)
 
-### 🔐 LAB 29 — SSH Brute Force + Persistence + Log Tampering
-- MITRE ATT&CK: T1110, T1078, T1098, T1070
-- Focus: Detection & Investigation  
-- 🔗 [View Lab](https://github.com/TKrysiaki/lab-soc-linux)
+### 🧱 Foundations
 
-### 🌐 LAB 31 — Web Shell Detection (Linux)
-- MITRE ATT&CK: T1505  
-- 🔗 [View Lab](https://github.com/TKrysiaki/lab-soc-linux)
+- Lab 01 - Log Analysis Base  
+- Lab 02 - SSH Brute Force Investigation  
+- Lab 03 - Log Analysis Investigation  
+- Lab 04 - SSH Brute Force Detection  
+- Lab 05 - SSH Hardening  
 
-### 📡 LAB 32 — DNS Tunneling / Data Exfiltration
-- MITRE ATT&CK: T1071  
-- 🔗 [View Lab](https://github.com/TKrysiaki/lab-soc-linux)
+---
 
-### 📊 LAB 33 — SIEM Use Case (Wazuh Correlation Rules)
-- Focus: Detection Engineering  
-- 🔗 [View Lab](https://github.com/TKrysiaki/lab-soc-linux)
+### 🔍 Investigation & Detection
+
+- Lab 06 - SSH Brute Force Incident Investigation  
+- Lab 07 - Privilege Escalation Investigation  
+- Lab 08 - Wazuh Brute Force Detection  
+- Lab 09 - Suspicious SSH Login Investigation  
+- Lab 10 - Unauthorized File Access Investigation  
+- Lab 11 - Suspicious File Modification Investigation  
+
+---
+
+### ⚔️ Attack Chain & Compromise
+
+- Lab 12 - SSH Compromise Attack Chain  
+- Lab 13 - Detection & Response (Wazuh)  
+- Lab 14 - File Monitoring (auditd + Wazuh)  
+- Lab 15 - SSH Hardening  
+- Lab 16 - Incident Response (Wazuh)  
+- Lab 17 - Full Compromise Multi-Vector  
+
+---
+
+### 🚨 Incident Response (Advanced)
+
+- Lab 18 - SSH Compromise Response (auditd)  
+- Lab 19 - Detection & Response  
+- Lab 20 - Detection & Response (Wazuh)  
+- Lab 21 - Web Attack Detection  
+- Lab 22 - SOC Detection & Response  
+- Lab 23 - SOC Incident Response + Threat Intel  
+- Lab 24 - Detection & Correlation  
+
+---
+
+### 🧠 Advanced SOC
+
+- Lab 25 - Detection & Response + Analysis  
+- Lab 26 - Incident Correlation  
+- Lab 27 - Detection & Response (Advanced)  
+- Lab 28 - Incident Response + Persistence + Hardening  
+
+---
+
+## 🚧 Labs in Progress
+
+- LAB 29 — SSH Brute Force + Persistence + Log Tampering  
+- LAB 31 — Web Shell Detection  
+- LAB 32 — DNS Tunneling / Exfiltration  
+- LAB 33 — SIEM Correlation Use Case  
 
 ---
 
 ## 🧠 Methodology
 
-Each lab follows a real SOC workflow:
+SOC workflow applied in all labs:
 
-1. Detection (alerts / logs)  
-2. Investigation (timeline + IOC analysis)  
-3. Response (containment / mitigation)  
+Detection → Investigation → Response  
 
 Based on:
 - MITRE ATT&CK  
-- Blue Team practices  
-- Real SOC routines  
-
----
-
-## 📄 Documentation Standard
-
-Each lab is structured as:
-
-- `README.md` → quick overview  
-- `report.md` → full incident report  
-  - Timeline  
-  - Indicators of Compromise (IoCs)  
-  - Analysis  
-  - Response actions  
+- Real SOC practices  
 
 ---
 
@@ -80,18 +117,9 @@ Each lab is structured as:
 
 - Ubuntu (Attacker & Target)  
 - Wazuh (SIEM)  
-- auditd (Host logging)  
-- Fail2ban (Defense)  
-- Wireshark / tcpdump (Network analysis)  
-- Virtualized lab (VirtualBox / KVM)  
-
----
-
-## 🔄 Attack Lifecycle Coverage
-
-Labs simulate full attack flow:
-
-Recon → Initial Access → Compromise → Post-Exploitation → Detection → Investigation → Response → Hardening  
+- auditd  
+- Fail2ban  
+- Wireshark / tcpdump  
 
 ---
 
