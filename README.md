@@ -78,12 +78,6 @@ Cada lab contém:
 
 ---
 
-## 📎 Repositório
-
-👉 https://github.com/TKrysiaki/lab-soc-linux
-
----
-
 ## 🧑‍💻 Autor
 
 Tiago Krysiaki  
