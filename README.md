@@ -20,10 +20,6 @@ Simulate real-world attack scenarios and cover the full SOC workflow:
 
 Monitoring → Detection → Investigation → Classification → Response
 
-
----
-
-
 ---
 
 ## 🧰 Tools
