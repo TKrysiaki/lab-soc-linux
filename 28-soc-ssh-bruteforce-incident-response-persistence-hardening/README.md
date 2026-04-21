@@ -153,7 +153,7 @@ A persistência foi removida e medidas de hardening foram aplicadas, reduzindo a
 
 ---
 
-📬 Contato
+## 📬 Contato
 
 Aberto a oportunidades como SOC Analyst.
 
