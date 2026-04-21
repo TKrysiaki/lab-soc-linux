@@ -136,7 +136,7 @@ A persistência foi removida e o ambiente foi protegido com hardening.
 
 ---
 
-📬 Contato
+## 📬 Contato
 
 LinkedIn: https://www.linkedin.com/in/tiago-krysiaki  
 GitHub: https://github.com/TKrysiaki
