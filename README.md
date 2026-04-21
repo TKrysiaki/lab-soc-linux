@@ -1,8 +1,8 @@
 # 🚨 SOC Analyst Lab Portfolio (Linux)
 
-Real-world SOC labs focused on **Detection, Investigation, and Incident Response**.
+Real-world SOC labs focused on **Threat Detection, Investigation, and Incident Response**.
 
-28+ hands-on labs | Wazuh SIEM | Linux log analysis | Blue Team workflow
+28+ hands-on labs simulating real attack scenarios using **Wazuh SIEM, Linux logs, and network analysis**.
 
 ---
 
@@ -10,7 +10,7 @@ Real-world SOC labs focused on **Detection, Investigation, and Incident Response
 
 SOC Analyst Jr | Blue Team | Open to Work  
 
-Practical experience analyzing security events using logs, SIEM, and network traffic, following real SOC workflows.
+Hands-on experience analyzing security events, investigating incidents, and applying response actions following real SOC workflows.
 
 ---
 
@@ -20,6 +20,7 @@ Practical experience analyzing security events using logs, SIEM, and network tra
 - 🔗 [Lab 25 — Detection + Response + Persistence + Remediation](https://github.com/TKrysiaki/lab-soc-linux/tree/main/25-soc-ssh-bruteforce-detection-response-persistence-remediation)  
 - 🔗 [Lab 24 — Detection + Correlation (Wazuh)](https://github.com/TKrysiaki/lab-soc-linux/tree/main/24-soc-ssh-bruteforce-detection-response-correlation)  
 
+👉 See full lab list below
 
 ---
 
@@ -36,79 +37,25 @@ Practical experience analyzing security events using logs, SIEM, and network tra
 
 ---
 
-## 🧪 Labs (Completed)
-
-### 🧱 Foundations
-
-- Lab 01 - Log Analysis Base  
-- Lab 02 - SSH Brute Force Investigation  
-- Lab 03 - Log Analysis Investigation  
-- Lab 04 - SSH Brute Force Detection  
-- Lab 05 - SSH Hardening  
-
----
-
-### 🔍 Investigation & Detection
-
-- Lab 06 - SSH Brute Force Incident Investigation  
-- Lab 07 - Privilege Escalation Investigation  
-- Lab 08 - Wazuh Brute Force Detection  
-- Lab 09 - Suspicious SSH Login Investigation  
-- Lab 10 - Unauthorized File Access Investigation  
-- Lab 11 - Suspicious File Modification Investigation  
-
----
-
-### ⚔️ Attack Chain & Compromise
-
-- Lab 12 - SSH Compromise Attack Chain  
-- Lab 13 - Detection & Response (Wazuh)  
-- Lab 14 - File Monitoring (auditd + Wazuh)  
-- Lab 15 - SSH Hardening  
-- Lab 16 - Incident Response (Wazuh)  
-- Lab 17 - Full Compromise Multi-Vector  
-
----
-
-### 🚨 Incident Response (Advanced)
-
-- Lab 18 - SSH Compromise Response (auditd)  
-- Lab 19 - Detection & Response  
-- Lab 20 - Detection & Response (Wazuh)  
-- Lab 21 - Web Attack Detection  
-- Lab 22 - SOC Detection & Response  
-- Lab 23 - SOC Incident Response + Threat Intel  
-- Lab 24 - Detection & Correlation  
-
----
-
-### 🧠 Advanced SOC
-
-- Lab 25 - Detection & Response + Analysis  
-- Lab 26 - Incident Correlation  
-- Lab 27 - Detection & Response (Advanced)  
-- Lab 28 - Incident Response + Persistence + Hardening  
-
----
-
-## 🚧 Labs in Progress
-
-- LAB 29 — SSH Brute Force + Persistence + Log Tampering  
-- LAB 31 — Web Shell Detection  
-- LAB 32 — DNS Tunneling / Exfiltration  
-- LAB 33 — SIEM Correlation Use Case  
-
----
-
 ## 🧠 Methodology
 
-SOC workflow applied in all labs:
-
-Detection → Investigation → Response  
+**Detection → Investigation → Response**
 
 Based on:
 - MITRE ATT&CK  
 - Real SOC practices  
+
+---
+
+## 🧪 Labs (Progression)
+
+From basic log analysis to advanced incident response:
+
+- Foundations → Log analysis & SSH basics  
+- Investigation → Incident analysis & correlation  
+- Compromise → Attack chain understanding  
+- Response → Containment & mitigation  
+- Advanced → Persistence, remediation & SOC decision-making  
 
 ---
 
