@@ -1,4 +1,8 @@
 # 🛡️ SOC Linux Labs – Monitoring, Detection, Investigation, Classification & Response
+![SIEM](https://img.shields.io/badge/SIEM-Wazuh-blue)
+![OS](https://img.shields.io/badge/OS-Linux-black)
+![SOC](https://img.shields.io/badge/Role-SOC%20Analyst-green)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen)
 
 Practical SOC labs demonstrating real-world detection, investigation, and response using Wazuh (SIEM).
 
@@ -97,3 +101,7 @@ Tiago Krysiaki
 Focus: SOC N1 | Blue Team | Threat Detection  
 
 LinkedIn: https://www.linkedin.com/in/tiago-krysiaki
+
+---
+
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=TKrysiaki&show_icons=true)
