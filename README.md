@@ -17,10 +17,9 @@ Practical experience analyzing security events using logs, SIEM, and network tra
 ## 🔥 Featured Labs
 
 - 🔗 [Lab 28 — SSH Brute Force + Persistence + Incident Response](https://github.com/TKrysiaki/lab-soc-linux/tree/main/28-soc-ssh-bruteforce-incident-response-persistence-hardening)  
+- 🔗 [Lab 25 — Detection + Response + Persistence + Remediation](https://github.com/TKrysiaki/lab-soc-linux/tree/main/25-soc-ssh-bruteforce-detection-response-persistence-remediation)  
 - 🔗 [Lab 24 — Detection + Correlation (Wazuh)](https://github.com/TKrysiaki/lab-soc-linux/tree/main/24-soc-ssh-bruteforce-detection-response-correlation)  
-- 🔗 [Lab 17 — Full Compromise Multi-Vector](https://github.com/TKrysiaki/lab-soc-linux/tree/main/17-full-compromise-multi-vector-incident-response)  
 
-👉 See full lab list below
 
 ---
 
