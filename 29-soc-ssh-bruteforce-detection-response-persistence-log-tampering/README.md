@@ -49,12 +49,11 @@ grep "Accepted password" /var/log/auth.log
 cat ~/.bash_history
 cat /etc/passwd
 ```
-<p align="center">
+
 <img src="images/02-discovery-bash-history.png" width="100%">
-</p>
-<p align="center">
+
 <img src="images/07-user-enumeration-backdoor-account.png" width="100%">
-</p>
+
 ---
 
 ## 🧬 Persistence
