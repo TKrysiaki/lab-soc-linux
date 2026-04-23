@@ -50,9 +50,9 @@ cat ~/.bash_history
 cat /etc/passwd
 ```
 
-<img src="images/02-discovery-bash-history.png" width="800">
+<img src="images/02-discovery-bash-history.png" width="100%">
 
-<img src="images/07-user-enumeration-backdoor-account.png" width="800">
+<img src="images/07-user-enumeration-backdoor-account.png" width="100%">
 
 ---
 
