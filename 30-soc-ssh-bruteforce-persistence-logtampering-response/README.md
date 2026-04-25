@@ -30,9 +30,7 @@ Simulação de ataque SSH brute force com comprometimento completo, persistênci
 
 ## 🎯 Attack Scenario
 
-Ataque de brute force realizado contra SSH até obtenção de acesso válido.
-
-![Attack Scenario](./images/01_wazuh_bruteforce_detection.png)
+Ataque de brute force realizado contra o serviço SSH até obtenção de acesso válido.
 
 ---
 
