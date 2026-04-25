@@ -4,7 +4,7 @@
 
 ## 📌 Overview
 
-Simulação de ataque SSH brute force com comprometimento real, persistência, abuso de privilégio e tentativa de evasão via manipulação de logs.
+Simulação de ataque SSH brute force com comprometimento completo, persistência, abuso de privilégio e tentativa de evasão via manipulação de logs.
 
 - Acesso: ✔ Sim  
 - Persistência: ✔ Sim  
@@ -30,7 +30,7 @@ Simulação de ataque SSH brute force com comprometimento real, persistência, a
 
 ## 🎯 Attack Scenario
 
-Ataque de brute force realizado contra o serviço SSH até obtenção de acesso válido:
+Ataque de brute force realizado contra SSH até obtenção de acesso válido.
 
 ![Attack Scenario](./images/01_wazuh_bruteforce_detection.png)
 
@@ -38,15 +38,15 @@ Ataque de brute force realizado contra o serviço SSH até obtenção de acesso 
 
 ## 🔍 Detection
 
-Atividade de brute force identificada no Wazuh:
+Atividade de brute force detectada no Wazuh:
 
 ![Detection](./images/01_wazuh_bruteforce_detection.png)
 
-Falhas de autenticação confirmadas no sistema:
+Múltiplas falhas de autenticação:
 
 ![Failed Password](./images/02_authlog_failed_password.png)
 
-Após múltiplas tentativas, login bem-sucedido:
+Login bem-sucedido após brute force:
 
 ![Accepted Password](./images/03_authlog_accepted_password.png)
 
@@ -64,10 +64,10 @@ Atividade pós-comprometimento identificada:
 
 ### Evidências:
 
-- Conta comprometida: `target`  
+- Usuário comprometido: `target`  
 - IP de origem: `192.168.122.1`  
 - Execução de comandos no sistema  
-- Abuso de privilégio via `sudo`  
+- Abuso de privilégio via sudo  
 
 ---
 
@@ -77,23 +77,21 @@ Tentativa de remoção de evidências:
 
 ![Log Tampering](./images/06_authlog_tampering_evidence.png)
 
-Mesmo com logs apagados, auditd manteve rastros:
+Mesmo após limpeza de logs, evidências mantidas via auditd:
 
-![Auditd](./images/07_auditd_ssh_exec_activity.png)
+![Auditd SSH](./images/07_auditd_ssh_exec_activity.png)
 
 Execução privilegiada confirmada:
 
-![Sudo](./images/08_auditd_sudo_activity.png)
+![Sudo Activity](./images/08_auditd_sudo_activity.png)
 
 ---
 
 ### 🔐 Persistência
 
-Criação de usuário malicioso:
+Usuário malicioso criado:
 
 ![Persistence](./images/09_persistence_user_suporte.png)
-
-Persistência ativa confirmada no sistema.
 
 ---
 
@@ -101,7 +99,7 @@ Persistência ativa confirmada no sistema.
 
 - Tipo: Acesso não autorizado + persistência  
 - Severidade: 🔴 CRITICAL  
-- Impacto: Comprometimento total do host  
+- Impacto: Comprometimento total do sistema  
 
 ---
 
@@ -109,7 +107,7 @@ Persistência ativa confirmada no sistema.
 
 ### Containment
 
-Bloqueio do IP atacante:
+Bloqueio do IP atacante com Fail2Ban:
 
 ![Fail2Ban](./images/12_fail2ban_defense_validation.png)
 
@@ -120,10 +118,6 @@ Bloqueio do IP atacante:
 Remoção do usuário malicioso:
 
 ![User Removed](./images/10_persistence_user_removed.png)
-
-Revisão de acessos SSH:
-
-![Authorized Keys](./images/11_authorized_keys_review.png)
 
 ---
 
@@ -152,14 +146,29 @@ Configuração de SSH reforçada:
 
 ---
 
-## 📊 Conclusão
+## 🎯 Conclusion
 
-O ataque evoluiu de brute force para comprometimento completo do sistema, incluindo persistência, execução privilegiada e tentativa de evasão.
+O incidente foi detectado, investigado e respondido com sucesso.
 
-Mesmo com a remoção de logs, a investigação foi possível através de múltiplas fontes de evidência, destacando a importância de defesa em profundidade.
+O ataque evoluiu de brute force para comprometimento completo, incluindo persistência, execução privilegiada e evasão de logs.
+
+A persistência foi removida e o ambiente protegido com hardening e controle de acesso.
 
 ---
 
-## 📁 Full Report
+## 🧠 Skills Desenvolvidas
 
-Veja detalhes completos em: `report.md`
+- Análise de logs SSH  
+- Detecção de brute force  
+- Correlação com Wazuh  
+- Identificação de persistência  
+- Resposta com Fail2Ban  
+- Hardening de SSH  
+- Detecção de log tampering  
+
+---
+
+## 📞 Contato
+
+LinkedIn: https://www.linkedin.com/in/tiago-krysiaki  
+GitHub: https://github.com/TKrysiaki
