@@ -10,7 +10,7 @@ The incident was detected through Wazuh SIEM correlation and validated using mul
 
 ---
 
-## 2. Timeline (UTC)
+## 2. Timeline
 
 - T1 — Multiple SSH authentication failures detected (Brute Force)
 - T2 — Successful login for user `target` from 192.168.122.1
