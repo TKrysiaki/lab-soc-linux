@@ -33,18 +33,18 @@ The incident was detected through Wazuh SIEM correlation and validated using mul
 
 ### Evidence
 
-Repeated failed authentication attempts followed by a successful login:
+Correlation of brute force attempts followed by successful authentication:
 
 ![Wazuh Correlation Rule](./images/04_wazuh_bruteforce_success_correlation.png)
 
-- `Failed password` events identified
-- `Accepted password` confirmed successful access
-- SIEM correlation triggered (Brute Force → Valid Account)
+- Multiple `Failed password` events detected
+- `Accepted password` confirmed successful login
+- SIEM correlation alert triggered (Brute Force → Valid Account)
 
 ### Detection Gap
 
 - SSH password authentication was enabled
-- No brute-force protection initially configured
+- No brute-force prevention initially configured
 - No alert generated before successful compromise
 
 **Root Cause:**  
@@ -69,6 +69,17 @@ Lack of preventive controls allowed brute-force attempts to succeed.
 
 ---
 
+### Post-Compromise Activity
+
+Commands executed after successful access:
+
+![Bash History](./images/05_bash_history_post_compromise.png)
+
+- Evidence of system interaction after compromise
+- Indicates attacker performed enumeration and system actions
+
+---
+
 ### Log Tampering
 
 Evidence of log manipulation after attacker access:
@@ -87,7 +98,7 @@ Execution of privileged commands detected via auditd:
 ![Auditd Sudo Activity](./images/08_auditd_sudo_activity.png)
 
 - Commands executed with elevated privileges
-- Indicates increased attacker control over the system
+- Confirms escalation of attacker capabilities
 
 ---
 
@@ -149,7 +160,12 @@ Blocking attacker IP using Fail2Ban:
 
 ![Fail2Ban Blocking Attacker](./images/12_fail2ban_defense_validation.png)
 
+Fail2Ban actively enforcing SSH protection rules:
+
+![Fail2Ban Status](./images/12_fail2ban_defense_validation.png)
+
 - Prevented further access attempts from malicious source
+- Active defense mechanism validated
 
 ---
 
