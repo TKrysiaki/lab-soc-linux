@@ -55,8 +55,8 @@ Monitoring → Detection → Investigation → Classification → Response
 | Lab | Description | Technologies | MITRE |
 |-----|------------|-------------|-------|
 | [30](./30-soc-ssh-bruteforce-persistence-logtampering-response) | SSH brute force + valid access + persistence + log tampering + response validation | Wazuh, auth.log, auditd, Fail2ban | T1110, T1078, T1098, T1070 |
-| [29](./29-soc-ssh-bruteforce-persistence-logtampering) | SSH brute force + valid access + persistence + log tampering | Wazuh, auth.log | T1110, T1078, T1098, T1070 |
-| [28](./28-soc-incident-persistence) | SSH brute force + valid access + persistence (no SIEM correlation) | Linux logs, auth.log | T1110, T1078, T1098 |
+| [29](https://github.com/TKrysiaki/lab-soc-linux/tree/main/29-soc-ssh-bruteforce-detection-response-persistence-log-tampering) | SSH brute force + valid access + persistence + log tampering | Wazuh, auth.log | T1110, T1078, T1098, T1070 |
+| [28](https://github.com/TKrysiaki/lab-soc-linux/tree/main/28-soc-ssh-bruteforce-incident-response-persistence-hardening) | SSH brute force + valid access + persistence (no SIEM correlation) | Linux logs, auth.log | T1110, T1078, T1098 |
 | [27](./27-soc-detection-without-siem) | SSH brute force detection (manual log analysis, no SIEM) | Linux logs, auth.log | T1110 |
 | [26](./26-soc-network-correlation) | SSH brute force detection + network correlation | Wazuh, logs | T1110 |
 | [25](./25-soc-detection-response-remediation) | SSH brute force detection + response + remediation (Fail2ban) | Wazuh, Fail2ban | T1110 |
