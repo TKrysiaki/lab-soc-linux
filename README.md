@@ -54,6 +54,7 @@ Monitoring → Detection → Investigation → Classification → Response
 
 | Lab | Description | Technologies | MITRE |
 |-----|------------|-------------|-------|
+| 30 | SSH brute force + persistence + log tampering + response validation | Wazuh, auth.log, auditd, Fail2ban | T1110, T1078, T1098, T1070 |
 | [29](https://github.com/TKrysiaki/lab-soc-linux/tree/main/29-soc-ssh-bruteforce-detection-response-persistence-log-tampering) | SSH brute force + persistence + log tampering | Wazuh, auth.log | T1110, T1078 |
 | [28](https://github.com/TKrysiaki/lab-soc-linux/tree/main/28-soc-ssh-bruteforce-incident-response-persistence-hardening) | Incident with persistence | Wazuh, Linux | T1110 |
 | [27](https://github.com/TKrysiaki/lab-soc-linux/tree/main/27-soc-ssh-bruteforce-detection-response-no-siem) | Detection without SIEM | Linux logs | T1110 |
