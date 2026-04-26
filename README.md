@@ -56,7 +56,7 @@ Monitoring → Detection → Investigation → Classification → Response
 |-----|------------|-------------|-------|
 | [30](./30-soc-ssh-bruteforce-persistence-logtampering-response) | SSH brute force + valid access + persistence + log tampering + response validation | Wazuh, auth.log, auditd, Fail2ban | T1110, T1078, T1098, T1070 |
 | [29](./29-soc-ssh-bruteforce-persistence-logtampering) | SSH brute force + valid access + persistence + log tampering | Wazuh, auth.log | T1110, T1078, T1098, T1070 |
-| [28](https://github.com/TKrysiaki/lab-soc-linux/tree/main/28-soc-ssh-bruteforce-incident-response-persistence-hardening) | Incident with persistence | Wazuh, Linux | T1110 |
+| [28](./28-soc-incident-persistence) | SSH brute force + valid access + persistence (no SIEM correlation) | Linux logs, auth.log | T1110, T1078, T1098 |
 | [27](https://github.com/TKrysiaki/lab-soc-linux/tree/main/27-soc-ssh-bruteforce-detection-response-no-siem) | Detection without SIEM | Linux logs | T1110 |
 | [26](https://github.com/TKrysiaki/lab-soc-linux/tree/main/26-soc-ssh-bruteforce-incident-correlation-network-analysis) | Network correlation | Wazuh, logs | T1110 |
 | [25](https://github.com/TKrysiaki/lab-soc-linux/tree/main/25-soc-ssh-bruteforce-detection-response-persistence-remediation) | Detection + response + remediation | Wazuh, Fail2ban | T1110 |
