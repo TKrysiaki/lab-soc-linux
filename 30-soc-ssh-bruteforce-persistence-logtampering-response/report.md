@@ -33,15 +33,19 @@ The incident was detected through Wazuh SIEM correlation and validated using mul
 
 ### Evidence
 
-- Repeated `Failed password` events
-- `Accepted password` indicating successful login
-- Correlation alert triggered in SIEM
+Repeated failed authentication attempts followed by a successful login:
+
+![Wazuh Correlation Rule](./images/04_wazuh_bruteforce_success_correlation.png)
+
+- `Failed password` events identified
+- `Accepted password` confirmed successful access
+- SIEM correlation triggered (Brute Force → Valid Account)
 
 ### Detection Gap
 
 - SSH password authentication was enabled
-- No brute-force prevention mechanism initially in place
-- No alert generated prior to successful compromise
+- No brute-force protection initially configured
+- No alert generated before successful compromise
 
 **Root Cause:**  
 Lack of preventive controls allowed brute-force attempts to succeed.
@@ -63,20 +67,35 @@ Lack of preventive controls allowed brute-force attempts to succeed.
 - Successful authentication to user `target`
 - Post-compromise command execution confirmed
 
-### Persistence
-
-- Malicious user `suporte` created
-- SSH key-based access configured
+---
 
 ### Log Tampering
+
+Evidence of log manipulation after attacker access:
+
+![Auth Log Tampered](./images/06_authlog_tampering_evidence.png)
 
 - `auth.log` cleared using truncate command
 - Loss of primary authentication logs
 
+---
+
 ### Privilege Abuse
 
-- Execution of privileged commands via `sudo`
-- Confirmed through `auditd` logs
+Execution of privileged commands detected via auditd:
+
+![Auditd Sudo Activity](./images/08_auditd_sudo_activity.png)
+
+- Commands executed with elevated privileges
+- Indicates increased attacker control over the system
+
+---
+
+### Persistence
+
+- Malicious user `suporte` created
+- SSH key-based access configured
+- Persistent access mechanism established
 
 ---
 
@@ -126,26 +145,37 @@ The attacker achieved persistent access and performed actions consistent with pr
 
 ### Containment
 
-- Attacker IP blocked via Fail2Ban to prevent further access attempts
+Blocking attacker IP using Fail2Ban:
+
+![Fail2Ban Blocking Attacker](./images/12_fail2ban_defense_validation.png)
+
+- Prevented further access attempts from malicious source
+
+---
 
 ### Eradication
 
-- Malicious user `suporte` removed to eliminate persistence
-- SSH keys reviewed and unauthorized access paths removed
+- Malicious user `suporte` removed
+- Unauthorized SSH access paths eliminated
+
+---
 
 ### Recovery
 
-- Password for user `target` reset to invalidate compromised credentials
+- Password reset for user `target`
 - SSH configuration hardened:
   - PasswordAuthentication disabled
   - Root login disabled
 
+---
+
 ### Rationale
 
 Response actions focused on:
-- Immediate containment of attacker access
-- Complete removal of persistence mechanisms
-- Prevention of re-compromise through credential rotation and hardening
+
+- Immediate containment of attacker access  
+- Complete removal of persistence mechanisms  
+- Prevention of re-compromise through credential rotation and hardening  
 
 ---
 
