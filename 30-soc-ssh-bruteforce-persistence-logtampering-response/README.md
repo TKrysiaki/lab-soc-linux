@@ -30,13 +30,13 @@ Simulação de ataque SSH brute force com comprometimento completo, persistênci
 
 ## 🎯 Attack Scenario
 
-Ataque de brute force realizado contra o serviço SSH até obtenção de acesso válido.
+Ataque de brute force realizado contra o serviço SSH, resultando em acesso não autorizado ao sistema.
 
 ---
 
 ## 🔍 Detection
 
-Atividade de brute force detectada no Wazuh:
+Atividade de brute force detectada no Wazuh após múltiplas tentativas de autenticação SSH:
 
 ![Detection](./images/01_wazuh_bruteforce_detection.png)
 
