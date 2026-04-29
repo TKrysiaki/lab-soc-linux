@@ -137,7 +137,23 @@ The attacker achieved persistent access and performed actions consistent with pr
 
 ---
 
-## 7. Classification
+## 7. CIS Controls Mapping
+
+- CIS Control 5: Account Management
+  - Criação de conta maliciosa detectada e removida
+
+- CIS Control 6: Access Control Management
+  - Controle de acesso SSH reforçado após incidente
+
+- CIS Control 8: Audit Log Management
+  - Uso de múltiplas fontes de log (auth.log, auditd) para investigação
+
+- CIS Control 10: Malware Defenses / Hardening
+  - Aplicação de Fail2ban e endurecimento do serviço SSH
+
+---
+
+## 8. Classification
 
 - **Incident Type:** Unauthorized Access + Persistence  
 - **Severity:** CRITICAL  
@@ -152,7 +168,7 @@ The attacker achieved persistent access and performed actions consistent with pr
 ---
 
 
-## 8. NIST Incident Response Mapping (SP 800-61)
+## 9. NIST Incident Response Mapping (SP 800-61)
 
 - Preparation:
   - Sistema com logs habilitados (auth.log, auditd)
@@ -176,7 +192,24 @@ The attacker achieved persistent access and performed actions consistent with pr
   - Validação do ambiente
 
 ---
-## 9. Response Actions
+
+## 10. ISO 27001 Alignment
+
+- A.9 – Access Control:
+  - Controle e revisão de contas e acessos
+
+- A.12 – Operations Security:
+  - Monitoramento de logs e detecção de eventos
+
+- A.16 – Information Security Incident Management:
+  - Identificação, resposta e tratamento do incidente
+
+- A.18 – Compliance:
+  - Aderência a boas práticas de segurança e auditoria
+
+---
+
+## 11. Response Actions
 
 ### Containment
 
@@ -215,7 +248,7 @@ Response actions focused on:
 
 ---
 
-## 10. Defense Validation
+## 12. Defense Validation
 
 ### Before
 
@@ -231,7 +264,7 @@ Response actions focused on:
 
 ---
 
-## 11. Lessons Learned
+## 13. Lessons Learned
 
 - Single log source is insufficient (auth.log was tampered)  
 - auditd provided critical forensic visibility  
@@ -241,7 +274,7 @@ Response actions focused on:
 
 ---
 
-## 12. Conclusion
+## 14. Conclusion
 
 This incident demonstrated a complete attack lifecycle, including:
 
@@ -256,7 +289,7 @@ Security controls implemented post-incident significantly improved system resili
 
 ---
 
-## 13. Indicators of Compromise (IoCs)
+## 15. Indicators of Compromise (IoCs)
 
 ### Network
 - Source IP: 192.168.122.1
