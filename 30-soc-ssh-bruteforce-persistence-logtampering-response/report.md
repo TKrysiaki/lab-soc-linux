@@ -238,20 +238,24 @@ Security controls implemented post-incident significantly improved system resili
 
 ### Accounts
 - Target User: target
-- Malicious User Created: suporte
+- Compromised Account: suporte
 
 ### Authentication
-- Pattern: Multiple SSH authentication failures followed by success
+- Pattern: Multiple SSH authentication failures followed by successful login
 - Log Source: /var/log/auth.log
 
 ### Persistence
-- SSH Authorized Keys added for user suporte
+- Mechanism: SSH Authorized Keys added for user suporte
 - Path: /home/suporte/.ssh/authorized_keys
 
 ### Privilege Abuse
-- Command Execution via sudo
+- Activity: Command execution via sudo
 - Log Source: auditd (EXECVE events)
 
 ### Log Tampering
-- File: /var/log/auth.log
+- Affected File: /var/log/auth.log
 - Action: Truncated (log cleared)
+
+### Detection Context
+- SIEM: Wazuh
+- Rule ID: 40112
