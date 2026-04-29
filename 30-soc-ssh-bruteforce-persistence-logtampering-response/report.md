@@ -228,3 +228,30 @@ This incident demonstrated a complete attack lifecycle, including:
 Despite log tampering, multi-source correlation enabled full incident reconstruction.
 
 Security controls implemented post-incident significantly improved system resilience.
+
+---
+
+## 12. Indicators of Compromise (IoCs)
+
+### Network
+- Source IP: 192.168.122.1
+
+### Accounts
+- Target User: target
+- Malicious User Created: suporte
+
+### Authentication
+- Pattern: Multiple SSH authentication failures followed by success
+- Log Source: /var/log/auth.log
+
+### Persistence
+- SSH Authorized Keys added for user suporte
+- Path: /home/suporte/.ssh/authorized_keys
+
+### Privilege Abuse
+- Command Execution via sudo
+- Log Source: auditd (EXECVE events)
+
+### Log Tampering
+- File: /var/log/auth.log
+- Action: Truncated (log cleared)
