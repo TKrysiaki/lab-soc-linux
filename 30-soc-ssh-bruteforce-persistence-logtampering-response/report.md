@@ -151,7 +151,32 @@ The attacker achieved persistent access and performed actions consistent with pr
 
 ---
 
-## 8. Response Actions
+
+## 8. NIST Incident Response Mapping (SP 800-61)
+
+- Preparation:
+  - Sistema com logs habilitados (auth.log, auditd)
+  - Monitoramento via Wazuh
+
+- Detection & Analysis:
+  - Identificação de múltiplas falhas SSH (brute force)
+  - Correlação com login bem-sucedido
+  - Análise de persistência e evasão (log tampering)
+
+- Containment:
+  - Bloqueio do IP atacante via Fail2ban
+
+- Eradication:
+  - Remoção de usuário malicioso (suporte)
+  - Remoção de chaves SSH não autorizadas
+
+- Recovery:
+  - Reset de credenciais
+  - Hardening do SSH
+  - Validação do ambiente
+
+---
+## 9. Response Actions
 
 ### Containment
 
@@ -190,7 +215,7 @@ Response actions focused on:
 
 ---
 
-## 9. Defense Validation
+## 10. Defense Validation
 
 ### Before
 
@@ -206,7 +231,7 @@ Response actions focused on:
 
 ---
 
-## 10. Lessons Learned
+## 11. Lessons Learned
 
 - Single log source is insufficient (auth.log was tampered)  
 - auditd provided critical forensic visibility  
@@ -216,7 +241,7 @@ Response actions focused on:
 
 ---
 
-## 11. Conclusion
+## 12. Conclusion
 
 This incident demonstrated a complete attack lifecycle, including:
 
@@ -231,7 +256,7 @@ Security controls implemented post-incident significantly improved system resili
 
 ---
 
-## 12. Indicators of Compromise (IoCs)
+## 13. Indicators of Compromise (IoCs)
 
 ### Network
 - Source IP: 192.168.122.1
