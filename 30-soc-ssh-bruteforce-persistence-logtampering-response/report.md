@@ -33,13 +33,13 @@ The incident was detected through Wazuh SIEM correlation and validated using mul
 
 ### Evidence
 
-Evidence of brute force activity followed by successful authentication:
-
 ![Wazuh Correlation Rule](./images/04_wazuh_bruteforce_success_correlation.png)
 
 - Multiple `Failed password` events identified  
 - `Accepted password` confirmed successful access  
 - SIEM correlation triggered (Brute Force → Valid Account)
+
+---
 
 ### Detection Gap
 
@@ -49,6 +49,14 @@ Evidence of brute force activity followed by successful authentication:
 
 **Root Cause:**  
 Lack of preventive controls allowed brute-force attempts to succeed.
+
+---
+
+### Recommendations
+
+- Enforce SSH key-based authentication only  
+- Implement Fail2Ban or equivalent protection  
+- Configure alerting on authentication anomalies  
 
 ---
 
@@ -63,99 +71,91 @@ Lack of preventive controls allowed brute-force attempts to succeed.
 
 ---
 
-### Post-Compromise Activity
+### Analyst Hypothesis
 
-Commands executed after successful login, confirming attacker interaction:
+The attacker performed a brute force attack to gain initial access, established persistence through account creation and SSH keys, escalated privileges via sudo, and attempted to evade detection by tampering with authentication logs.
+
+---
+
+### Post-Compromise Activity
 
 ![Bash History](./images/05_bash_history_post_compromise.png)
 
 - Evidence of system interaction after compromise  
-- Indicates enumeration and manual actions by the attacker  
+- Indicates manual attacker activity and system exploration  
 
 ---
 
 ### Log Tampering
 
-Evidence of log manipulation to evade detection:
-
 ![Auth Log Tampered](./images/06_authlog_tampering_evidence.png)
 
-- `auth.log` cleared using truncate  
-- Removal of primary authentication evidence  
+- `auth.log` truncated  
+- Attempt to remove authentication traces  
 
 ---
 
 ### Privilege Abuse
 
-Auditd logs capturing privileged command execution:
-
 ![Auditd Sudo Activity](./images/08_auditd_sudo_activity.png)
 
-- Commands executed with elevated privileges  
-- Confirms attacker escalation capabilities  
+- Execution of privileged commands detected  
+- Confirms elevated attacker capabilities  
 
 ---
 
 ### Persistence
 
-Persistent access established through account manipulation:
-
 ![Persistence User](./images/09_persistence_user_suporte.png)
 
 - Malicious user `suporte` created  
 - SSH key-based access configured  
-- Ensures continued access even after password changes  
+- Ensures continued access even after credential reset  
 
 ---
 
 ## 5. Impact Assessment
 
-- **System Access:** Confirmed  
-- **Privilege Level:** User access with sudo capability  
+- **Access Level:** Unauthorized SSH access with valid credentials  
+- **Privilege Level:** Sudo-level command execution (potential root)  
+- **Scope:** Single host (192.168.122.102)  
 - **Persistence:** Confirmed (user + SSH key)  
-- **Credential Exposure:** Possible (`/etc/shadow` accessed)  
-- **Log Integrity:** Compromised (auth.log tampered)  
+- **Log Integrity:** Compromised  
+- **Credential Exposure:** Possible (`/etc/shadow` access)
 
-**Conclusion:**  
-The attacker achieved persistent access and performed actions consistent with privilege abuse and defense evasion, resulting in a full system compromise scenario.
+### 🔴 Severity: CRITICAL
+
+**Justification:**
+- Successful initial access  
+- Persistence established  
+- Privileged command execution  
+- Evidence of defense evasion  
+
+→ Indicates full system compromise with risk of attacker re-entry.
 
 ---
 
 ## 6. MITRE ATT&CK Mapping
 
 - T1110 — Brute Force  
-  https://attack.mitre.org/techniques/T1110/
-
 - T1078 — Valid Accounts  
-  https://attack.mitre.org/techniques/T1078/
-
 - T1098 — Account Manipulation  
-  https://attack.mitre.org/techniques/T1098/
-
 - T1070 — Indicator Removal  
-  https://attack.mitre.org/techniques/T1070/
 
 ---
 
 ## 7. CIS Controls Mapping
 
-- CIS Control 5: Account Management
-  - Criação de conta maliciosa detectada e removida
-
-- CIS Control 6: Access Control Management
-  - Controle de acesso SSH reforçado após incidente
-
-- CIS Control 8: Audit Log Management
-  - Uso de múltiplas fontes de log (auth.log, auditd) para investigação
-
-- CIS Control 10: Malware Defenses / Hardening
-  - Aplicação de Fail2ban e endurecimento do serviço SSH
+- CIS Control 5: Account Management  
+- CIS Control 6: Access Control Management  
+- CIS Control 8: Audit Log Management  
+- CIS Control 10: System Hardening  
 
 ---
 
 ## 8. Classification
 
-- **Incident Type:** Unauthorized Access + Persistence  
+- **Incident Type:** Credential Access → Initial Access → Persistence → Defense Evasion  
 - **Severity:** CRITICAL  
 
 **Impact Summary:**
@@ -167,45 +167,22 @@ The attacker achieved persistent access and performed actions consistent with pr
 
 ---
 
-
 ## 9. NIST Incident Response Mapping (SP 800-61)
 
-- Preparation:
-  - Sistema com logs habilitados (auth.log, auditd)
-  - Monitoramento via Wazuh
-
-- Detection & Analysis:
-  - Identificação de múltiplas falhas SSH (brute force)
-  - Correlação com login bem-sucedido
-  - Análise de persistência e evasão (log tampering)
-
-- Containment:
-  - Bloqueio do IP atacante via Fail2ban
-
-- Eradication:
-  - Remoção de usuário malicioso (suporte)
-  - Remoção de chaves SSH não autorizadas
-
-- Recovery:
-  - Reset de credenciais
-  - Hardening do SSH
-  - Validação do ambiente
+- **Preparation:** Logging enabled (auth.log, auditd), SIEM monitoring active  
+- **Detection & Analysis:** Brute force identified and correlated with successful login  
+- **Containment:** Attacker IP blocked via Fail2Ban  
+- **Eradication:** Malicious user and SSH keys removed  
+- **Recovery:** Credentials reset, SSH hardened, environment validated  
 
 ---
 
 ## 10. ISO 27001 Alignment
 
-- A.9 – Access Control:
-  - Controle e revisão de contas e acessos
-
-- A.12 – Operations Security:
-  - Monitoramento de logs e detecção de eventos
-
-- A.16 – Information Security Incident Management:
-  - Identificação, resposta e tratamento do incidente
-
-- A.18 – Compliance:
-  - Aderência a boas práticas de segurança e auditoria
+- A.9 — Access Control  
+- A.12 — Operations Security  
+- A.16 — Incident Management  
+- A.18 — Compliance  
 
 ---
 
@@ -213,12 +190,10 @@ The attacker achieved persistent access and performed actions consistent with pr
 
 ### Containment
 
-Fail2Ban actively blocking attacker IP:
-
 ![Fail2Ban Blocking Attacker](./images/12_fail2ban_defense_validation.png)
 
-- Immediate interruption of attacker access  
-- Prevention of further brute-force attempts  
+- Attacker IP blocked  
+- Active sessions interrupted  
 
 ---
 
@@ -232,88 +207,74 @@ Fail2Ban actively blocking attacker IP:
 ### Recovery
 
 - Password reset for user `target`  
-- SSH configuration hardened:
+- SSH hardened:
   - PasswordAuthentication disabled  
   - Root login disabled  
 
 ---
 
-### Rationale
+### Defense Validation
 
-Response actions focused on:
-
-- Immediate containment of attacker access  
-- Complete removal of persistence mechanisms  
-- Prevention of re-compromise through credential rotation and hardening  
-
----
-
-## 12. Defense Validation
-
-### Before
-
-- SSH password authentication enabled  
-- No brute-force protection  
-- High exposure to credential-based attacks  
-
-### After
-
-- Fail2Ban actively blocking malicious IPs  
-- SSH restricted to key-based authentication  
-- Reduced attack surface and improved access control  
+- Brute-force attempts successfully blocked  
+- No unauthorized access observed after containment  
+- Persistence not re-established  
+- System integrity restored  
 
 ---
 
-## 13. Lessons Learned
+## 12. Lessons Learned
 
-- Single log source is insufficient (auth.log was tampered)  
+- Single log source is insufficient  
 - auditd provided critical forensic visibility  
 - Defense-in-depth is essential  
-- Brute-force attacks can escalate quickly to full compromise  
-- Preventive controls are as important as detection  
+- Brute-force attacks can escalate rapidly  
+- Preventive controls are critical  
+
+---
+
+## 13. Indicators of Compromise (IoCs)
+
+### Network
+- Source IP: 192.168.122.1  
+- Destination Port: 22 (SSH)  
+
+### Timeline Indicators
+- High volume of failed SSH attempts within short interval  
+- Successful login immediately after brute force  
+
+### Accounts
+- Compromised user: target  
+- Malicious user: suporte  
+
+### Authentication
+- Pattern: Multiple failures followed by success  
+- Log Source: `/var/log/auth.log`  
+
+### Persistence
+- SSH key added for user suporte  
+- Path: `/home/suporte/.ssh/authorized_keys`  
+
+### Privilege Abuse
+- Sudo command execution  
+- Log Source: auditd (EXECVE)  
+
+### Log Tampering
+- File: `/var/log/auth.log`  
+- Action: Truncated  
+
+### Detection Context
+- SIEM: Wazuh  
+- Rule ID: 40112  
 
 ---
 
 ## 14. Conclusion
 
-This incident demonstrated a complete attack lifecycle, including:
+The incident followed the complete lifecycle:
+Detection → Investigation → Classification → Response
 
-- Initial access (Brute Force)  
-- Persistence  
-- Privilege abuse  
-- Defense evasion  
+The attacker achieved initial access, established persistence, escalated privileges, and attempted to evade detection.
 
-Despite log tampering, multi-source correlation enabled full incident reconstruction.
+Despite log tampering, multi-source log correlation enabled full incident reconstruction.
 
-Security controls implemented post-incident significantly improved system resilience.
-
----
-
-## 15. Indicators of Compromise (IoCs)
-
-### Network
-- Source IP: 192.168.122.1
-
-### Accounts
-- Target User: target
-- Compromised Account: suporte
-
-### Authentication
-- Pattern: Multiple SSH authentication failures followed by successful login
-- Log Source: /var/log/auth.log
-
-### Persistence
-- Mechanism: SSH Authorized Keys added for user suporte
-- Path: /home/suporte/.ssh/authorized_keys
-
-### Privilege Abuse
-- Activity: Command execution via sudo
-- Log Source: auditd (EXECVE events)
-
-### Log Tampering
-- Affected File: /var/log/auth.log
-- Action: Truncated (log cleared)
-
-### Detection Context
-- SIEM: Wazuh
-- Rule ID: 40112
+All malicious artifacts were removed, defensive controls were implemented and validated, and system integrity was restored.
