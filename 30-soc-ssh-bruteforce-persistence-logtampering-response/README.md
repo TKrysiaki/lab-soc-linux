@@ -69,6 +69,35 @@ Atividade pós-comprometimento identificada:
 
 ---
 
+## 🔎 Indicators of Compromise (IoCs)
+
+### 🌐 Network
+- Source IP: 192.168.122.1  
+- Target IP: 192.168.122.102  
+- Service: SSH (port 22)  
+
+### 👤 Authentication
+- Multiple failed SSH login attempts  
+- Successful login for user: target  
+
+### 🧑‍💻 Accounts
+- Compromised account: target  
+- Malicious account created: suporte  
+
+### 🔐 Persistence
+- Creation of new user (suporte)  
+- Privilege escalation via sudo  
+
+### 🧼 Log Tampering
+- Partial deletion of auth.log  
+- Inconsistency between auth.log and auditd logs  
+
+### ⚙️ System Behavior
+- Execution of commands post-compromise  
+- Privileged command execution confirmed via auditd
+
+---
+
 ### 🧼 Log Tampering
 
 Tentativa de remoção de evidências:
