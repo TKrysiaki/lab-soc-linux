@@ -1,54 +1,54 @@
-# 🚨 Detecção e Resposta a SSH Brute Force com Comprometimento, Persistência e Log Tampering (Wazuh + Fail2Ban)
+# 🚨 Detection and Response to SSH Brute Force with Compromise, Persistence and Log Tampering (Wazuh + Fail2Ban)
 
 ---
 
 ## 📌 Overview
 
-Simulação de ataque SSH brute force com comprometimento completo, persistência, abuso de privilégio e tentativa de evasão via manipulação de logs.
+Simulation of an SSH brute force attack resulting in full system compromise, persistence, privilege abuse, and log tampering attempts.
 
-- Acesso: ✔ Sim  
-- Persistência: ✔ Sim  
-- Evasão (Log Tampering): ✔ Sim  
-- Severidade: 🔴 Crítica  
+- Access: ✔ Yes  
+- Persistence: ✔ Yes  
+- Evasion (Log Tampering): ✔ Yes  
+- Severity: 🔴 Critical  
 
 ---
 
 ## 📄 Detailed Incident Report
 
-➡️ Ver relatório completo: [report.md](./report.md)
+➡️ Full report: [report.md](./report.md)
 
 ---
 
-## 🖥️ Ambiente
+## 🖥️ Environment
 
-- Atacante: 192.168.122.1  
-- Alvo: 192.168.122.102  
+- Attacker: 192.168.122.1  
+- Target: 192.168.122.102  
 - SIEM: Wazuh  
-- Defesa: Fail2Ban  
+- Defense: Fail2Ban  
 
 ---
 
 ## 🎯 Attack Scenario
 
-Ataque de brute force realizado contra o serviço SSH, resultando em acesso não autorizado ao sistema.
+A brute force attack was executed against the SSH service, resulting in unauthorized system access.
 
 ---
 
 ## 🔍 Detection
 
-Atividade de brute force detectada no Wazuh após múltiplas tentativas de autenticação SSH:
+Brute force activity detected in Wazuh after multiple failed SSH authentication attempts:
 
 ![Detection](./images/01_wazuh_bruteforce_detection.png)
 
-Múltiplas falhas de autenticação:
+Multiple failed login attempts:
 
 ![Failed Password](./images/02_authlog_failed_password.png)
 
-Login bem-sucedido após brute force:
+Successful login after brute force:
 
 ![Accepted Password](./images/03_authlog_accepted_password.png)
 
-Correlação automática do ataque:
+Attack correlation identified:
 
 ![Correlation](./images/04_wazuh_bruteforce_success_correlation.png)
 
@@ -56,89 +56,89 @@ Correlação automática do ataque:
 
 ## 🧠 Investigation
 
-Atividade pós-comprometimento identificada:
+Post-compromise activity identified:
 
 ![Bash History](./images/05_bash_history_post_compromise.png)
 
-### Evidências:
+### Evidence:
 
-- Usuário comprometido: `target`  
-- IP de origem: `192.168.122.1`  
-- Execução de comandos no sistema  
-- Abuso de privilégio via sudo  
+- Compromised user: `target`  
+- Source IP: `192.168.122.1`  
+- Command execution observed  
+- Privilege escalation via sudo  
 
 ---
 
-## 🔎 Indicadores de Comprometimento (IoCs)
+## 🔎 Indicators of Compromise (IoCs)
 
-### 🌐 Rede
-- IP de origem: 192.168.122.1  
-- IP de destino: 192.168.122.102  
-- Serviço: SSH (porta 22)  
+### 🌐 Network
+- Source IP: 192.168.122.1  
+- Target IP: 192.168.122.102  
+- Service: SSH (port 22)  
 
-### 👤 Autenticação
-- Múltiplas tentativas de login SSH com falha  
-- Login bem-sucedido para o usuário: target  
+### 👤 Authentication
+- Multiple failed SSH login attempts  
+- Successful login for user: target  
 
-### 🧑‍💻 Contas
-- Conta comprometida: target  
-- Conta maliciosa criada: suporte  
+### 🧑‍💻 Accounts
+- Compromised account: target  
+- Malicious account created: suporte  
 
-### 🔐 Persistência
-- Criação de novo usuário (suporte)  
-- Escalada de privilégio via sudo  
+### 🔐 Persistence
+- Creation of new user (suporte)  
+- Privilege escalation via sudo  
 
-### 🧼 Manipulação de Logs
-- Remoção parcial do arquivo auth.log  
-- Inconsistência entre auth.log e logs do auditd  
+### 🧼 Log Tampering
+- Partial deletion of auth.log  
+- Inconsistency between auth.log and auditd logs  
 
-### ⚙️ Comportamento do Sistema
-- Execução de comandos após o comprometimento  
-- Execução de comandos privilegiados confirmada via auditd  
+### ⚙️ System Behavior
+- Post-compromise command execution  
+- Privileged commands confirmed via auditd  
 
 ---
 
 ## 🧼 Log Tampering
 
-Tentativa de remoção de evidências:
+Attempt to remove evidence:
 
 ![Log Tampering](./images/06_authlog_tampering_evidence.png)
 
-Mesmo após limpeza de logs, evidências mantidas via auditd:
+Evidence preserved via auditd:
 
 ![Auditd SSH](./images/07_auditd_ssh_exec_activity.png)
 
-Execução privilegiada confirmada:
+Privileged execution confirmed:
 
 ![Sudo Activity](./images/08_auditd_sudo_activity.png)
 
 ---
 
-## 🔐 Persistência
+## 🔐 Persistence
 
-Usuário malicioso criado:
+Malicious user creation:
 
 ![Persistence](./images/09_persistence_user_suporte.png)
 
 ---
 
-## 🎯 Impacto do Incidente
+## 🎯 Impact Assessment
 
-- **Nível de Acesso:** Acesso SSH não autorizado com credenciais válidas  
-- **Nível de Privilégio:** Execução de comandos com sudo (potencial root)  
-- **Escopo:** Host único (192.168.122.102)  
-- **Persistência:** Criação de usuário malicioso (suporte)  
-- **Evasão:** Tentativa de manipulação de logs identificada  
+- **Access Level:** Unauthorized SSH access with valid credentials  
+- **Privilege Level:** Sudo-level command execution (potential root)  
+- **Scope:** Single host (192.168.122.102)  
+- **Persistence:** Malicious user created for continued access  
+- **Evasion:** Log tampering attempt detected  
 
-### 🔴 Severidade: CRÍTICA
+### 🔴 Severity: CRITICAL
 
-**Justificativa:**
-- Houve acesso inicial bem-sucedido  
-- Persistência estabelecida  
-- Execução de comandos privilegiados  
-- Tentativa de ocultação de evidências  
+**Justification:**
+- Successful initial access  
+- Persistence established  
+- Privileged command execution  
+- Evidence of log evasion  
 
-→ Caracteriza comprometimento total do sistema com risco de reentrada do atacante.
+→ Indicates full system compromise with risk of attacker re-entry.
 
 ---
 
@@ -146,7 +146,7 @@ Usuário malicioso criado:
 
 ### Containment
 
-Bloqueio do IP atacante com Fail2Ban:
+Attacker IP blocked using Fail2Ban:
 
 ![Fail2Ban](./images/12_fail2ban_defense_validation.png)
 
@@ -154,7 +154,7 @@ Bloqueio do IP atacante com Fail2Ban:
 
 ### Eradication
 
-Remoção do usuário malicioso:
+Removal of malicious user:
 
 ![User Removed](./images/10_persistence_user_removed.png)
 
@@ -162,7 +162,7 @@ Remoção do usuário malicioso:
 
 ### Recovery
 
-Reset de credenciais:
+Credential reset for compromised account:
 
 ![Password Reset](./images/13_password_reset_target.png)
 
@@ -170,9 +170,20 @@ Reset de credenciais:
 
 ### 🔐 Hardening
 
-Configuração de SSH reforçada:
+SSH configuration reinforced:
 
 ![SSH Hardening](./images/14_ssh_hardening_config.png)
+
+---
+
+### ✅ Defense Validation
+
+- New brute force attempts successfully blocked  
+- No unauthorized access observed after containment  
+- Malicious user not recreated  
+- No new persistence mechanisms detected  
+
+→ Security controls validated and environment considered stable.
 
 ---
 
@@ -187,27 +198,28 @@ Configuração de SSH reforçada:
 
 ## 🎯 Conclusion
 
-O incidente foi detectado, investigado e respondido com sucesso.
+The incident followed the full lifecycle:
+Detection → Investigation → Classification → Response
 
-O ataque evoluiu de brute force para comprometimento completo, incluindo persistência, execução privilegiada e evasão de logs.
+Evidence confirms successful initial access, persistence, privilege escalation, and attempted log evasion.
 
-A persistência foi removida e o ambiente protegido com hardening e controle de acesso.
-
----
-
-## 🧠 Skills Desenvolvidas
-
-- Análise de logs SSH  
-- Detecção de brute force  
-- Correlação com Wazuh  
-- Identificação de persistência  
-- Resposta com Fail2Ban  
-- Hardening de SSH  
-- Detecção de log tampering  
+All malicious artifacts were removed, defensive measures were implemented and validated, and system integrity was restored.
 
 ---
 
-## 📞 Contato
+## 🧠 Skills Developed
+
+- SSH log analysis  
+- Brute force detection  
+- Wazuh correlation  
+- Persistence identification  
+- Incident response with Fail2Ban  
+- SSH hardening  
+- Log tampering detection  
+
+---
+
+## 📞 Contact
 
 LinkedIn: https://www.linkedin.com/in/tiago-krysiaki  
 GitHub: https://github.com/TKrysiaki
