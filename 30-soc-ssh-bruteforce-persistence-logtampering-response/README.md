@@ -122,11 +122,23 @@ Usuário malicioso criado:
 
 ---
 
-## 🚨 Classification
+## 🎯 Impacto do Incidente
 
-- Tipo: Acesso não autorizado + persistência  
-- Severidade: 🔴 CRITICAL  
-- Impacto: Comprometimento total do sistema  
+- **Nível de Acesso:** Acesso SSH não autorizado com credenciais válidas  
+- **Nível de Privilégio:** Execução de comandos com sudo (potencial root)  
+- **Escopo:** Host único (192.168.122.102)  
+- **Persistência:** Criação de usuário malicioso (suporte)  
+- **Evasão:** Tentativa de manipulação de logs identificada  
+
+### 🔴 Severidade: CRÍTICA
+
+**Justificativa:**
+- Houve acesso inicial bem-sucedido  
+- Persistência estabelecida  
+- Execução de comandos privilegiados  
+- Tentativa de ocultação de evidências  
+
+→ Caracteriza comprometimento total do sistema com risco de reentrada do atacante.
 
 ---
 
