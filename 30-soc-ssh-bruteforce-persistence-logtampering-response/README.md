@@ -69,36 +69,36 @@ Atividade pós-comprometimento identificada:
 
 ---
 
-## 🔎 Indicators of Compromise (IoCs)
+## 🔎 Indicadores de Comprometimento (IoCs)
 
-### 🌐 Network
-- Source IP: 192.168.122.1  
-- Target IP: 192.168.122.102  
-- Service: SSH (port 22)  
+### 🌐 Rede
+- IP de origem: 192.168.122.1  
+- IP de destino: 192.168.122.102  
+- Serviço: SSH (porta 22)  
 
-### 👤 Authentication
-- Multiple failed SSH login attempts  
-- Successful login for user: target  
+### 👤 Autenticação
+- Múltiplas tentativas de login SSH com falha  
+- Login bem-sucedido para o usuário: target  
 
-### 🧑‍💻 Accounts
-- Compromised account: target  
-- Malicious account created: suporte  
+### 🧑‍💻 Contas
+- Conta comprometida: target  
+- Conta maliciosa criada: suporte  
 
-### 🔐 Persistence
-- Creation of new user (suporte)  
-- Privilege escalation via sudo  
+### 🔐 Persistência
+- Criação de novo usuário (suporte)  
+- Escalada de privilégio via sudo  
 
-### 🧼 Log Tampering
-- Partial deletion of auth.log  
-- Inconsistency between auth.log and auditd logs  
+### 🧼 Manipulação de Logs
+- Remoção parcial do arquivo auth.log  
+- Inconsistência entre auth.log e logs do auditd  
 
-### ⚙️ System Behavior
-- Execution of commands post-compromise  
-- Privileged command execution confirmed via auditd
+### ⚙️ Comportamento do Sistema
+- Execução de comandos após o comprometimento  
+- Execução de comandos privilegiados confirmada via auditd  
 
 ---
 
-### 🧼 Log Tampering
+## 🧼 Log Tampering
 
 Tentativa de remoção de evidências:
 
@@ -114,7 +114,7 @@ Execução privilegiada confirmada:
 
 ---
 
-### 🔐 Persistência
+## 🔐 Persistência
 
 Usuário malicioso criado:
 
