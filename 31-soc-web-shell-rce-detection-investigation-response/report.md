@@ -36,7 +36,7 @@ The incident was detected by Wazuh SIEM and validated through Apache access logs
 **SIEM:** Wazuh  
 
 - Rule: Web shell command execution detection  
-- Description: Suspicious execution via `shell.php`  
+- Rule ID: 31514  
 - Level: High  
 
 ### Evidence
@@ -45,7 +45,7 @@ The incident was detected by Wazuh SIEM and validated through Apache access logs
 
 - Multiple HTTP requests with `cmd=` parameter  
 - Repeated command execution pattern  
-- MITRE mapping automatically applied  
+- MITRE mapping applied  
 
 ---
 
@@ -88,12 +88,10 @@ The attacker exploited a vulnerable file upload functionality to deploy a web sh
 
 ![Access Log](./images/02_apache_access_log_webshell.png)
 
-Evidence identified in Apache logs:
-
-- Repeated HTTP requests to `/DVWA/hackable/uploads/shell.php`
-- Use of parameter `cmd=` indicating command execution
+- Repeated requests to `/DVWA/hackable/uploads/shell.php`
+- Use of parameter `cmd=`
 - Source IP: `192.168.122.1`
-- High frequency requests in short time interval (interactive behavior)
+- High-frequency requests (interactive behavior)
 
 ---
 
@@ -101,7 +99,7 @@ Evidence identified in Apache logs:
 
 ![Commands](./images/05_extracted_commands_webshell.png)
 
-Commands executed via web shell:
+Commands executed:
 
 - id  
 - whoami  
@@ -114,17 +112,18 @@ Commands executed via web shell:
 
 ### Execution Context
 
-- Execution user: `www-data`
-- Indicates command execution within web server context (limited privileges)
+- User: `www-data`
+- Execution within web server context (limited privileges)
 
 ---
 
 ### Key Findings
 
-- Remote command execution confirmed via HTTP (`cmd=` parameter)
-- Consistent attacker behavior from single IP (192.168.122.1)
-- Evidence of system enumeration and sensitive file access
-- No evidence of persistence or privilege escalation observed
+- Remote command execution confirmed via HTTP  
+- Consistent attacker behavior from single IP  
+- System enumeration and file access observed  
+- No persistence or privilege escalation identified  
+
 ---
 
 ## 5. Impact Assessment
@@ -138,16 +137,15 @@ Commands executed via web shell:
 
 ### Compromise
 
-- **Initial Access:** Exploitation of vulnerable file upload functionality  
-- **Execution:** Remote command execution via web shell (`cmd=` parameter)  
-- **Privilege Level:** Web server context (`www-data`)  
+- **Initial Access:** Vulnerable file upload  
+- **Execution:** Remote command execution (`cmd=`)  
+- **Privilege Level:** `www-data`  
 - **Persistence:** Not observed  
-- **Data Exposure:** Access to sensitive system file (`/etc/passwd`)  
+- **Data Exposure:** Access to `/etc/passwd` confirmed  
 
 ### Summary
 
-The attacker achieved remote command execution through a web shell, allowing system-level enumeration and access to sensitive data. Although limited to web server privileges, the impact is critical due to the ability to execute arbitrary commands.
-
+Remote command execution was achieved via web shell, enabling system enumeration and file access. Despite limited privileges, the ability to execute arbitrary commands represents a critical impact.
 
 ---
 
@@ -162,9 +160,9 @@ The attacker achieved remote command execution through a web shell, allowing sys
 ## 7. CIS Controls Mapping
 
 - CIS Control 4: Secure Configuration  
-- CIS Control 6: Access Control Management  
-- CIS Control 8: Audit Log Management  
-- CIS Control 16: Application Software Security  
+- CIS Control 6: Access Control  
+- CIS Control 8: Audit Logs  
+- CIS Control 16: Application Security  
 
 ---
 
@@ -173,20 +171,15 @@ The attacker achieved remote command execution through a web shell, allowing sys
 - **Incident Type:** Initial Access → Execution  
 - **Severity:** CRITICAL  
 
-**Impact Summary:**
-- Remote command execution  
-- Exposure of system-level data  
-- Application compromise  
-
 ---
 
-## 9. NIST Incident Response Mapping (SP 800-61)
+## 9. NIST Incident Response
 
-- **Preparation:** Logging enabled (Apache, Wazuh)  
-- **Detection & Analysis:** Web shell activity identified via SIEM and logs  
-- **Containment:** Attacker IP blocked  
-- **Eradication:** Web shell removed  
-- **Recovery:** Upload control reviewed, environment validated  
+- Detection → Wazuh alerts  
+- Analysis → Log correlation  
+- Containment → IP blocked  
+- Eradication → Web shell removed  
+- Recovery → Environment validated  
 
 ---
 
@@ -194,16 +187,17 @@ The attacker achieved remote command execution through a web shell, allowing sys
 
 - A.9 — Access Control  
 - A.12 — Operations Security  
-- A.14 — System Acquisition, Development and Maintenance  
+- A.14 — Secure Development  
 - A.16 — Incident Management  
 
 ---
+
 ## 11. Response Actions
 
 ### Containment
 
-- Attacker IP (192.168.122.1) blocked via firewall (UFW)
-- Access to upload directory restricted
+- IP 192.168.122.1 blocked (UFW)
+- Upload directory restricted  
 
 ![Containment](./images/06_response_eradication_validation.png)
 
@@ -211,9 +205,9 @@ The attacker achieved remote command execution through a web shell, allowing sys
 
 ### Eradication
 
-- Malicious file `/DVWA/hackable/uploads/shell.php` removed
-- Upload directory inspected for additional artifacts
-- File permissions reviewed to prevent execution
+- `shell.php` removed  
+- Directory reviewed  
+- Permissions adjusted  
 
 ![Eradication](./images/06_response_eradication_validation.png)
 
@@ -221,9 +215,9 @@ The attacker achieved remote command execution through a web shell, allowing sys
 
 ### Validation
 
-- Web shell access returned HTTP 404 (resource not found)
-- No further `cmd=` requests observed in Apache logs
-- No new related alerts in Wazuh
+- 404 response confirmed  
+- No new `cmd=` activity  
+- No new Wazuh alerts  
 
 ![Validation](./images/07_webshell_access_blocked_404.png)
 
@@ -231,48 +225,41 @@ The attacker achieved remote command execution through a web shell, allowing sys
 
 ### Outcome
 
-- Attack successfully contained and eradicated  
-- No persistence mechanisms identified  
-- Environment validated as secure  
+- Attack contained and eradicated  
+- No persistence  
+- Environment secure  
 
 ---
 
 ## 12. Lessons Learned
 
-- Web applications are critical attack vectors  
-- File upload must be strictly validated  
-- Application logs are essential for detection  
-- SIEM correlation improves visibility  
-- Even low privilege (www-data) can lead to impact  
+- Upload validation is critical  
+- Application logs are essential  
+- SIEM correlation improves detection  
+- Low privilege ≠ low impact  
 
 ---
 
 ## 13. Indicators of Compromise (IoCs)
 
-| Category       | Indicator | Description |
-|---------------|----------|-------------|
-| 🌐 Network     | 192.168.122.1 | Attacker source IP |
-| 🌐 Network     | HTTP requests to `/DVWA/hackable/uploads/shell.php` | Malicious web shell access |
-| 🌍 Application | `/DVWA/hackable/uploads/shell.php` | Web shell endpoint |
-| 🌍 Application | Parameter `cmd=` | Command execution via HTTP |
-| 🖥️ Host        | `/var/www/html/DVWA/hackable/uploads/shell.php` | Malicious file on server |
-| 🖥️ Host        | User: www-data | Execution context (web server user) |
-| 🖥️ Host | SHA256: Not available | Hash not collected prior to file removal |
-| ⚙️ Behavior    | Repeated HTTP requests | Interactive command execution pattern |
-| ⚙️ Behavior    | Commands: id, whoami, uname, pwd, ls | System enumeration |
-| ⚙️ Behavior    | Access to `/etc/passwd` | Sensitive file access |
-| 📡 Detection   | Wazuh Rule ID: 31514 | Web shell command execution detection |
-| 📡 Detection   | Log source: Apache access.log | Evidence of HTTP-based execution |
+| Category | Indicator | Description |
+|----------|----------|------------|
+| Network | 192.168.122.1 | Attacker IP |
+| Application | `/shell.php` | Malicious endpoint |
+| Application | `cmd=` | Execution parameter |
+| Host | shell.php | Malicious file |
+| Host | www-data | Execution context |
+| Host | SHA256: Not available | File removed before hashing |
+| Behavior | Command execution | RCE pattern |
+| Detection | Rule 31514 | Wazuh detection |
 
 ---
 
 ## 14. Conclusion
 
-The incident followed the complete lifecycle:  
-Detection → Investigation → Classification → Response
+The incident followed the full lifecycle:  
+Detection → Investigation → Response
 
-The attacker successfully exploited a web application vulnerability to achieve remote command execution.
+The attacker exploited a web vulnerability to achieve remote command execution.
 
-Although no persistence was established, the impact was significant due to the ability to execute arbitrary commands.
-
-All malicious artifacts were removed, defensive measures were implemented, and the environment was validated as secure.
+All malicious activity was contained, the root cause addressed, and the environment validated as secure.
