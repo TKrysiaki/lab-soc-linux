@@ -161,7 +161,7 @@ Attacker IP blocked via firewall:
 |-------------|--------------|------------|
 | [T1190](https://attack.mitre.org/techniques/T1190/) | Exploit Public-Facing Application | Exploitation of vulnerable file upload functionality |
 | [T1505.003](https://attack.mitre.org/techniques/T1505/003/) | Web Shell | Malicious PHP file used for command execution |
-| [T1059](https://attack.mitre.org/techniques/T1059/) | Command Execution | Remote command execution via HTTP parameter (`cmd=`) |
+| [T1059](https://attack.mitre.org/techniques/T1059/) | Command Execution | Remote command execution via web shell (`cmd=` parameter) |
 
 ---
 
