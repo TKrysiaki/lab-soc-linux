@@ -187,39 +187,42 @@ The attacker achieved remote command execution through a web shell, allowing sys
 - A.16 — Incident Management  
 
 ---
-
 ## 11. Response Actions
 
 ### Containment
 
-![Response](./images/06_response_eradication_validation.png)
+- Attacker IP (192.168.122.1) blocked via firewall (UFW)
+- Access to upload directory restricted
 
-- Attacker IP blocked  
-- Upload directory access restricted  
+![Containment](./images/06_response_eradication_validation.png)
 
 ---
 
 ### Eradication
 
-- Malicious file `shell.php` removed  
-- Upload directory inspected  
-- Execution permissions reviewed  
+- Malicious file `/DVWA/hackable/uploads/shell.php` removed
+- Upload directory inspected for additional artifacts
+- File permissions reviewed to prevent execution
+
+![Eradication](./images/06_response_eradication_validation.png)
 
 ---
 
-### Recovery
+### Validation
 
-- Web shell no longer accessible (404):
+- Web shell access returned HTTP 404 (resource not found)
+- No further `cmd=` requests observed in Apache logs
+- No new related alerts in Wazuh
 
 ![Validation](./images/07_webshell_access_blocked_404.png)
 
 ---
 
-### Defense Validation
+### Outcome
 
-- No further command execution observed  
-- No new malicious files detected  
-- Environment stabilized  
+- Attack successfully contained and eradicated  
+- No persistence mechanisms identified  
+- Environment validated as secure  
 
 ---
 
