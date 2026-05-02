@@ -73,14 +73,27 @@ Insecure file upload configuration enabled arbitrary code execution.
 
 ### Log Sources
 
-- `/var/log/apache2/access.log`
-- Wazuh SIEM alerts  
+- Apache: `/var/log/apache2/access.log`
+- SIEM: Wazuh alerts (Rule ID: 31514)
 
 ---
 
 ### Analyst Hypothesis
 
-The attacker exploited a vulnerable file upload feature to deploy a web shell and executed system commands via HTTP requests, enabling remote control of the server.
+The attacker exploited a vulnerable file upload functionality to deploy a web shell (`shell.php`) and executed system commands via HTTP requests using the `cmd=` parameter.
+
+---
+
+### Access Log Evidence
+
+![Access Log](./images/02_apache_access_log_webshell.png)
+
+Evidence identified in Apache logs:
+
+- Repeated HTTP requests to `/DVWA/hackable/uploads/shell.php`
+- Use of parameter `cmd=` indicating command execution
+- Source IP: `192.168.122.1`
+- High frequency requests in short time interval (interactive behavior)
 
 ---
 
@@ -88,7 +101,7 @@ The attacker exploited a vulnerable file upload feature to deploy a web shell an
 
 ![Commands](./images/05_extracted_commands_webshell.png)
 
-Commands observed:
+Commands executed via web shell:
 
 - id  
 - whoami  
@@ -99,21 +112,19 @@ Commands observed:
 
 ---
 
-### Access Log Evidence
+### Execution Context
 
-![Access Log](./images/02_apache_access_log_webshell.png)
-
-- Repeated requests to `/shell.php?cmd=`  
-- Same source IP  
-- Short interval execution  
+- Execution user: `www-data`
+- Indicates command execution within web server context (limited privileges)
 
 ---
 
-### Execution Context
+### Key Findings
 
-- User: `www-data`  
-- Confirms execution within web server context  
-
+- Remote command execution confirmed via HTTP (`cmd=` parameter)
+- Consistent attacker behavior from single IP (192.168.122.1)
+- Evidence of system enumeration and sensitive file access
+- No evidence of persistence or privilege escalation observed
 ---
 
 ## 5. Impact Assessment
