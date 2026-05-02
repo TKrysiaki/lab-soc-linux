@@ -36,7 +36,7 @@ The incident was detected by Wazuh SIEM and validated through Apache access logs
 **SIEM:** Wazuh  
 
 - Rule: Web shell command execution detection  
-- Rule ID: 31514  
+- Rule ID: Wazuh Rule 31514 
 - Level: High  
 
 ### Evidence
@@ -245,11 +245,11 @@ Remote command execution was achieved via web shell, enabling system enumeration
 | Category | Indicator | Description | MITRE |
 |----------|----------|------------|-------|
 | Network | 192.168.122.1 | Attacker IP | T1190 |
-| Application | `/shell.php` | Web shell endpoint | T1505.003 |
-| Application | `cmd=` | Command execution parameter | T1059 |
+Application | /DVWA/hackable/uploads/shell.php | Web shell endpoint | T1505.003
+| Application | /DVWA/hackable/uploads/shell.php?cmd= | RCE via HTTP request | T1059 |
 | Host | shell.php | Malicious file | T1505.003 |
 | Host | www-data | Execution context | T1059 |
-| Behavior | Command execution | RCE activity | T1059 |
+| Behavior | Repeated HTTP command execution | RCE activity | T1059 |
 | Detection | Rule 31514 | Wazuh detection | T1505.003 |
 
 ---
