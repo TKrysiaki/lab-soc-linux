@@ -254,7 +254,18 @@ Application | /DVWA/hackable/uploads/shell.php | Web shell endpoint | T1505.003
 
 ---
 
-## 14. Conclusion
+## 14. 🧠 Lessons Learned
+
+- Correlation between Apache logs and Wazuh alerts enabled rapid detection of RCE activity  
+- Repeated HTTP requests with parameters (`cmd=`) are strong indicators of web shell usage  
+- Even limited execution context (`www-data`) can lead to critical impact  
+- Lack of upload validation allows direct exploitation of web applications  
+- Disabling execution in upload directories is essential to prevent RCE  
+- Detection based on behavior (patterns) is more reliable than single alerts
+
+----
+
+## 15. Conclusion
 
 The incident followed the full lifecycle:  
 Detection → Investigation → Response
