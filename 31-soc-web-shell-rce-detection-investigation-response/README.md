@@ -178,14 +178,13 @@ All malicious artifacts were removed, access was blocked, and defensive measures
 
 ## 🧠 Skills Developed
 
-- Web log analysis (Apache)  
-- RCE detection via application logs  
-- Wazuh alert analysis  
-- Log correlation (Apache + Wazuh)  
-- Threat hunting (Wazuh + Apache logs)  
-- IoC extraction and structuring  
-- Incident response (containment + eradication + validation)  
-- Web security hardening  
+- Threat detection using Wazuh SIEM  
+- Web attack detection (RCE via application logs)  
+- Log analysis and correlation (Apache + Wazuh)  
+- Threat hunting based on HTTP patterns  
+- IoC identification and structuring  
+- Incident response (containment, eradication, validation)  
+- Web security hardening (upload restrictions, execution control)  
 
 ---
 
