@@ -99,7 +99,7 @@ Commands extracted from logs:
 - **Scope:** Single host (192.168.122.171)  
 - **Exposure:** System enumeration and file access  
 
-### 🔴 Severity: 9/10 (Critical)
+### Severity: 🔴 9/10 (Critical)
 
 **Justification:**
 - Remote command execution confirmed  
@@ -141,7 +141,7 @@ Attacker IP blocked via firewall:
 - File upload restrictions (block `.php`)  
 - MIME type validation  
 - Least privilege on web directories  
-- Disable PHP execution in upload directories (Apache configuration)
+- Disable PHP execution in upload directories using .htaccess or Apache configuration  
 
 ---
 
@@ -160,8 +160,8 @@ Attacker IP blocked via firewall:
 | Technique ID | Technique Name | Description |
 |-------------|--------------|------------|
 | T1190 | Exploit Public-Facing Application | Exploitation of vulnerable file upload functionality |
-| T1505.003 | Web Shell | Malicious PHP file used for persistence and execution |
-| T1059 | Command Execution | Remote command execution via web shell (`cmd=` parameter) |
+| T1505.003 | Web Shell | Malicious PHP file used for command execution |
+| T1059 | Command Execution | Remote command execution via HTTP parameter (`cmd=`) |
 
 ---
 
@@ -182,6 +182,7 @@ All malicious artifacts were removed, access was blocked, and defensive measures
 - RCE detection via application logs  
 - Wazuh alert analysis  
 - Log correlation (Apache + Wazuh)  
+- Threat hunting (Wazuh + Apache logs)  
 - IoC extraction and structuring  
 - Incident response (containment + eradication + validation)  
 - Web security hardening  
