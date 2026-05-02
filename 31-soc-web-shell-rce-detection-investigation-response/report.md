@@ -14,20 +14,20 @@ The incident was detected by Wazuh SIEM and validated through Apache access logs
 
 ## 2. Timeline
 
-| Time (UTC-3)        | Event |
-|---------------------|------|
-| 02/May/2026 10:47:00 | Access to upload functionality (`/DVWA/vulnerabilities/upload/`) |
-| 02/May/2026 10:47:00 | Malicious file uploaded via HTTP POST |
-| 02/May/2026 10:58:40 | First web shell execution (`cmd=id`) |
-| 02/May/2026 10:58:45 | Command execution (`cmd=whoami`) |
-| 02/May/2026 10:58:50 | Command execution (`cmd=uname -a`) |
-| 02/May/2026 10:58:55 | Command execution (`cmd=pwd`) |
-| 02/May/2026 10:59:00 | Command execution (`cmd=ls`) |
-| 02/May/2026 10:59:05 | Sensitive file access (`cmd=cat /etc/passwd`) |
-| 02/May/2026 11:00:00 | Wazuh detection triggered (web shell activity) |
-| 02/May/2026 11:05:00 | Web shell identified and removed |
-| 02/May/2026 11:06:00 | Attacker IP blocked via firewall |
-| 02/May/2026 11:07:00 | Validation completed (404 response confirmed) |
+| Time (UTC-3)        | Event | Source |
+|---------------------|------|--------|
+| 02/May/2026 10:47:00 | Access to upload functionality | Apache access.log |
+| 02/May/2026 10:47:00 | Malicious file uploaded (POST) | Apache access.log |
+| 02/May/2026 10:58:40 | First execution (`cmd=id`) | Apache access.log |
+| 02/May/2026 10:58:45 | Execution (`cmd=whoami`) | Apache access.log |
+| 02/May/2026 10:58:50 | Execution (`cmd=uname -a`) | Apache access.log |
+| 02/May/2026 10:58:55 | Execution (`cmd=pwd`) | Apache access.log |
+| 02/May/2026 10:59:00 | Execution (`cmd=ls`) | Apache access.log |
+| 02/May/2026 10:59:05 | Sensitive file access (`/etc/passwd`) | Apache access.log |
+| 02/May/2026 11:00:00 | Detection triggered | Wazuh |
+| 02/May/2026 11:05:00 | Web shell removed | Host |
+| 02/May/2026 11:06:00 | Attacker IP blocked | Firewall |
+| 02/May/2026 11:07:00 | Validation (404 response) | Apache access.log |
 
 ---
 
