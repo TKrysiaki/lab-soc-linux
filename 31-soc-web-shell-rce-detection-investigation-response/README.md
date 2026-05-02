@@ -39,7 +39,7 @@ An attacker exploited a vulnerable file upload feature to upload a malicious PHP
 
 Suspicious command execution via web application detected by Wazuh:
 
-![Detection](./03_wazuh_webshell_detection.png)
+![Detection](./images/03_wazuh_webshell_detection.png)
 
 ---
 
@@ -47,7 +47,7 @@ Suspicious command execution via web application detected by Wazuh:
 
 Apache logs revealed multiple command executions via HTTP:
 
-![Access Log](./02_apache_access_log_webshell.png)
+![Access Log](./images/02_apache_access_log_webshell.png)
 
 ### Evidence:
 
@@ -84,7 +84,7 @@ Apache logs revealed multiple command executions via HTTP:
 
 Commands extracted from logs:
 
-![Commands](./05_extracted_commands_webshell.png)
+![Commands](./images/05_extracted_commands_webshell.png)
 
 - id  
 - whoami  
@@ -109,7 +109,7 @@ Commands extracted from logs:
 - Ability to execute arbitrary commands  
 - Access to sensitive system files  
 
-→ Indicates full compromise of web application context.
+→ Indicates compromise of the web application context.
 
 ---
 
@@ -119,7 +119,7 @@ Commands extracted from logs:
 
 Attacker IP blocked via firewall:
 
-![Response](./06_response_eradication_validation.png)
+![Response](./images/06_response_eradication_validation.png)
 
 ---
 
@@ -135,15 +135,15 @@ Attacker IP blocked via firewall:
 
 - Web shell no longer accessible (404):
 
-![Validation](./07_webshell_access_blocked_404.png)
+![Validation](./images/07_webshell_access_blocked_404.png)
 
 ---
 
 ### 🔐 Hardening
 
-- File upload restrictions recommended (block `.php`)  
-- Input validation and MIME checking  
-- Principle of least privilege for web directories  
+- File upload restrictions (block `.php`)  
+- MIME type validation  
+- Least privilege on web directories  
 
 ---
 
@@ -167,8 +167,8 @@ Attacker IP blocked via firewall:
 
 ## 🎯 Conclusion
 
-The incident followed the full lifecycle:
-Detection → Investigation → Classification → Response
+The incident followed the full lifecycle:  
+**Detection → Investigation → Classification → Response**
 
 Evidence confirms exploitation of a web application leading to remote command execution.
 
