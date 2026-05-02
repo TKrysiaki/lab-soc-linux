@@ -231,26 +231,20 @@ Commands observed:
 
 ## 13. Indicators of Compromise (IoCs)
 
-### Network
-- Source IP: 192.168.122.1  
-- HTTP requests to web shell  
-
-### Application
-- Endpoint: `/DVWA/hackable/uploads/shell.php`  
-- Parameter: `cmd=`  
-
-### Host
-- File: `/var/www/html/DVWA/hackable/uploads/shell.php`  
-- Execution user: www-data  
-
-### Behavior
-- Repeated HTTP command execution  
-- System enumeration commands  
-- Access to sensitive files  
-
-### Detection Context
-- SIEM: Wazuh  
-- Rule: Web shell execution detection  
+| Category       | Indicator | Description |
+|---------------|----------|-------------|
+| 🌐 Network     | 192.168.122.1 | Attacker source IP |
+| 🌐 Network     | HTTP requests to `/DVWA/hackable/uploads/shell.php` | Malicious web shell access |
+| 🌍 Application | `/DVWA/hackable/uploads/shell.php` | Web shell endpoint |
+| 🌍 Application | Parameter `cmd=` | Command execution via HTTP |
+| 🖥️ Host        | `/var/www/html/DVWA/hackable/uploads/shell.php` | Malicious file on server |
+| 🖥️ Host        | User: www-data | Execution context (web server user) |
+| 🖥️ Host        | SHA256: <HASH_DO_ARQUIVO> | Hash of malicious web shell |
+| ⚙️ Behavior    | Repeated HTTP requests | Interactive command execution pattern |
+| ⚙️ Behavior    | Commands: id, whoami, uname, pwd, ls | System enumeration |
+| ⚙️ Behavior    | Access to `/etc/passwd` | Sensitive file access |
+| 📡 Detection   | Wazuh Rule ID: 31514 | Web shell command execution detection |
+| 📡 Detection   | Log source: Apache access.log | Evidence of HTTP-based execution |
 
 ---
 
