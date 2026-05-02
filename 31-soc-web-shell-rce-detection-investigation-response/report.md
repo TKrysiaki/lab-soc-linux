@@ -239,7 +239,7 @@ Commands observed:
 | 🌍 Application | Parameter `cmd=` | Command execution via HTTP |
 | 🖥️ Host        | `/var/www/html/DVWA/hackable/uploads/shell.php` | Malicious file on server |
 | 🖥️ Host        | User: www-data | Execution context (web server user) |
-| 🖥️ Host        | SHA256: <HASH_DO_ARQUIVO> | Hash of malicious web shell |
+| 🖥️ Host | SHA256: Not available | Hash not collected prior to file removal |
 | ⚙️ Behavior    | Repeated HTTP requests | Interactive command execution pattern |
 | ⚙️ Behavior    | Commands: id, whoami, uname, pwd, ls | System enumeration |
 | ⚙️ Behavior    | Access to `/etc/passwd` | Sensitive file access |
