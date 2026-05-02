@@ -59,13 +59,13 @@ The incident was detected by Wazuh SIEM and validated through Apache access logs
 Insecure file upload configuration enabled arbitrary code execution.
 
 ---
-
 ### Recommendations
 
 - Block execution of `.php` files in upload directories  
 - Implement MIME type validation  
 - Restrict upload directory permissions  
 - Add SIEM rules for query-based execution patterns  
+- Disable execution of PHP files in upload directories  
 
 ---
 
@@ -129,7 +129,7 @@ Commands executed:
 ## 5. Impact Assessment
 
 ### Severity
-🔴 CRITICAL
+🔴 Severity: 9/10 (Critical)
 
 ### Scope
 - Single host affected: 192.168.122.171 (web-01)
@@ -233,25 +233,24 @@ Remote command execution was achieved via web shell, enabling system enumeration
 
 ## 12. Lessons Learned
 
-- Upload validation is critical  
-- Application logs are essential  
-- SIEM correlation improves detection  
-- Low privilege ≠ low impact  
+- Apache logs + Wazuh correlation enabled detection within minutes  
+- File upload functionality must enforce strict validation  
+- Execution in upload directories should be disabled by default  
+- Even low-privilege execution (`www-data`) can result in critical impact  
 
 ---
 
 ## 13. Indicators of Compromise (IoCs)
 
-| Category | Indicator | Description |
-|----------|----------|------------|
-| Network | 192.168.122.1 | Attacker IP |
-| Application | `/shell.php` | Malicious endpoint |
-| Application | `cmd=` | Execution parameter |
-| Host | shell.php | Malicious file |
-| Host | www-data | Execution context |
-| Host | SHA256: Not available | File removed before hashing |
-| Behavior | Command execution | RCE pattern |
-| Detection | Rule 31514 | Wazuh detection |
+| Category | Indicator | Description | MITRE |
+|----------|----------|------------|-------|
+| Network | 192.168.122.1 | Attacker IP | T1190 |
+| Application | `/shell.php` | Web shell endpoint | T1505.003 |
+| Application | `cmd=` | Command execution parameter | T1059 |
+| Host | shell.php | Malicious file | T1505.003 |
+| Host | www-data | Execution context | T1059 |
+| Behavior | Command execution | RCE activity | T1059 |
+| Detection | Rule 31514 | Wazuh detection | T1505.003 |
 
 ---
 
