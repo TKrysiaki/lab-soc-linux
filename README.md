@@ -105,4 +105,4 @@ LinkedIn: https://www.linkedin.com/in/tiago-krysiaki
 
 ---
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=TKrysiaki&show_icons=true&theme=radical)
+![GitHub Stats](https://github-readme-streak-stats.herokuapp.com/?user=TKrysiaki&theme=tokyonight)
