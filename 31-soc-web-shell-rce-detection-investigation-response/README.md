@@ -10,7 +10,7 @@ Simulation of a web shell attack via file upload vulnerability, resulting in rem
 - Execution (RCE): ✔ Yes  
 - Persistence: ❌ No  
 - Evasion: ❌ No  
-- Severity: 🔴 Critical  
+- Severity: 🔴 9/10 (Critical)  
 
 ---
 
@@ -41,6 +41,10 @@ Suspicious command execution via web application detected by Wazuh:
 
 ![Detection](./images/03_wazuh_webshell_detection.png)
 
+- Rule ID: 31514  
+- Multiple HTTP requests containing `cmd=`  
+- Repeated execution pattern detected  
+
 ---
 
 ## 🧠 Investigation
@@ -60,23 +64,16 @@ Apache logs revealed multiple command executions via HTTP:
 
 ## 🔎 Indicators of Compromise (IoCs)
 
-### 🌐 Network
-- Source IP: 192.168.122.1  
-- Target IP: 192.168.122.171  
-- HTTP requests to web shell  
-
-### 🌍 Application
-- Endpoint: `/DVWA/hackable/uploads/shell.php`  
-- Parameter abuse: `cmd=`  
-
-### 🖥️ Host
-- Malicious file: `/var/www/html/DVWA/hackable/uploads/shell.php`  
-- Execution context: `www-data`  
-
-### ⚙️ Behavior
-- Remote command execution via HTTP  
-- Repeated requests (interactive attacker behavior)  
-- Access to sensitive file (`/etc/passwd`)  
+| Category | Indicator | Description | MITRE |
+|----------|----------|------------|-------|
+| Network | 192.168.122.1 | Attacker IP | T1190 |
+| Application | /DVWA/hackable/uploads/shell.php | Web shell endpoint | T1505.003 |
+| Application | cmd= | Command execution parameter | T1059 |
+| Application | /DVWA/hackable/uploads/shell.php?cmd= | RCE via HTTP request | T1059 |
+| Host | /var/www/html/DVWA/hackable/uploads/shell.php | Malicious file | T1505.003 |
+| Host | www-data | Execution context | T1059 |
+| Behavior | Repeated HTTP command execution | RCE activity | T1059 |
+| Detection | Wazuh Rule 31514 | Web shell detection | T1505.003 |
 
 ---
 
@@ -102,12 +99,12 @@ Commands extracted from logs:
 - **Scope:** Single host (192.168.122.171)  
 - **Exposure:** System enumeration and file access  
 
-### 🔴 Severity: CRITICAL
+### 🔴 Severity: 9/10 (Critical)
 
 **Justification:**
 - Remote command execution confirmed  
 - Ability to execute arbitrary commands  
-- Access to sensitive system files  
+- Access to system file (`/etc/passwd`) confirmed  
 
 → Indicates compromise of the web application context.
 
@@ -144,6 +141,7 @@ Attacker IP blocked via firewall:
 - File upload restrictions (block `.php`)  
 - MIME type validation  
 - Least privilege on web directories  
+- Disable PHP execution in upload directories (Apache configuration)
 
 ---
 
@@ -159,9 +157,11 @@ Attacker IP blocked via firewall:
 
 ## 🧬 MITRE ATT&CK
 
-- T1190 — Exploit Public-Facing Application  
-- T1505.003 — Web Shell  
-- T1059 — Command Execution  
+| Technique ID | Technique Name | Description |
+|-------------|--------------|------------|
+| T1190 | Exploit Public-Facing Application | Exploitation of vulnerable file upload functionality |
+| T1505.003 | Web Shell | Malicious PHP file used for persistence and execution |
+| T1059 | Command Execution | Remote command execution via web shell (`cmd=` parameter) |
 
 ---
 
@@ -181,6 +181,7 @@ All malicious artifacts were removed, access was blocked, and defensive measures
 - Web log analysis (Apache)  
 - RCE detection via application logs  
 - Wazuh alert analysis  
+- Log correlation (Apache + Wazuh)  
 - IoC extraction and structuring  
 - Incident response (containment + eradication + validation)  
 - Web security hardening  
