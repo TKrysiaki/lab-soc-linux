@@ -118,21 +118,25 @@ Commands observed:
 
 ## 5. Impact Assessment
 
-- **Access Level:** Remote command execution via web application  
-- **Privilege Level:** www-data (web server context)  
-- **Scope:** Single host (192.168.122.171)  
+### Severity
+🔴 CRITICAL
+
+### Scope
+- Single host affected: 192.168.122.171 (web-01)
+- No lateral movement observed
+
+### Compromise
+
+- **Initial Access:** Exploitation of vulnerable file upload functionality  
+- **Execution:** Remote command execution via web shell (`cmd=` parameter)  
+- **Privilege Level:** Web server context (`www-data`)  
 - **Persistence:** Not observed  
-- **Log Integrity:** Intact  
-- **Data Exposure:** Possible access to `/etc/passwd`
+- **Data Exposure:** Access to sensitive system file (`/etc/passwd`)  
 
-### 🔴 Severity: CRITICAL
+### Summary
 
-**Justification:**
-- Remote command execution confirmed  
-- Arbitrary command execution possible  
-- Access to sensitive system files  
+The attacker achieved remote command execution through a web shell, allowing system-level enumeration and access to sensitive data. Although limited to web server privileges, the impact is critical due to the ability to execute arbitrary commands.
 
-→ Indicates compromise of web application layer with potential escalation risk.
 
 ---
 
