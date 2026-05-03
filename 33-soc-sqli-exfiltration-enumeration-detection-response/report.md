@@ -8,7 +8,7 @@ SQL Injection attack targeting DVWA application, resulting in database enumerati
 
 - Attack vector: HTTP parameter (`id`)
 - Technique: SQL Injection (UNION-based)
-- Impact: Data exposure (users table + DB structure)
+- Impact: Data exposure (users table + database structure)
 
 ---
 
@@ -17,7 +17,7 @@ SQL Injection attack targeting DVWA application, resulting in database enumerati
 | Time (UTC-3) | Event | Source |
 |-------------|------|--------|
 | 17:28:19 | Initial SQL Injection attempt (`OR 1=1`) | Wazuh / access.log |
-| 17:33:00 | Payload escalation with UNION SELECT | access.log |
+| 17:33:00 | Payload escalation (UNION SELECT) | access.log |
 | 17:52:58 | Database enumeration (information_schema) | access.log |
 | 18:13:00 | Containment applied (iptables block) | System |
 
@@ -35,27 +35,27 @@ SQL Injection attack targeting DVWA application, resulting in database enumerati
 
 ![Detection](./images/01_wazuh_sqli_detection_burst.png)
 
-- Repeated SQL Injection alerts
-- HTTP 200 responses confirming successful execution
+- Repeated SQL Injection alerts  
+- HTTP 200 responses indicating successful execution  
 
 ---
 
 ### Detection Gap
 
-- No blocking mechanism initially
-- Detection only after multiple attempts
+- No preventive control to block malicious requests  
+- Detection occurred only after multiple attempts  
 
 **Root Cause:**  
-Lack of input validation and absence of preventive controls (WAF / filtering)
+Lack of input validation and absence of preventive controls
 
 ---
 
 ### Recommendations
 
-- Implement input validation (server-side)
-- Deploy WAF or ModSecurity
-- Create correlation rules for burst detection
-- Block repeated malicious IPs automatically
+- Implement server-side input validation  
+- Improve detection with correlation rules (burst SQLi)  
+- Apply preventive controls (WAF / filtering)  
+- Implement automated response (IP blocking)
 
 ---
 
@@ -63,14 +63,14 @@ Lack of input validation and absence of preventive controls (WAF / filtering)
 
 ### Log Sources
 
-- /var/log/apache2/access.log
-- /var/ossec/logs/alerts/alerts.json
+- /var/log/apache2/access.log  
+- /var/ossec/logs/alerts/alerts.json  
 
 ---
 
 ### Analyst Hypothesis
 
-Attacker exploited vulnerable parameter via SQL Injection to extract data and enumerate database structure.
+Attacker exploited a vulnerable parameter using SQL Injection to extract data and enumerate the database structure.
 
 ---
 
@@ -78,7 +78,7 @@ Attacker exploited vulnerable parameter via SQL Injection to extract data and en
 
 ![Evidence](./images/02_wazuh_sqli_event_details.png)
 
-- Payloads containing:
+- Payloads identified:
   - `OR 1=1`
   - `UNION SELECT`
   - `information_schema`
@@ -87,18 +87,20 @@ Attacker exploited vulnerable parameter via SQL Injection to extract data and en
 
 ### Execution Context
 
-- User: www-data (web context)  
-- Privilege level: Application-level (DB read)
+- User: www-data  
+- Privilege level: Low (web application context)  
+- Privilege Escalation: Not observed  
 
 ---
 
 ### Key Findings
 
 - ✔ Successful SQL Injection execution  
+- ✔ Credential exposure confirmed (users table)  
 - ✔ Database enumeration confirmed  
-- ✔ Credential extraction attempts observed  
 - ❌ No command execution (RCE not observed)  
 - ❌ No persistence mechanisms  
+- ❌ No privilege escalation attempts observed  
 
 ---
 
@@ -117,20 +119,19 @@ Severity: 9/10 (High)
 - Execution: ✔  
 - Privilege Level: Low (application context)  
 - Persistence: ❌  
-- Data Exposure: ✔ (users + schema)
+- Data Exposure: ✔  
 
 ---
 
 ### Summary
 
-Attack resulted in **logical compromise of the database**, exposing sensitive information and internal structure.
+The attack resulted in **logical compromise of the database**, exposing sensitive information and internal structure, without impacting system-level access.
 
 ---
 
 ## 6. MITRE ATT&CK Mapping
 
 - [T1190](https://attack.mitre.org/techniques/T1190/) — Exploit Public-Facing Application  
-- [T1055](https://attack.mitre.org/techniques/T1055/) — Process Injection (rule context)
 
 ---
 
@@ -152,17 +153,17 @@ Attack resulted in **logical compromise of the database**, exposing sensitive in
 ## 9. NIST Incident Response
 
 - Detection: Wazuh alerts triggered  
-- Analysis: Log correlation + payload inspection  
+- Analysis: Log correlation and payload analysis  
 - Containment: IP blocked via iptables  
-- Eradication: Not required (no persistence)  
-- Recovery: Service validated and stable  
+- Eradication: Not performed (no persistent artifacts)  
+- Recovery: Service remained operational and stable  
 
 ---
 
 ## 10. ISO 27001
 
 - A.12.4 — Logging and Monitoring  
-- A.14.2 — Secure Development Practices  
+- A.14.2 — Secure Development  
 
 ---
 
@@ -170,21 +171,21 @@ Attack resulted in **logical compromise of the database**, exposing sensitive in
 
 ### Containment
 
-- Blocked attacker IP using iptables
+- Malicious IP blocked using iptables  
 
-![Containment](./images/05_defense_validation_iptables_block.png)
+![Containment](./images/09_iptables_rule_validation.png)
 
 ---
 
 ### Eradication
 
-- No artifacts to remove (attack was application-level)
+- Not required (no persistence or system compromise observed)
 
 ---
 
 ### Validation
 
-- Connection attempts blocked (timeout observed)
+- Connection attempts blocked successfully  
 
 ![Validation](./images/06_defense_validation_connection_timeout.png)
 
@@ -192,16 +193,16 @@ Attack resulted in **logical compromise of the database**, exposing sensitive in
 
 ### Outcome
 
-- Attack successfully stopped  
+- Attack successfully contained  
 - No further malicious activity observed  
 
 ---
 
 ## 12. Lessons Learned
 
-- Detection without response is insufficient  
-- Input validation is critical  
-- SIEM correlation improves visibility  
+- Detection without prevention allows repeated exploitation  
+- Input validation is critical for web security  
+- Log analysis is essential to confirm attack progression  
 - Network-level blocking is effective for containment  
 
 ---
@@ -213,13 +214,13 @@ Attack resulted in **logical compromise of the database**, exposing sensitive in
 | Network | 192.168.122.1 | Attacker IP | [T1190](https://attack.mitre.org/techniques/T1190/) |
 | Application | /DVWA/vulnerabilities/sqli | Attack vector | [T1190](https://attack.mitre.org/techniques/T1190/) |
 | Application | id= | Injection parameter | [T1190](https://attack.mitre.org/techniques/T1190/) |
-| Application | OR 1=1 | Authentication bypass | [T1190](https://attack.mitre.org/techniques/T1190/) |
-| Application | UNION SELECT | Data extraction | [T1190](https://attack.mitre.org/techniques/T1190/) |
-| Application | information_schema | DB enumeration | [T1190](https://attack.mitre.org/techniques/T1190/) |
+| Application | OR 1=1 | Authentication bypass pattern | [T1190](https://attack.mitre.org/techniques/T1190/) |
+| Application | UNION SELECT | Data extraction technique | [T1190](https://attack.mitre.org/techniques/T1190/) |
+| Application | information_schema | Database enumeration | [T1190](https://attack.mitre.org/techniques/T1190/) |
 | Behavior | Burst requests | Repeated attack attempts | [T1190](https://attack.mitre.org/techniques/T1190/) |
-| Host | access.log | Evidence source | N/A |
+| Host | /var/log/apache2/access.log | Evidence source | N/A |
 | Detection | Rule 31103 | SQLi detection | [T1190](https://attack.mitre.org/techniques/T1190/) |
-| Response | iptables DROP | Containment | N/A |
+| Response | iptables DROP | Containment action | N/A |
 
 ---
 
@@ -228,5 +229,5 @@ Attack resulted in **logical compromise of the database**, exposing sensitive in
 Detection → Investigation → Response  
 
 SQL Injection attack was successfully detected and investigated using Wazuh and Apache logs.  
-The attacker achieved data extraction and enumeration, confirming impact.  
-Containment was applied via firewall rules, and effectiveness validated through connection blocking.
+The attacker achieved data exposure and database enumeration, confirming impact.  
+Containment was applied via firewall rules and validated through connection blocking, stopping further activity.
