@@ -75,7 +75,7 @@ Brief explanation of how detection occurred.
 
 ## 🔎 Command / Activity Evidence
 
-![Commands](./images/07_exploitation_and_credential_exposure.png)
+![Commands](./images/07_exploitation_evidence_access_log.png)
 
 - `UNION SELECT user,password FROM users`  
 - `UNION SELECT table_name FROM information_schema.tables`  
