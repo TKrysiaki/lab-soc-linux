@@ -92,12 +92,21 @@ Clear evidence of SQL Injection exploitation and data extraction:
 
 | Category | Indicator | Description | MITRE |
 |----------|----------|------------|-------|
-| Network | 192.168.122.1 | Attacker IP | T1190 |
-| Application | /DVWA/vulnerabilities/sqli | Attack vector | T1190 |
-| Application | id= | Injection parameter | T1190 |
-| Behavior | UNION SELECT | Data extraction | T1190 |
-| Behavior | information_schema | DB enumeration | T1190 |
-| Detection | Rule 31103 | SQLi detection | T1190 |
+| Network | 192.168.122.1 | Attacker source IP performing SQL Injection | [T1190](https://attack.mitre.org/techniques/T1190/) |
+| Network | HTTP GET requests | Repeated abnormal requests to web application | [T1190](https://attack.mitre.org/techniques/T1190/) |
+| Application | /DVWA/vulnerabilities/sqli | Vulnerable endpoint targeted | [T1190](https://attack.mitre.org/techniques/T1190/) |
+| Application | id= | Injection point parameter | [T1190](https://attack.mitre.org/techniques/T1190/) |
+| Application | OR 1=1 | Authentication bypass pattern | [T1190](https://attack.mitre.org/techniques/T1190/) |
+| Application | UNION SELECT | Data extraction technique | [T1190](https://attack.mitre.org/techniques/T1190/) |
+| Application | information_schema.tables | Database enumeration (tables) | [T1190](https://attack.mitre.org/techniques/T1190/) |
+| Application | information_schema.columns | Database enumeration (columns) | [T1190](https://attack.mitre.org/techniques/T1190/) |
+| Application | user,password FROM users | Credential extraction attempt | [T1190](https://attack.mitre.org/techniques/T1190/) |
+| Behavior | High-frequency requests | Burst pattern indicating automated/manual probing | [T1190](https://attack.mitre.org/techniques/T1190/) |
+| Behavior | Incremental payload evolution | From bypass → extraction → enumeration | [T1190](https://attack.mitre.org/techniques/T1190/) |
+| Host | /var/log/apache2/access.log | Source of evidence (web logs) | N/A |
+| Detection | Rule 31103 | SQL Injection detection (Wazuh) | [T1190](https://attack.mitre.org/techniques/T1190/) |
+| Detection | Rule 31106 | Web attack success (HTTP 200) | [T1190](https://attack.mitre.org/techniques/T1190/) |
+| Response | iptables DROP 192.168.122.1 | Containment action applied | N/A |
 
 ---
 
@@ -175,8 +184,8 @@ Access attempts blocked successfully:
 
 | Technique ID | Technique Name | Description |
 |-------------|--------------|------------|
-| T1190 | Exploit Public-Facing Application | SQL Injection |
-| T1055 | Process Injection (rule mapping) | Detection context |
+| [T1190](https://attack.mitre.org/techniques/T1190/) | Exploit Public-Facing Application | SQL Injection against DVWA |
+| [T1055](https://attack.mitre.org/techniques/T1055/) | Process Injection | Mapped by Wazuh rule (contextual detection) |
 
 ---
 
