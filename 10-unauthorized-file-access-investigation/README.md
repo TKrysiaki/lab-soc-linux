@@ -1,140 +1,189 @@
-# 🚨 Investigação de Acesso Não Autorizado e Tentativa de Leitura de Credenciais (SOC Analysis)
+# 🚨 Detection and Response to Unauthorized SSH Access & Credential Access Attempt (Wazuh / Linux)
 
 ---
 
-## 🎯 Cenário
+## 📌 Overview
 
-Foi identificado acesso bem-sucedido via SSH em um servidor Linux. A investigação teve como objetivo analisar possíveis ações maliciosas realizadas após o login.
+Simulation of unauthorized SSH access using valid credentials, followed by attempted credential access and privilege escalation.
 
----
-
-## 🚨 Acesso Inicial
-
-Login SSH realizado com sucesso:
-
-<img src="images/01-ssh-login-success.png" width="100%">
-
-👉 Indica acesso válido ao sistema
+- Access: ✔  
+- Execution: ✔  
+- Persistence: ❌ (not observed)  
+- Evasion: ❌  
+- Severity: 🔴 8/10 (High)  
 
 ---
 
-## ⚠️ Tentativa de Acesso Sensível
+## 📄 Detailed Incident Report
 
-Foi detectada tentativa de acesso ao arquivo `/etc/shadow`, que contém hashes de senha:
-
-<img src="images/02-shadow-access-attempt.png" width="100%">
-
-Evidência nos logs:
-
-<img src="images/03-shadow-log-evidence.png" width="100%">
-
-Análise:
-
-- Acesso a arquivo crítico do sistema  
-- Indicativo de tentativa de coleta de credenciais  
-- Comportamento altamente suspeito  
+➡️ Full report: [report.md](./report.md)
 
 ---
 
-## 🧠 Uso de Privilégios Elevados
+## 🖥️ Environment
 
-Execução de comandos com sudo:
-
-<img src="images/04-sudo-commands-log.png" width="100%">
-
-Análise:
-
-- Usuário elevando privilégios  
-- Possível tentativa de obter acesso root  
-- Indicativo de exploração pós-login  
+- Attacker: <ATTACKER_IP>  
+- Target: <TARGET_IP>  
+- SIEM: Wazuh  
+- Service: SSH  
 
 ---
 
-## 📊 Linha do Tempo do Ataque
+## 🎯 Attack Scenario
 
-Sequência dos eventos:
-
-<img src="images/05-attack-timeline.png" width="100%">
-
-Fluxo identificado:
-
-1. Login SSH bem-sucedido  
-2. Tentativa de acesso ao `/etc/shadow`  
-3. Execução de comandos com sudo  
+An attacker successfully authenticated via SSH using valid credentials.  
+Post-login activity included attempts to access sensitive files (`/etc/shadow`) and execution of privileged commands using `sudo`.
 
 ---
 
-## 🧠 Análise SOC
+## 🔍 Detection
 
-O comportamento indica possível comprometimento de conta seguido de tentativa de coleta de credenciais e elevação de privilégios.
+Detection occurred through correlation of:
 
-Correlação:
+- Successful SSH login  
+- Access attempt to sensitive file  
+- Privileged command execution  
 
-- Login válido (auth.log)  
-- Tentativa de acesso a arquivo sensível  
-- Uso de sudo após login  
+![Detection](./images/01_detection.png)
 
-Impacto:
-
-- Risco de exposição de credenciais  
-- Possível escalonamento de privilégio  
-- Comprometimento potencial do sistema  
-
-Objetivo do atacante:
-
-- Obter hashes de senha  
-- Escalar privilégios  
-- Manter persistência  
-
-Conclusão:
-
-Atividade maliciosa altamente suspeita, com indícios de pós-exploração.
+- Rule ID: <RULE_ID>  
+- Detection logic: SSH success + sensitive file access + sudo usage correlation  
 
 ---
 
-## 🚨 Classificação
+## 🧠 Investigation
 
-Malicioso — tentativa de acesso a credenciais sensíveis com uso de privilégios elevados.
+![Evidence](./images/02_evidence.png)
+
+### Evidence:
+
+- Source IP: `<ATTACKER_IP>`  
+- Service: `SSH`  
+- Target file: `/etc/shadow`  
+- Behavior observed:
+  - Valid login
+  - Sensitive file access attempt
+  - Privilege escalation activity
+
+---
+
+## 🔎 Indicators of Compromise (IoCs)
+
+| Category | Indicator | Description | MITRE |
+|----------|----------|------------|-------|
+| Network | <ATTACKER_IP> | Source of SSH login | [T1078](https://attack.mitre.org/techniques/T1078/) |
+| Host | /etc/shadow | Credential file access attempt | [T1003](https://attack.mitre.org/techniques/T1003/) |
+| Behavior | sudo usage | Privilege escalation attempt | [T1548](https://attack.mitre.org/techniques/T1548/) |
+| Host | auth.log | Authentication logs | N/A |
+| Detection | <RULE_ID> | Wazuh correlation rule | N/A |
+| Response | IP block | Containment action | N/A |
+
+---
+
+## 🔎 Command / Activity Evidence
+
+![Commands](./images/03_commands.png)
+
+- `cat /etc/shadow` (attempt)  
+- `sudo <command>`  
+
+---
+
+## ⚠️ Impact Assessment
+
+- **Access Level:** Valid user access  
+- **Privilege Level:** User → attempted root escalation  
+- **Scope:** Single host  
+- **Exposure:** Attempted access to password hashes  
+
+### Severity: 🔴 8/10 (High)
+
+**Justification:**
+- Valid account compromise  
+- Attempt to access credential storage  
+- Privilege escalation behavior observed  
+
+→ High risk of credential exposure and further compromise  
+
+---
+
+## 🛡️ Response
+
+### Containment
+
+![Containment](./images/04_response.png)
+
+- Attacker IP blocked (iptables / Fail2ban)  
+- SSH session terminated  
+- User account temporarily disabled  
+
+---
+
+### Eradication
+
+- Password reset enforced  
+- Review of `~/.ssh/authorized_keys`  
+- No malicious persistence artifacts found  
+
+---
+
+### Recovery
+
+![Validation](./images/05_validation.png)
+
+- System integrity validated  
+- No further suspicious activity observed  
+
+---
+
+### 🔐 Hardening
+
+- SSH access restricted (Fail2ban enabled)  
+- Sudo usage monitored  
+- Audit rules for `/etc/shadow` implemented (auditd)  
+- Least privilege enforced  
+
+---
+
+### ✅ Defense Validation
+
+- Repeated access attempt blocked  
+- Alerts triggered correctly  
+- No recurrence observed  
 
 ---
 
 ## 🧬 MITRE ATT&CK
 
-- T1003 — OS Credential Dumping  
-- T1078 — Valid Accounts  
-- T1548 — Abuse Elevation Control Mechanism  
-- TA0001 — Initial Access  
-- TA0004 — Privilege Escalation  
-- TA0006 — Credential Access  
+| Technique ID | Technique Name | Description |
+|-------------|--------------|------------|
+| [T1078](https://attack.mitre.org/techniques/T1078/) | Valid Accounts | Use of legitimate credentials |
+| [T1003](https://attack.mitre.org/techniques/T1003/) | OS Credential Dumping | Attempt to access `/etc/shadow` |
+| [T1548](https://attack.mitre.org/techniques/T1548/) | Abuse Elevation Control Mechanism | Use of sudo |
 
 ---
 
-## 🧠 Habilidades Demonstradas
+## 🎯 Conclusion
 
-- Análise de logs Linux  
-- Identificação de acesso suspeito  
-- Detecção de tentativa de credential dumping  
-- Investigação de uso de sudo  
-- Construção de timeline de ataque  
-- Correlação de eventos  
+Detection → Investigation → Classification → Response  
+
+Unauthorized SSH access using valid credentials led to attempted credential access and privilege escalation.  
+The incident was contained, no persistence was identified, and defensive controls were successfully validated.
 
 ---
 
-## 📌 Conclusão
+## 🧠 Skills Developed
 
-O laboratório demonstra um cenário de pós-comprometimento, onde um invasor utiliza credenciais válidas para acessar o sistema e tenta extrair informações sensíveis e elevar privilégios.
-
-A análise reforça a importância de:
-
-- Monitoramento de arquivos críticos  
-- Controle de privilégios  
-- Correlação de eventos após login  
+- Linux log analysis (auth.log)  
+- SIEM correlation (Wazuh)  
+- Credential access detection  
+- Privilege escalation investigation  
+- Incident response (containment + validation)  
+- MITRE ATT&CK mapping  
 
 ---
 
-## 📬 Contato
+## 📞 Contact
 
-Aberto a oportunidades em SOC / NOC / Cybersecurity Jr.
-
-- LinkedIn: https://www.linkedin.com/in/tiago-krysiaki  
-- Email: t.krysiaki91@gmail.com  
+LinkedIn: https://www.linkedin.com/in/tiagokrysiaki/  
+GitHub: https://github.com/TKrysiaki  
