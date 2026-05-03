@@ -174,5 +174,6 @@ DNS exfiltration activity was detected through anomaly-based analysis, investiga
 
 ## 📞 Contact
 
-LinkedIn: https://www.linkedin.com/tiago-krysiaki
+LinkedIn: [https://www.linkedin.com/tiago-krysiaki](https://www.linkedin.com/in/tiagokrysiaki/)
+
 GitHub: https://github.com/TKrysiaki/lab-soc-linux
