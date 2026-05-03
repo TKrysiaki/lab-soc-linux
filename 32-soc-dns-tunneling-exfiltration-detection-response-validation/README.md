@@ -19,10 +19,9 @@ Simulation of a **DNS tunneling/data exfiltration attack**, resulting in **data 
 ➡️ Full report: [report.md](./report.md)
 
 ---
-
 ## 🖥️ Environment
 
-- Attacker: Simulated (`exfil.com`)  
+- Attacker: Simulated (external domain – `exfil.com`)  
 - Target: web-01  
 - SIEM: Wazuh  
 - IDS: Suricata  
