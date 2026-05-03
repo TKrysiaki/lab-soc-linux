@@ -67,6 +67,7 @@ Detailed analysis of the alert revealed malicious payloads targeting the SQL par
 Attack duration and progression:
 
 ![Start](./images/03_wazuh_sqli_timeline_start.png)  
+
 ![End](./images/04_wazuh_sqli_timeline_end.png)
 
 - Start: 03/05/2026 17:28:19  
