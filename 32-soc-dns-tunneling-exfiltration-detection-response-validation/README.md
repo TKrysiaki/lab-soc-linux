@@ -39,7 +39,7 @@ The activity followed a repetitive and high-frequency pattern, consistent with d
 
 ## 🔍 Detection
 
-Detection was performed through **Suricata DNS logs (eve.json)** by identifying abnormal query frequency and suspicious domain patterns.
+Detection logic: High-frequency DNS queries, abnormal subdomain length, and entropy patterns consistent with encoded data
 
 ![Detection](./images/01_dns_frequency_suspicious_domain.png)
 
@@ -137,7 +137,8 @@ Detection was performed through **Suricata DNS logs (eve.json)** by identifying 
 
 - DNS domain blocking (egress filtering)  
 - DNS traffic monitoring  
-- Baseline creation for DNS behavior  
+- Baseline creation for DNS behavior
+- Restrict outbound DNS to authorized resolvers only
 
 ---
 
