@@ -31,14 +31,14 @@ Simulation of a **SQL Injection attack**, resulting in **data exposure and datab
 
 ## 🎯 Attack Scenario
 
-An attacker exploited a vulnerable parameter in the DVWA application using SQL Injection techniques.  
+An attacker exploited a vulnerable parameter (`id`) in the DVWA application via SQL Injection.  
 The attack evolved from authentication bypass (`OR 1=1`) to **data extraction** and **database enumeration** using `UNION SELECT`.
 
 ---
 
 ## 🔍 Detection
 
-Brief explanation of how detection occurred.
+Detection occurred via Wazuh rules analyzing Apache access logs.
 
 ![Detection](./images/01_wazuh_sqli_detection_burst.png)
 
@@ -49,14 +49,41 @@ Brief explanation of how detection occurred.
 
 ## 🧠 Investigation
 
+Detailed analysis of the alert revealed malicious payloads targeting the SQL parameter.
+
 ![Evidence](./images/02_wazuh_sqli_event_details.png)
 
 ### Evidence:
 
 - Source IP: `192.168.122.1`  
-- Endpoint / Service: `/DVWA/vulnerabilities/sqli`  
-- Parameter / Vector: `id=`  
-- Behavior observed: SQL Injection attempts with payload escalation  
+- Endpoint: `/DVWA/vulnerabilities/sqli`  
+- Parameter: `id=`  
+- Behavior: SQL Injection with payload escalation  
+
+---
+
+## 🕒 Timeline
+
+Attack duration and progression:
+
+![Start](./images/03_wazuh_sqli_timeline_start.png)  
+![End](./images/04_wazuh_sqli_timeline_end.png)
+
+- Start: 03/05/2026 17:28:19  
+- End: 03/05/2026 17:52:58  
+- Duration: ~24 minutes  
+
+---
+
+## 🔎 Command / Activity Evidence
+
+Clear evidence of SQL Injection exploitation and data extraction:
+
+![Commands](./images/07_exploitation_evidence_access_log.png)
+
+- `UNION SELECT user,password FROM users`  
+- `UNION SELECT table_name FROM information_schema.tables`  
+- `UNION SELECT column_name FROM information_schema.columns`  
 
 ---
 
@@ -67,38 +94,40 @@ Brief explanation of how detection occurred.
 | Network | 192.168.122.1 | Attacker IP | T1190 |
 | Application | /DVWA/vulnerabilities/sqli | Attack vector | T1190 |
 | Application | id= | Injection parameter | T1190 |
-| Application | UNION SELECT | Data extraction pattern | T1190 |
-| Application | information_schema | DB enumeration | T1190 |
+| Behavior | UNION SELECT | Data extraction | T1190 |
+| Behavior | information_schema | DB enumeration | T1190 |
 | Detection | Rule 31103 | SQLi detection | T1190 |
-
----
-
-## 🔎 Command / Activity Evidence
-
-![Commands](./images/07_exploitation_evidence_access_log.png)
-
-- `UNION SELECT user,password FROM users`  
-- `UNION SELECT table_name FROM information_schema.tables`  
-- `UNION SELECT column_name FROM information_schema.columns`  
 
 ---
 
 ## ⚠️ Impact Assessment
 
-- **Access Level:** Application-level access  
-- **Privilege Level:** Database read access  
-- **Scope:** Web application (DVWA)  
-- **Exposure:** User credentials and database structure  
+- **Access Level:** Application  
+- **Privilege Level:** Database read  
+- **Scope:** DVWA application  
+- **Exposure:** Credentials + database structure  
 
 ### Severity: 🔴 9/10 (High)
 
 **Justification:**
 - Successful SQL Injection execution  
-- Sensitive data exposure (credentials)  
+- Sensitive data exposure (users table)  
 - Full database enumeration  
-- Adaptive attacker behavior observed  
+- Adaptive attacker behavior  
 
-→ **Confirmed database compromise at logical level**
+→ **Database compromise confirmed (logical level)**
+
+---
+
+## 🧠 Post-Exploitation
+
+Database enumeration confirmed attacker exploration of schema:
+
+![Post Exploitation](./images/08_post_exploitation_db_enumeration.png)
+
+- Tables discovered  
+- Columns identified  
+- Expansion of attack scope  
 
 ---
 
@@ -106,32 +135,30 @@ Brief explanation of how detection occurred.
 
 ### Containment
 
+Firewall rule applied to block attacker IP:
+
 ![Containment](./images/09_iptables_rule_validation.png)
 
-- Malicious IP blocked via iptables  
+- `iptables DROP 192.168.122.1`  
 
 ---
 
-### Eradication
+### Recovery / Validation
 
-- Attack source removed (network-level block)  
-- No persistence observed  
+Access attempts blocked successfully:
 
----
+![Validation](./images/06_defense_validation_connection_timeout.png)
 
-### Recovery
-
-![Validation](./images/10_defense_validation_connection_timeout.png)
-
-- Connection attempts blocked successfully  
+- Connection timeout observed  
+- No further interaction possible  
 
 ---
 
-### 🔐 Hardening
+### 🔐 Hardening (Lab Context)
 
-- Temporary network blocking (iptables)  
-- Input validation awareness (lab context)  
-- Monitoring via Wazuh maintained  
+- Temporary IP blocking  
+- Continued monitoring via Wazuh  
+- No permanent changes (lab repeatability maintained)  
 
 ---
 
@@ -147,8 +174,8 @@ Brief explanation of how detection occurred.
 
 | Technique ID | Technique Name | Description |
 |-------------|--------------|------------|
-| T1190 | Exploit Public-Facing Application | SQL Injection attack on DVWA |
-| T1055 | Process Injection (mapped by rule) | Detection context (Wazuh mapping) |
+| T1190 | Exploit Public-Facing Application | SQL Injection |
+| T1055 | Process Injection (rule mapping) | Detection context |
 
 ---
 
@@ -156,16 +183,16 @@ Brief explanation of how detection occurred.
 
 Detection → Investigation → Classification → Response  
 
-A SQL Injection attack was successfully detected and investigated using Wazuh.  
+A SQL Injection attack was successfully detected using Wazuh and Apache logs.  
 The attacker achieved data extraction and database enumeration, confirming impact.  
-Containment was applied via firewall rules, and effectiveness was validated.
+Containment was applied via firewall rules, and effectiveness was validated through connection blocking.
 
 ---
 
 ## 🧠 Skills Developed
 
 - Log analysis (Apache access.log)  
-- SIEM detection (Wazuh rules)  
+- SIEM detection (Wazuh)  
 - Threat investigation (timeline + payload analysis)  
 - Incident response (containment + validation)  
 - MITRE ATT&CK mapping  
