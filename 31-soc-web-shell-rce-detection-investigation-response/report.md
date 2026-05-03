@@ -140,12 +140,13 @@ Commands executed:
 - **Initial Access:** Vulnerable file upload  
 - **Execution:** Remote command execution (`cmd=`)  
 - **Privilege Level:** `www-data`  
-- **Persistence:** Not observed  
+- **Persistence:** Not observed
+  - Note: Although no persistence mechanism was identified, the use of a web shell inherently enables persistent access if not removed.
 - **Data Exposure:** Access to `/etc/passwd` confirmed  
 
 ### Summary
 
-Remote command execution was achieved via web shell, enabling system enumeration and file access. Despite limited privileges, the ability to execute arbitrary commands represents a critical impact.
+Remote command execution was achieved via web shell, enabling system enumeration and file access. Despite limited privileges, the attacker gained the ability to execute arbitrary commands, which could lead to privilege escalation, persistence, and lateral movement.
 
 ---
 
