@@ -46,8 +46,10 @@ Detection of suspicious DNS activity indicating potential data exfiltration from
 
 ### Detection Gap
 
-- No automated detection rule for DNS exfiltration
-- SIEM did not trigger alerts for DNS anomaly
+- No automated detection rule was in place to identify abnormal DNS behavior such as high-frequency queries or suspicious subdomain patterns.
+
+**Root Cause:**  
+Lack of DNS behavioral monitoring and absence of SIEM correlation rules for anomaly-based detection.
 
 **Root Cause:**  
 Lack of correlation rules and DNS anomaly detection in Wazuh.
@@ -125,11 +127,14 @@ Severity: 6/10 (Medium)
 
 Data exfiltration was successfully simulated through DNS queries using subdomain encoding. The activity was limited to a single host and no persistence or lateral movement was identified.
 
+DNS tunneling provides a covert channel that can be used for continuous data exfiltration or command-and-control communication if not detected.
+
 ---
 
 ## 6. MITRE ATT&CK Mapping
 
 - T1048.003 — Exfiltration Over Unencrypted Non-C2 Protocol (DNS)
+- T1071.004 — Application Layer Protocol: DNS
 
 ---
 
@@ -169,6 +174,7 @@ Data exfiltration was successfully simulated through DNS queries using subdomain
 ### Containment
 
 - Blocked DNS queries to `exfil.com` using iptables
+- Outbound DNS traffic restricted to prevent communication with unauthorized domains
 
 ![Containment](./images/04_dns_containment_iptables.png)
 
