@@ -6,6 +6,13 @@
 
 SQL Injection attack targeting DVWA application, resulting in database enumeration and credential exposure.
 
+### Business Impact
+
+- Early detection and containment limited further data exposure  
+- Reduced risk of broader data breach and regulatory impact (e.g., LGPD)  
+- Prevented escalation to full database extraction  
+- Maintained service availability and operational stability  
+
 - Attack vector: HTTP parameter (`id`)
 - Technique: SQL Injection (UNION-based)
 - Impact: Data exposure (users table + database structure)
