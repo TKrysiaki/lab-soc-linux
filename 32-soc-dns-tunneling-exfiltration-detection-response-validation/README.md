@@ -31,7 +31,9 @@ Simulation of a **DNS tunneling/data exfiltration attack**, resulting in **data 
 
 ## 🎯 Attack Scenario
 
-The host **web-01** generated multiple DNS queries to a controlled domain (`exfil.com`) using sequential subdomains (`data1`, `data2`, ...), simulating **data exfiltration via DNS tunneling**.
+The compromised host **web-01** generated multiple DNS queries to an external domain (`exfil.com`) using encoded-like subdomains, simulating **data exfiltration via DNS tunneling**.
+
+The activity followed a repetitive and high-frequency pattern, consistent with data chunking over DNS queries.
 
 ---
 
