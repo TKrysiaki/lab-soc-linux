@@ -1,7 +1,31 @@
+## Attack Scenario
+
+### Initial Access
+- [ ] RCE/Web Shell obtido com usuário `www-data`
+- [ ] Execução remota de comandos validada
+- [ ] Reverse shell estabelecida
+
+---
+
+### Persistence Simulation
+- [ ] Persistência via Cron criada em `/etc/cron.d/`
+- [ ] Persistência via SSH Key adicionada em `/root/.ssh/authorized_keys`
+- [ ] Persistência via Systemd criada em `/etc/systemd/system/`
+
+---
+
+### Threat Activity
+- [ ] Comandos suspeitos executados (`curl`, `wget`, `chmod`, `bash`)
+- [ ] Arquivos suspeitos criados em `/tmp`
+- [ ] Serviço malicioso habilitado com `systemctl enable`
+- [ ] Tentativa de reconexão persistente validada
+
+---
+
 ## IoCs (Indicators of Compromise)
 
 ### Network IoCs
-- [x] IP do atacante identificado
+- [ ] IP do atacante identificado
 - [ ] Portas utilizadas identificadas (4444/4445)
 - [ ] Conexões suspeitas registradas via `ss -antp`
 
