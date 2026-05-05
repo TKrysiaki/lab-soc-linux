@@ -1,7 +1,7 @@
 ## IoCs (Indicators of Compromise)
 
 ### Network IoCs
-- [ ] IP do atacante identificado
+- [x ] IP do atacante identificado
 - [ ] Portas utilizadas identificadas (4444/4445)
 - [ ] Conexões suspeitas registradas via `ss -antp`
 
