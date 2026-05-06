@@ -65,3 +65,9 @@
 - [ ] Regra Wazuh acionada
 - [ ] Timestamp do alerta registrado
 - [ ] Técnica MITRE ATT&CK associada
+
+---
+
+## LEIA
+
+Experiência Prática Validada: Como você não tem experiência formal em cibersegurança, deve focar em transformar seus laboratórios (como o LAB 34 que você está desenvolvendo) em "experiência de projeto" detalhada no LinkedIn.
