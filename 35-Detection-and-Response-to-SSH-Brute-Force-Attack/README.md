@@ -30,7 +30,7 @@ An SSH brute-force attack was simulated using Hydra and the `rockyou.txt` wordli
 
 ## 🚀 Attack Execution
 
-![Hydra Execution](./images/01-hydra_2.png)
+![Hydra Execution](./images/01-hydra.png)
 
 Hydra initiated an SSH brute-force password attack against `192.168.122.171` using the user `tiago` and `rockyou.txt`.
 
@@ -38,7 +38,7 @@ Hydra initiated an SSH brute-force password attack against `192.168.122.171` usi
 
 ## 🔍 Detection
 
-![Wazuh Dashboard](./images/02-wazuh_2.png)
+![Wazuh Dashboard](./images/02-wazuh.png)
 
 Wazuh dashboard captured authentication failures and categorized the activity under Credential Access (MITRE ATT&CK T1110).
 
@@ -46,7 +46,7 @@ Wazuh dashboard captured authentication failures and categorized the activity un
 
 ## 📊 Alert Investigation
 
-![Alert Details](./images/03-detalhes_2.png)
+![Alert Details](./images/03-detalhes.png)
 
 Detailed view of the Wazuh alert showing Rule ID `2502` triggered by multiple failed password attempts from the attacker IP.
 
@@ -55,27 +55,27 @@ Detailed view of the Wazuh alert showing Rule ID `2502` triggered by multiple fa
 ## 📜 Log Analysis
 
 ### Failed Authentication Attempts
-![Failed Logins](./images/04-grep_2.png)
+![Failed Logins](./images/04-grep.png)
 Filtering authentication logs exposed continuous failed password attempts from IP `192.168.122.1` targeting the user `tiago`.
 
 ### Real-Time Monitoring
-![Tail Auth Log](./images/05-detected_2.png)
+![Tail Auth Log](./images/05-detected.png)
 Monitoring `/var/log/auth.log` in real time using `tail -f`.
 
 ### Attempt Count
-![Attempts Count](./images/06-tentativas_2.png)
+![Attempts Count](./images/06-tentativas.png)
 A total of **136 failed authentication attempts** were identified using `grep` combined with `wc -l`.
 
 ### Session Review
-![Session Opened](./images/07-session opened_2.png)
+![Session Opened](./images/07-sessionopened.png)
 Review of established sessions and system access logs.
 
 ### Administrative Commands
-![Command History](./images/08- command_2.png)
+![Command History](./images/08-command.png)
 Auditing administrative command executions via `sudo` and `pkexec`.
 
 ### Process Execution
-![Execve Logs](./images/09-execve_2.png)
+![Execve Logs](./images/09-execve.png)
 Reviewing kernel-level process execution logs (`EXECVE`) for system activity validation.
 
 ---
@@ -116,7 +116,7 @@ Reviewing kernel-level process execution logs (`EXECVE`) for system activity val
 
 ## 🛡️ Containment
 
-![Fail2ban Action](./images/10-fail2ban_2.png)
+![Fail2ban Action](./images/10-fail2ban.png)
 
 - Fail2ban service started and verified as active.
 - Manual ban triggered for attacker IP `192.168.122.1` via `fail2ban-client`.
