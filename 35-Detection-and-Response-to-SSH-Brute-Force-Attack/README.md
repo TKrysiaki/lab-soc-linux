@@ -2,126 +2,152 @@
 
 ---
 
-## 📌 Overview 
+## 📌 Overview
 
-Simulation of an SSH brute force attack against a Linux target, telemetry validation via Wazuh, log analysis, and active remediation using Fail2ban.
+This lab simulates an SSH brute-force attack against a Linux server, validates telemetry collection through Wazuh, investigates authentication logs, identifies indicators of compromise (IOCs), and performs active containment using Fail2ban.
 
-- Access: ✔ 
-- Attack Type: Brute Force (Hydra)  
-- Severity: 🔴 7/10 (High)
+- **Access:** Successful detection
+- **Attack Type:** SSH Brute Force (Hydra)
+- **Severity:** 🔴 High (7/10)
 
 ---
 
 ## 🖥️ Environment
 
-- Attacker: `192.168.122.1` (tiago@lab-soc)
-- Target: `WEB-01` (`192.168.122.171`)
-- SIEM: `Wazuh`
-- Mitigation: `Fail2ban` / `UFW`
-- Operating System: `Ubuntu Linux`
+- **Attacker:** `192.168.122.1` (`tiago@lab-soc`)
+- **Target:** `WEB-01` (`192.168.122.171`)
+- **Operating System:** Ubuntu Linux
+- **SIEM:** Wazuh
+- **Mitigation:** Fail2ban + UFW
 
 ---
 
 ## 🎯 Attack Scenario
 
-A simulated brute-force attack was launched against the SSH service of target `WEB-01` using Hydra with the wordlist `rockyou.txt` targeting the user `tiago`.
+An SSH brute-force attack was simulated using Hydra and the `rockyou.txt` wordlist against the username `tiago` on the target host `WEB-01`.
 
 ---
 
 ## 🚀 Attack Execution
 
-![Hydra Execution](./images/01-hydra.png)
+![Hydra Execution](./images/01-hydra_2.png)
 
 Hydra initiated an SSH brute-force password attack against `192.168.122.171` using the user `tiago` and `rockyou.txt`.
 
 ---
 
-## 📊 SIEM Telemetry & Wazuh Dashboard
+## 🔍 Detection
 
-![Wazuh Dashboard](./images/02-wazuh.png)
+![Wazuh Dashboard](./images/02-wazuh_2.png)
 
 Wazuh dashboard captured authentication failures and categorized the activity under Credential Access (MITRE ATT&CK T1110).
 
 ---
 
-## 🔍 Alert Details
+## 📊 Alert Investigation
 
-![Alert Details](./images/03-detalhes.png)
+![Alert Details](./images/03-detalhes_2.png)
 
 Detailed view of the Wazuh alert showing Rule ID `2502` triggered by multiple failed password attempts from the attacker IP.
 
 ---
 
-## 📜 Log Analysis (`/var/log/auth.log`)
+## 📜 Log Analysis
 
-### Failed Attempts
+### Failed Authentication Attempts
+![Failed Logins](./images/04-grep_2.png)
+Filtering authentication logs exposed continuous failed password attempts from IP `192.168.122.1` targeting the user `tiago`.
 
-![Failed Logins](./images/04-grep.png)
+### Real-Time Monitoring
+![Tail Auth Log](./images/05-detected_2.png)
+Monitoring `/var/log/auth.log` in real time using `tail -f`.
 
-Filtering authentication logs exposed continuous failed password attempts from IP `192.168.122.1` targeting the invalid user `tiago`.
+### Attempt Count
+![Attempts Count](./images/06-tentativas_2.png)
+A total of **136 failed authentication attempts** were identified using `grep` combined with `wc -l`.
 
----
+### Session Review
+![Session Opened](./images/07-session opened_2.png)
+Review of established sessions and system access logs.
 
-### Real-time Monitoring
-
-![Tail Auth Log](./images/05-detected.png)
-
-Monitoring `/var/log/auth.log` in real time using `tail -f` to observe incoming brute-force attempts.
-
----
-
-### Total Attempts Count
-
-![Total Attempts](./images/06-tentativas.png)
-
-Quantifying failed attempts using `grep` combined with `wc -l`, confirming 136 recorded failures.
-
----
-
-### Session and Command Audit
-
-![Session Opened](./images/07-sessionopened.png)
-
-Reviewing established sessions and system access logs.
-
----
-
-![Command Execution History](./images/08-command.png)
-
+### Administrative Commands
+![Command History](./images/08- command_2.png)
 Auditing administrative command executions via `sudo` and `pkexec`.
 
----
-
-### Process Execution (Auditd / Execve)
-
-![Execve Logs](./images/09-execve.png)
-
+### Process Execution
+![Execve Logs](./images/09-execve_2.png)
 Reviewing kernel-level process execution logs (`EXECVE`) for system activity validation.
 
 ---
 
-## 🛡️ Remediation and Mitigation
+## 🔎 IOCs
 
-### Fail2ban Configuration & Ban Verification
+| IOC | Value |
+|------|-------|
+| Source IP | 192.168.122.1 |
+| Target Host | WEB-01 |
+| Target User | tiago |
+| Attack Tool | Hydra |
+| Log Source | /var/log/auth.log |
+| Wazuh Rule | 2502 |
 
-![Fail2ban Action](./images/10-fail2ban.png)
+---
 
-- `fail2ban` service started and verified as active.
+## ⏱️ Timeline
+
+1. Hydra launched the SSH brute-force attack.
+2. SSH generated failed authentication events.
+3. Wazuh collected and correlated the logs.
+4. Rule 2502 was triggered.
+5. Authentication logs were investigated.
+6. Failed attempts were quantified.
+7. Fail2ban banned the attacker's IP.
+8. Monitoring confirmed successful containment.
+
+---
+
+## 🧬 MITRE ATT&CK
+
+| Technique ID | Technique | Description |
+|--------------|-----------|-------------|
+| T1110 | Brute Force | SSH password guessing using Hydra |
+
+---
+
+## 🛡️ Containment
+
+![Fail2ban Action](./images/10-fail2ban_2.png)
+
+- Fail2ban service started and verified as active.
 - Manual ban triggered for attacker IP `192.168.122.1` via `fail2ban-client`.
 - Log verification confirmed successful IP block actions.
 
 ---
 
-# 🧬 MITRE ATT&CK
+## 📚 Lessons Learned
 
-| Technique ID | Technique Name | Description |
-|-------------|--------------|------------|
-| [T1110](https://attack.mitre.org/techniques/T1110/) | Brute Force | SSH Password Guessing via Hydra |
+- Validate SIEM alerts using raw system logs.
+- Correlate multiple log sources before escalation.
+- Identify attacker infrastructure through IOCs.
+- Apply rapid containment using Fail2ban.
+- Continue monitoring after mitigation.
 
 ---
 
-# 🎯 Conclusion
+## 🧰 Skills Demonstrated
 
-Detection → Investigation → Mitigation
+- SIEM Monitoring
+- Alert Triage
+- Linux Log Analysis
+- SSH Security
+- IOC Identification
+- Incident Investigation
+- MITRE ATT&CK Mapping
+- Fail2ban Administration
+- Initial Incident Response
 
-This lab simulated a standard SSH brute-force attack, validated SIEM event ingestion via Wazuh, audited logs on `auth.log`, and successfully mitigated the threat using Fail2ban.
+---
+
+## 🎯 Conclusion
+
+This lab reproduces a realistic SOC Level 1 investigation involving an SSH brute-force attack against a Linux server. The attack was detected through Wazuh telemetry, validated using authentication logs, investigated through log analysis, and successfully contained using Fail2ban. The exercise demonstrates practical experience in alert triage, IOC identification, evidence collection, MITRE ATT&CK mapping, and initial incident response.
